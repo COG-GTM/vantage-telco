@@ -58,12 +58,23 @@ Devices flagged `external_bgp` are customer-facing and must not be renumbered.
 
 - `rating.py` — usage is billed to the exact MB at $0.012/MB overage. No
   gigabyte rounding.
-- `discounts.py` — tax is assessed on the full charge; the loyalty discount is
-  applied to the taxed total afterwards.
+- `proration.py` — mid-cycle plan changes split on actual calendar days.
+- `promo.py` — promo credits stay live for 30 days from issue.
+- `suspension.py` — suspended days are credited back at the daily rate.
+- `lines.py` — 3-9 lines 5% off recurring, 10 or more 10%.
+- `latefee.py` — 10 days grace after the due date, then 1.5% of the balance.
+- `tax.py` — GST/HST/PST/QST, all assessed on the pre-discount subtotal.
+- `discounts.py` — the loyalty credit comes off the subtotal and does not change
+  the tax base.
 - `invoices.py` — invoice construction, plus `unlinked_usage()` for usage that
   was mediated without a billing account.
 
-Endpoints: `GET /billing/invoices`, `GET /billing/usage-summary`.
+Charges are carried as `Decimal` at full precision and rounded once, at the
+invoice total. Provinces billed: BC, AB, ON, QC.
+
+Endpoints: `GET /billing/invoices`, `GET /billing/usage-summary`. The invoice
+register page is `GET /dashboard/billing` (filter by `period`, `account_id` or
+`billing_ref`); it shows the province and the tax lines per invoice.
 
 ## Capacity check (sales engineering)
 
@@ -115,4 +126,36 @@ Usage comes from the mediation CSV export
 ## Seed data
 
 `data/seed/` holds `sites.json` (97), `circuits.json`, `devices.json`,
-`accounts.json`, `usage.json` and `locations.json`.
+`accounts.json` (200 billing accounts across BC/AB/ON/QC), `usage.json` and
+`locations.json`.
+
+The billing fixtures are generated, not hand-edited. `tools/fixtures` writes
+both estates' copies of the same customer book from one seed, so an account is
+the same customer on both sides and joins on `billing_ref`:
+
+```bash
+make fixtures MERIDIAN_DIR=../meridian-telco
+```
+
+## Invoice parity with meridian-telco
+
+`tools/parity` runs the legacy meridian-telco register and this service over the
+same usage feed, joins on `billing_ref` and prints every account whose invoice
+total disagrees, with the rules implicated and the variance by rule and by
+province.
+
+```bash
+make parity PERIOD=2026-07 MERIDIAN_DIR=../meridian-telco
+```
+
+It exits non-zero while the two estates still disagree.
+
+## Demo
+
+```bash
+make demo MERIDIAN_DIR=../meridian-telco
+```
+
+Brings up both invoice registers side by side: vantage on
+<http://localhost:8000/dashboard/billing> and meridian on
+<http://localhost:8083/billing.html> (its invoice API on :8082).
