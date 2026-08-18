@@ -42,10 +42,9 @@ public final class ReportRenderer {
     }
 
     public String renderCycleSummary(String period, List<Invoice> invoices, List<UsageRecord> unlinked) {
-        BigDecimal billed = BigDecimal.ZERO;
-        for (Invoice invoice : invoices) {
-            billed = billed.add(invoice.total());
-        }
+        BigDecimal billed = invoices.stream()
+                .map(Invoice::total)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         StringBuilder out = new StringBuilder();
         out.append("BILLING CYCLE SUMMARY\n");
@@ -91,10 +90,9 @@ public final class ReportRenderer {
     }
 
     private static String pad(String label) {
-        StringBuilder padded = new StringBuilder(label);
-        while (padded.length() < LABEL_WIDTH) {
-            padded.append(' ');
+        if (label.length() >= LABEL_WIDTH) {
+            return label;
         }
-        return padded.toString();
+        return label + " ".repeat(LABEL_WIDTH - label.length());
     }
 }

@@ -6,11 +6,11 @@ import java.util.Objects;
 /**
  * Base type for every line that can appear on an invoice.
  *
- * <p>The hierarchy is closed by convention only — subclasses live in this
- * package and callers are expected to dispatch through {@link ChargeVisitor}
- * or an {@code instanceof} chain.
+ * <p>The hierarchy is sealed, so callers dispatch with an exhaustive
+ * {@code switch} over the permitted subtypes.
  */
-public abstract class Charge {
+public abstract sealed class Charge
+        permits LoyaltyCredit, OverageCharge, PlanFeeCharge, ProrationAdjustment, TaxCharge {
 
     private final String code;
     private final BigDecimal amount;
@@ -30,8 +30,6 @@ public abstract class Charge {
 
     /** Signed contribution of this charge to the invoice total. */
     public abstract BigDecimal signedAmount();
-
-    public abstract <T> T accept(ChargeVisitor<T> visitor);
 
     @Override
     public String toString() {

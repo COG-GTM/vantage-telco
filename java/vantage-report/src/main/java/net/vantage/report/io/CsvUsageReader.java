@@ -31,19 +31,19 @@ public final class CsvUsageReader {
     }
 
     public List<UsageRecord> readResource(String resourceName) {
-        InputStream in = getClass().getClassLoader().getResourceAsStream(resourceName);
-        if (in == null) {
+        InputStream resource = getClass().getClassLoader().getResourceAsStream(resourceName);
+        if (resource == null) {
             throw new IllegalArgumentException("resource not found: " + resourceName);
         }
-        try {
+        try (InputStream in = resource) {
             return read(in);
-        } finally {
-            closeQuietly(in);
+        } catch (IOException e) {
+            throw new UncheckedIOException("failed reading usage csv resource: " + resourceName, e);
         }
     }
 
     public List<UsageRecord> read(InputStream in) {
-        List<UsageRecord> records = new ArrayList<UsageRecord>();
+        List<UsageRecord> records = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
         try {
             String header = reader.readLine();
@@ -81,13 +81,5 @@ public final class CsvUsageReader {
             throw new IllegalArgumentException("bad usage_mb on line " + lineNumber + ": " + fields[3], e);
         }
         return new UsageRecord(fields[0].trim(), fields[1].trim(), fields[2].trim(), usageMb);
-    }
-
-    private static void closeQuietly(InputStream in) {
-        try {
-            in.close();
-        } catch (IOException ignored) {
-            // nothing useful to do on close failure
-        }
     }
 }

@@ -1,7 +1,6 @@
 package net.vantage.report;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import net.vantage.report.io.CsvUsageReader;
@@ -33,26 +32,19 @@ public final class Main {
         String period = args.length > 0 ? args[0] : "2026-07";
         CsvUsageReader reader = new CsvUsageReader();
 
-        List<UsageRecord> usage;
-        if (args.length > 1) {
-            Path path = Paths.get(args[1]);
-            usage = reader.readFile(path);
-        } else {
-            usage = reader.readResource(DEFAULT_RESOURCE);
-        }
+        List<UsageRecord> usage = args.length > 1
+                ? reader.readFile(Path.of(args[1]))
+                : reader.readResource(DEFAULT_RESOURCE);
 
         RatingEngine engine = new RatingEngine(SeedAccounts.load());
         List<Invoice> invoices = engine.buildInvoices(period, usage);
         List<UsageRecord> unlinked = engine.unlinked(usage);
 
         ReportRenderer renderer = new ReportRenderer();
-        BatchRunner runner = new BatchRunner(renderer);
-        try {
+        try (BatchRunner runner = new BatchRunner(renderer)) {
             for (String rendered : runner.renderAll(invoices)) {
                 System.out.println(rendered);
             }
-        } finally {
-            runner.close();
         }
 
         System.out.println(renderer.renderCycleSummary(period, invoices, unlinked));

@@ -21,9 +21,4 @@ public final class PlanFeeCharge extends Charge {
     public BigDecimal signedAmount() {
         return getAmount();
     }
-
-    @Override
-    public <T> T accept(ChargeVisitor<T> visitor) {
-        return visitor.visitPlanFee(this);
-    }
 }

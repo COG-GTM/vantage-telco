@@ -41,10 +41,9 @@ public final class UsageRecord {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof UsageRecord)) {
+        if (!(other instanceof UsageRecord that)) {
             return false;
         }
-        UsageRecord that = (UsageRecord) other;
         return usageMb == that.usageMb
                 && accountId.equals(that.accountId)
                 && deviceUuid.equals(that.deviceUuid)

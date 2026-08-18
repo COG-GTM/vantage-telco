@@ -69,10 +69,9 @@ public final class Account {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof Account)) {
+        if (!(other instanceof Account that)) {
             return false;
         }
-        Account that = (Account) other;
         return includedGb == that.includedGb
                 && accountId.equals(that.accountId)
                 && legalName.equals(that.legalName)

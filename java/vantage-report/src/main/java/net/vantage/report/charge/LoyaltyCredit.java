@@ -24,9 +24,4 @@ public final class LoyaltyCredit extends Charge {
     public BigDecimal signedAmount() {
         return getAmount().negate();
     }
-
-    @Override
-    public <T> T accept(ChargeVisitor<T> visitor) {
-        return visitor.visitLoyaltyCredit(this);
-    }
 }

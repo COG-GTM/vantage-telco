@@ -107,7 +107,7 @@ addressing/reference integrity, and the HTTP surface.
 ## `java/vantage-report`
 
 The archived invoice artifacts the NOC keeps per cycle are rendered by a
-separate Maven module in `java/vantage-report`, built and run on Java 11. It
+separate Maven module in `java/vantage-report`, built and run on Java 21. It
 re-implements the rating rules in `app/billing` (exact-MB overage, tax on the
 pre-discount subtotal, loyalty credit applied post-tax) and renders each
 invoice as plain text plus a per-charge CSV.

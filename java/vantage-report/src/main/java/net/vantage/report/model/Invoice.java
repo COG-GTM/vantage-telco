@@ -1,8 +1,6 @@
 package net.vantage.report.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +17,7 @@ public final class Invoice {
     public Invoice(Account account, String period, List<Charge> charges) {
         this.account = Objects.requireNonNull(account, "account");
         this.period = Objects.requireNonNull(period, "period");
-        this.charges = Collections.unmodifiableList(new ArrayList<Charge>(charges));
+        this.charges = List.copyOf(charges);
     }
 
     public Account getAccount() {
@@ -35,10 +33,9 @@ public final class Invoice {
     }
 
     public BigDecimal total() {
-        BigDecimal total = BigDecimal.ZERO;
-        for (Charge charge : charges) {
-            total = total.add(charge.signedAmount());
-        }
+        BigDecimal total = charges.stream()
+                .map(Charge::signedAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         return Money.round(total);
     }
 

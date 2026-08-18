@@ -38,9 +38,4 @@ public final class ProrationAdjustment extends Charge {
     public BigDecimal signedAmount() {
         return refund ? getAmount().negate() : getAmount();
     }
-
-    @Override
-    public <T> T accept(ChargeVisitor<T> visitor) {
-        return visitor.visitProration(this);
-    }
 }
