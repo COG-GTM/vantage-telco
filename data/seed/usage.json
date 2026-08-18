@@ -2,85 +2,2815 @@
   {
     "usage_id": "VU-2026-06-0001",
     "account_id": "VANTAGE-BILL-88213",
-    "device_uuid": "7df04fa3-e35d-6f44-193f-038f70570d90",
+    "device_uuid": "b238b1da-4e7d-3e23-42c0-1a109ceeb1c3",
     "period": "2026-06",
-    "usage_mb": 3412088
+    "usage_mb": 5813259
   },
   {
-    "usage_id": "VU-2026-07-0001",
+    "usage_id": "VU-2026-07-0002",
     "account_id": "VANTAGE-BILL-88213",
-    "device_uuid": "7df04fa3-e35d-6f44-193f-038f70570d90",
+    "device_uuid": "de32922f-1584-2c74-6cb2-8d1ff713f46b",
     "period": "2026-07",
-    "usage_mb": 3680915
+    "usage_mb": 7472103
+  },
+  {
+    "usage_id": "VU-2026-06-0003",
+    "account_id": "VANTAGE-BILL-70000",
+    "device_uuid": "7c869977-fc11-29b3-d04a-bdeb83c8ffa4",
+    "period": "2026-06",
+    "usage_mb": 3146111
+  },
+  {
+    "usage_id": "VU-2026-07-0004",
+    "account_id": "VANTAGE-BILL-70000",
+    "device_uuid": "99630929-715e-736f-022a-6f909add18e2",
+    "period": "2026-07",
+    "usage_mb": 4049593
+  },
+  {
+    "usage_id": "VU-2026-06-0005",
+    "account_id": "VANTAGE-BILL-70013",
+    "device_uuid": "3c3086be-a96e-c74c-fc10-cc41e81d33ff",
+    "period": "2026-06",
+    "usage_mb": 1024033
+  },
+  {
+    "usage_id": "VU-2026-07-0006",
+    "account_id": "VANTAGE-BILL-70013",
+    "device_uuid": "cf618078-0c40-2121-387c-b58f57a12091",
+    "period": "2026-07",
+    "usage_mb": 1024485
+  },
+  {
+    "usage_id": "VU-2026-06-0007",
+    "account_id": "VANTAGE-BILL-70026",
+    "device_uuid": "d74684a7-b1e4-40f5-ca92-9cf47b5ee5fa",
+    "period": "2026-06",
+    "usage_mb": 622038
+  },
+  {
+    "usage_id": "VU-2026-07-0008",
+    "account_id": "VANTAGE-BILL-70026",
+    "device_uuid": "ed84ea02-7911-5f47-e9fd-b1117aa8b666",
+    "period": "2026-07",
+    "usage_mb": 816852
+  },
+  {
+    "usage_id": "VU-2026-06-0009",
+    "account_id": "VANTAGE-BILL-70039",
+    "device_uuid": "989a8cc1-f4bb-7e05-8f70-6951e46b0582",
+    "period": "2026-06",
+    "usage_mb": 407140
+  },
+  {
+    "usage_id": "VU-2026-07-0010",
+    "account_id": "VANTAGE-BILL-70039",
+    "device_uuid": "e01ffafd-cb88-f79a-5fde-020732baac55",
+    "period": "2026-07",
+    "usage_mb": 273807
+  },
+  {
+    "usage_id": "VU-2026-06-0011",
+    "account_id": "VANTAGE-BILL-70052",
+    "device_uuid": "4963c959-c128-3d09-9aa8-ee110fee3e82",
+    "period": "2026-06",
+    "usage_mb": 3655752
+  },
+  {
+    "usage_id": "VU-2026-07-0012",
+    "account_id": "VANTAGE-BILL-70052",
+    "device_uuid": "a4e4165d-a85f-3c22-2b82-4062e2a31b2b",
+    "period": "2026-07",
+    "usage_mb": 4465608
+  },
+  {
+    "usage_id": "VU-2026-06-0013",
+    "account_id": "VANTAGE-BILL-70065",
+    "device_uuid": "e4c98ec1-0e0f-cfd7-08b3-befdcbe4b400",
+    "period": "2026-06",
+    "usage_mb": 3678631
+  },
+  {
+    "usage_id": "VU-2026-07-0014",
+    "account_id": "VANTAGE-BILL-70065",
+    "device_uuid": "74cb51d7-a554-93ab-7827-656789a15e2b",
+    "period": "2026-07",
+    "usage_mb": 4140306
+  },
+  {
+    "usage_id": "VU-2026-06-0015",
+    "account_id": "VANTAGE-BILL-70078",
+    "device_uuid": "c8da1ed9-0597-4704-40c1-ef6e8ff2cfdf",
+    "period": "2026-06",
+    "usage_mb": 1225894
+  },
+  {
+    "usage_id": "VU-2026-07-0016",
+    "account_id": "VANTAGE-BILL-70078",
+    "device_uuid": "a26a79ef-7fb0-1896-b581-21cd40abc3fe",
+    "period": "2026-07",
+    "usage_mb": 1584690
+  },
+  {
+    "usage_id": "VU-2026-06-0017",
+    "account_id": "VANTAGE-BILL-70091",
+    "device_uuid": "23ebf634-2ef6-365b-5d49-443b05fd3d0b",
+    "period": "2026-06",
+    "usage_mb": 512683
+  },
+  {
+    "usage_id": "VU-2026-07-0018",
+    "account_id": "VANTAGE-BILL-70091",
+    "device_uuid": "b86ee44c-faac-fe20-fd05-55e690f11f79",
+    "period": "2026-07",
+    "usage_mb": 512050
+  },
+  {
+    "usage_id": "VU-2026-06-0019",
+    "account_id": "VANTAGE-BILL-70104",
+    "device_uuid": "8e2aa64b-862c-ead2-bc2e-1949e1fc1fe2",
+    "period": "2026-06",
+    "usage_mb": 445992
+  },
+  {
+    "usage_id": "VU-2026-07-0020",
+    "account_id": "VANTAGE-BILL-70104",
+    "device_uuid": "8e5a7614-c0e6-66a5-0c21-64403a758859",
+    "period": "2026-07",
+    "usage_mb": 419445
+  },
+  {
+    "usage_id": "VU-2026-06-0021",
+    "account_id": "VANTAGE-BILL-70117",
+    "device_uuid": "8df326a9-aa2a-b6fc-569f-90b596dd54b7",
+    "period": "2026-06",
+    "usage_mb": 9402043
+  },
+  {
+    "usage_id": "VU-2026-07-0022",
+    "account_id": "VANTAGE-BILL-70117",
+    "device_uuid": "31b60861-2894-1b2c-7a7a-1687dd127b51",
+    "period": "2026-07",
+    "usage_mb": 7598936
+  },
+  {
+    "usage_id": "VU-2026-06-0023",
+    "account_id": "VANTAGE-BILL-70130",
+    "device_uuid": "802be0a0-3119-7c1f-ce26-e86d5b1b1a4b",
+    "period": "2026-06",
+    "usage_mb": 1440490
+  },
+  {
+    "usage_id": "VU-2026-07-0024",
+    "account_id": "VANTAGE-BILL-70130",
+    "device_uuid": "16da6a0d-cc2e-6d67-aab4-cf4d2bd0c8ac",
+    "period": "2026-07",
+    "usage_mb": 1776655
+  },
+  {
+    "usage_id": "VU-2026-06-0025",
+    "account_id": "VANTAGE-BILL-70143",
+    "device_uuid": "f6d21429-9f9f-eee8-a28c-488251db0c0f",
+    "period": "2026-06",
+    "usage_mb": 1464511
+  },
+  {
+    "usage_id": "VU-2026-07-0026",
+    "account_id": "VANTAGE-BILL-70143",
+    "device_uuid": "d2be2977-a296-796a-df8e-82cad24e96a2",
+    "period": "2026-07",
+    "usage_mb": 1504662
+  },
+  {
+    "usage_id": "VU-2026-06-0027",
+    "account_id": "VANTAGE-BILL-70156",
+    "device_uuid": "ecfcc8f7-2bc8-a482-2065-a8b11e34cf28",
+    "period": "2026-06",
+    "usage_mb": 663424
+  },
+  {
+    "usage_id": "VU-2026-07-0028",
+    "account_id": "VANTAGE-BILL-70156",
+    "device_uuid": "e5ca9a5e-7182-77df-fbe9-8a9891c307d9",
+    "period": "2026-07",
+    "usage_mb": 965460
+  },
+  {
+    "usage_id": "VU-2026-06-0029",
+    "account_id": "VANTAGE-BILL-70169",
+    "device_uuid": "b7c6116a-4a06-da58-1918-afe7f87e2a9e",
+    "period": "2026-06",
+    "usage_mb": 256463
+  },
+  {
+    "usage_id": "VU-2026-07-0030",
+    "account_id": "VANTAGE-BILL-70169",
+    "device_uuid": "18e1974b-0f3a-29dd-bf57-00cf20547833",
+    "period": "2026-07",
+    "usage_mb": 256246
+  },
+  {
+    "usage_id": "VU-2026-06-0031",
+    "account_id": "VANTAGE-BILL-70182",
+    "device_uuid": "03a425d2-bf65-87ee-e2e8-e9f27bd160d7",
+    "period": "2026-06",
+    "usage_mb": 9395653
+  },
+  {
+    "usage_id": "VU-2026-07-0032",
+    "account_id": "VANTAGE-BILL-70182",
+    "device_uuid": "24123924-35de-0200-2afe-56ade978fb31",
+    "period": "2026-07",
+    "usage_mb": 7278044
+  },
+  {
+    "usage_id": "VU-2026-06-0033",
+    "account_id": "VANTAGE-BILL-70195",
+    "device_uuid": "8ee56815-57d0-26d7-eda9-d7c9e888a82d",
+    "period": "2026-06",
+    "usage_mb": 3574907
+  },
+  {
+    "usage_id": "VU-2026-07-0034",
+    "account_id": "VANTAGE-BILL-70195",
+    "device_uuid": "dc2a0b66-707f-d616-74ea-93c6d699e9f1",
+    "period": "2026-07",
+    "usage_mb": 2848542
+  },
+  {
+    "usage_id": "VU-2026-06-0035",
+    "account_id": "VANTAGE-BILL-70208",
+    "device_uuid": "46960980-2d0f-94b9-fd8e-16ddab18b137",
+    "period": "2026-06",
+    "usage_mb": 717765
+  },
+  {
+    "usage_id": "VU-2026-07-0036",
+    "account_id": "VANTAGE-BILL-70208",
+    "device_uuid": "b3cf9e85-c74d-ea30-7483-50c4efaf2554",
+    "period": "2026-07",
+    "usage_mb": 671654
+  },
+  {
+    "usage_id": "VU-2026-06-0037",
+    "account_id": "VANTAGE-BILL-70221",
+    "device_uuid": "74b1614d-9e8b-8d96-7dda-de02875dffda",
+    "period": "2026-06",
+    "usage_mb": 743630
+  },
+  {
+    "usage_id": "VU-2026-07-0038",
+    "account_id": "VANTAGE-BILL-70221",
+    "device_uuid": "4ecb2332-8660-4eec-8b34-3d341420b135",
+    "period": "2026-07",
+    "usage_mb": 736216
+  },
+  {
+    "usage_id": "VU-2026-06-0039",
+    "account_id": "VANTAGE-BILL-70234",
+    "device_uuid": "0dd2ac94-0b57-39a0-3ebf-69df6bcc1e34",
+    "period": "2026-06",
+    "usage_mb": 297766
+  },
+  {
+    "usage_id": "VU-2026-07-0040",
+    "account_id": "VANTAGE-BILL-70234",
+    "device_uuid": "a4e00c91-92e0-01a5-68d1-2efde4c944a3",
+    "period": "2026-07",
+    "usage_mb": 353454
+  },
+  {
+    "usage_id": "VU-2026-06-0041",
+    "account_id": "VANTAGE-BILL-70247",
+    "device_uuid": "617f8c7c-6d6a-4518-e929-76a65dd8dc40",
+    "period": "2026-06",
+    "usage_mb": 5120178
+  },
+  {
+    "usage_id": "VU-2026-07-0042",
+    "account_id": "VANTAGE-BILL-70247",
+    "device_uuid": "258e80d4-13fe-0e37-6fb8-d1eacb38dbf5",
+    "period": "2026-07",
+    "usage_mb": 5120386
+  },
+  {
+    "usage_id": "VU-2026-06-0043",
+    "account_id": "VANTAGE-BILL-70260",
+    "device_uuid": "96f16bad-61dd-6f88-2557-2bb4f740e275",
+    "period": "2026-06",
+    "usage_mb": 3531126
+  },
+  {
+    "usage_id": "VU-2026-07-0044",
+    "account_id": "VANTAGE-BILL-70260",
+    "device_uuid": "7bf4d7cf-c033-91ce-51b5-2d5190de049a",
+    "period": "2026-07",
+    "usage_mb": 2808893
+  },
+  {
+    "usage_id": "VU-2026-06-0045",
+    "account_id": "VANTAGE-BILL-70273",
+    "device_uuid": "d2d4b0e4-a3e5-9c51-571e-405e13333347",
+    "period": "2026-06",
+    "usage_mb": 1379141
+  },
+  {
+    "usage_id": "VU-2026-07-0046",
+    "account_id": "VANTAGE-BILL-70273",
+    "device_uuid": "c8d4153b-50ec-f31a-d714-0202bd838c75",
+    "period": "2026-07",
+    "usage_mb": 1360388
+  },
+  {
+    "usage_id": "VU-2026-06-0047",
+    "account_id": "VANTAGE-BILL-70286",
+    "device_uuid": "c1df83e8-cc3b-0963-bd51-8d14199f631e",
+    "period": "2026-06",
+    "usage_mb": 451414
+  },
+  {
+    "usage_id": "VU-2026-07-0048",
+    "account_id": "VANTAGE-BILL-70286",
+    "device_uuid": "ac7f609e-d171-07cf-7468-6d1f2d544d59",
+    "period": "2026-07",
+    "usage_mb": 441632
+  },
+  {
+    "usage_id": "VU-2026-06-0049",
+    "account_id": "VANTAGE-BILL-70299",
+    "device_uuid": "ba87e59b-aecc-1218-a93f-3251345f6ebe",
+    "period": "2026-06",
+    "usage_mb": 391376
+  },
+  {
+    "usage_id": "VU-2026-07-0050",
+    "account_id": "VANTAGE-BILL-70299",
+    "device_uuid": "26623c43-b394-ed7e-7857-db4c12df8fe6",
+    "period": "2026-07",
+    "usage_mb": 436114
+  },
+  {
+    "usage_id": "VU-2026-06-0051",
+    "account_id": "VANTAGE-BILL-70312",
+    "device_uuid": "1a2812c0-c1f6-853e-fb8e-fa8bb1d1d49c",
+    "period": "2026-06",
+    "usage_mb": 8426008
+  },
+  {
+    "usage_id": "VU-2026-07-0052",
+    "account_id": "VANTAGE-BILL-70312",
+    "device_uuid": "812803c8-550f-1803-76d2-25f0a04d3798",
+    "period": "2026-07",
+    "usage_mb": 6866870
+  },
+  {
+    "usage_id": "VU-2026-06-0053",
+    "account_id": "VANTAGE-BILL-70325",
+    "device_uuid": "8c8df540-97ff-b686-83b4-803715762288",
+    "period": "2026-06",
+    "usage_mb": 2560587
+  },
+  {
+    "usage_id": "VU-2026-07-0054",
+    "account_id": "VANTAGE-BILL-70325",
+    "device_uuid": "35529b8c-96ad-e5a6-15a9-2841686a5ce5",
+    "period": "2026-07",
+    "usage_mb": 2560233
+  },
+  {
+    "usage_id": "VU-2026-06-0055",
+    "account_id": "VANTAGE-BILL-70338",
+    "device_uuid": "4892894d-aec4-3bdd-a37e-7ee2190a34e5",
+    "period": "2026-06",
+    "usage_mb": 1665272
+  },
+  {
+    "usage_id": "VU-2026-07-0056",
+    "account_id": "VANTAGE-BILL-70338",
+    "device_uuid": "3b72f69f-1cf8-3832-5493-4aa471e45e0f",
+    "period": "2026-07",
+    "usage_mb": 1191055
+  },
+  {
+    "usage_id": "VU-2026-06-0057",
+    "account_id": "VANTAGE-BILL-70351",
+    "device_uuid": "3bb31f98-ef31-9db9-1442-7e9447396ebf",
+    "period": "2026-06",
+    "usage_mb": 636493
+  },
+  {
+    "usage_id": "VU-2026-07-0058",
+    "account_id": "VANTAGE-BILL-70351",
+    "device_uuid": "9df62ce3-3f7c-ab2d-aecf-c0d0d0a3a6dc",
+    "period": "2026-07",
+    "usage_mb": 835873
+  },
+  {
+    "usage_id": "VU-2026-06-0059",
+    "account_id": "VANTAGE-BILL-70364",
+    "device_uuid": "fdda0158-2c51-944f-f50a-b36b9144a7d2",
+    "period": "2026-06",
+    "usage_mb": 253546
+  },
+  {
+    "usage_id": "VU-2026-07-0060",
+    "account_id": "VANTAGE-BILL-70364",
+    "device_uuid": "9855c3a9-d77d-46ef-2096-d463e6521a5f",
+    "period": "2026-07",
+    "usage_mb": 208972
+  },
+  {
+    "usage_id": "VU-2026-06-0061",
+    "account_id": "VANTAGE-BILL-70377",
+    "device_uuid": "44a836e8-20b9-8ef5-d952-9bfc6b7d7a56",
+    "period": "2026-06",
+    "usage_mb": 7411074
+  },
+  {
+    "usage_id": "VU-2026-07-0062",
+    "account_id": "VANTAGE-BILL-70377",
+    "device_uuid": "9bae9818-a274-00f7-2d5d-d2cdd3015b3f",
+    "period": "2026-07",
+    "usage_mb": 5570981
+  },
+  {
+    "usage_id": "VU-2026-06-0063",
+    "account_id": "VANTAGE-BILL-70390",
+    "device_uuid": "b8f02108-a60e-ebbc-12c5-328eaabac52b",
+    "period": "2026-06",
+    "usage_mb": 4178650
+  },
+  {
+    "usage_id": "VU-2026-07-0064",
+    "account_id": "VANTAGE-BILL-70390",
+    "device_uuid": "26d1ebbd-848e-d278-108f-23663aba2e06",
+    "period": "2026-07",
+    "usage_mb": 3546898
+  },
+  {
+    "usage_id": "VU-2026-06-0065",
+    "account_id": "VANTAGE-BILL-70403",
+    "device_uuid": "32ab9fd9-ddc8-81a8-52bf-afa140608ee7",
+    "period": "2026-06",
+    "usage_mb": 1024350
+  },
+  {
+    "usage_id": "VU-2026-07-0066",
+    "account_id": "VANTAGE-BILL-70403",
+    "device_uuid": "7f1e9bc0-0b02-f403-8047-ee90824d3416",
+    "period": "2026-07",
+    "usage_mb": 1024223
+  },
+  {
+    "usage_id": "VU-2026-06-0067",
+    "account_id": "VANTAGE-BILL-70416",
+    "device_uuid": "adb91ae0-9dc1-aaa1-1249-166e7023ee14",
+    "period": "2026-06",
+    "usage_mb": 942079
+  },
+  {
+    "usage_id": "VU-2026-07-0068",
+    "account_id": "VANTAGE-BILL-70416",
+    "device_uuid": "8be1755a-0d7b-8818-9894-79d61c51ac6b",
+    "period": "2026-07",
+    "usage_mb": 773545
+  },
+  {
+    "usage_id": "VU-2026-06-0069",
+    "account_id": "VANTAGE-BILL-70429",
+    "device_uuid": "1e4184a7-560f-db42-d049-f1fd1d4b66bc",
+    "period": "2026-06",
+    "usage_mb": 371555
+  },
+  {
+    "usage_id": "VU-2026-07-0070",
+    "account_id": "VANTAGE-BILL-70429",
+    "device_uuid": "6bb53b6e-4abe-4b21-46a0-f441caed4737",
+    "period": "2026-07",
+    "usage_mb": 313072
+  },
+  {
+    "usage_id": "VU-2026-06-0071",
+    "account_id": "VANTAGE-BILL-70442",
+    "device_uuid": "b8f92b2e-a3bb-0ded-cbd5-04b8c3e750ef",
+    "period": "2026-06",
+    "usage_mb": 3167223
+  },
+  {
+    "usage_id": "VU-2026-07-0072",
+    "account_id": "VANTAGE-BILL-70442",
+    "device_uuid": "be98bf9f-d1c9-ef02-2874-1836238950f3",
+    "period": "2026-07",
+    "usage_mb": 4861658
+  },
+  {
+    "usage_id": "VU-2026-06-0073",
+    "account_id": "VANTAGE-BILL-70455",
+    "device_uuid": "fad04ca1-a82a-b3df-793e-c25ca29bb260",
+    "period": "2026-06",
+    "usage_mb": 4169798
+  },
+  {
+    "usage_id": "VU-2026-07-0074",
+    "account_id": "VANTAGE-BILL-70455",
+    "device_uuid": "65afd1a7-5b9c-4d0c-9527-6968402fba7c",
+    "period": "2026-07",
+    "usage_mb": 3888736
+  },
+  {
+    "usage_id": "VU-2026-06-0075",
+    "account_id": "VANTAGE-BILL-70468",
+    "device_uuid": "b238b1da-4e7d-3e23-42c0-1a109ceeb1c3",
+    "period": "2026-06",
+    "usage_mb": 1442479
+  },
+  {
+    "usage_id": "VU-2026-07-0076",
+    "account_id": "VANTAGE-BILL-70468",
+    "device_uuid": "de32922f-1584-2c74-6cb2-8d1ff713f46b",
+    "period": "2026-07",
+    "usage_mb": 1503642
+  },
+  {
+    "usage_id": "VU-2026-06-0077",
+    "account_id": "VANTAGE-BILL-70481",
+    "device_uuid": "7c869977-fc11-29b3-d04a-bdeb83c8ffa4",
+    "period": "2026-06",
+    "usage_mb": 512605
+  },
+  {
+    "usage_id": "VU-2026-07-0078",
+    "account_id": "VANTAGE-BILL-70481",
+    "device_uuid": "99630929-715e-736f-022a-6f909add18e2",
+    "period": "2026-07",
+    "usage_mb": 512432
+  },
+  {
+    "usage_id": "VU-2026-06-0079",
+    "account_id": "VANTAGE-BILL-70494",
+    "device_uuid": "3c3086be-a96e-c74c-fc10-cc41e81d33ff",
+    "period": "2026-06",
+    "usage_mb": 484641
+  },
+  {
+    "usage_id": "VU-2026-07-0080",
+    "account_id": "VANTAGE-BILL-70494",
+    "device_uuid": "cf618078-0c40-2121-387c-b58f57a12091",
+    "period": "2026-07",
+    "usage_mb": 291460
+  },
+  {
+    "usage_id": "VU-2026-06-0081",
+    "account_id": "VANTAGE-BILL-70507",
+    "device_uuid": "d74684a7-b1e4-40f5-ca92-9cf47b5ee5fa",
+    "period": "2026-06",
+    "usage_mb": 5432886
+  },
+  {
+    "usage_id": "VU-2026-07-0082",
+    "account_id": "VANTAGE-BILL-70507",
+    "device_uuid": "ed84ea02-7911-5f47-e9fd-b1117aa8b666",
+    "period": "2026-07",
+    "usage_mb": 9682838
+  },
+  {
+    "usage_id": "VU-2026-06-0083",
+    "account_id": "VANTAGE-BILL-70520",
+    "device_uuid": "989a8cc1-f4bb-7e05-8f70-6951e46b0582",
+    "period": "2026-06",
+    "usage_mb": 1873607
+  },
+  {
+    "usage_id": "VU-2026-07-0084",
+    "account_id": "VANTAGE-BILL-70520",
+    "device_uuid": "e01ffafd-cb88-f79a-5fde-020732baac55",
+    "period": "2026-07",
+    "usage_mb": 2016394
+  },
+  {
+    "usage_id": "VU-2026-06-0085",
+    "account_id": "VANTAGE-BILL-70533",
+    "device_uuid": "4963c959-c128-3d09-9aa8-ee110fee3e82",
+    "period": "2026-06",
+    "usage_mb": 1866707
+  },
+  {
+    "usage_id": "VU-2026-07-0086",
+    "account_id": "VANTAGE-BILL-70533",
+    "device_uuid": "a4e4165d-a85f-3c22-2b82-4062e2a31b2b",
+    "period": "2026-07",
+    "usage_mb": 1291996
+  },
+  {
+    "usage_id": "VU-2026-06-0087",
+    "account_id": "VANTAGE-BILL-70546",
+    "device_uuid": "e4c98ec1-0e0f-cfd7-08b3-befdcbe4b400",
+    "period": "2026-06",
+    "usage_mb": 673778
+  },
+  {
+    "usage_id": "VU-2026-07-0088",
+    "account_id": "VANTAGE-BILL-70546",
+    "device_uuid": "74cb51d7-a554-93ab-7827-656789a15e2b",
+    "period": "2026-07",
+    "usage_mb": 741575
+  },
+  {
+    "usage_id": "VU-2026-06-0089",
+    "account_id": "VANTAGE-BILL-70559",
+    "device_uuid": "c8da1ed9-0597-4704-40c1-ef6e8ff2cfdf",
+    "period": "2026-06",
+    "usage_mb": 256590
+  },
+  {
+    "usage_id": "VU-2026-07-0090",
+    "account_id": "VANTAGE-BILL-70559",
+    "device_uuid": "a26a79ef-7fb0-1896-b581-21cd40abc3fe",
+    "period": "2026-07",
+    "usage_mb": 256018
+  },
+  {
+    "usage_id": "VU-2026-06-0091",
+    "account_id": "VANTAGE-BILL-70572",
+    "device_uuid": "23ebf634-2ef6-365b-5d49-443b05fd3d0b",
+    "period": "2026-06",
+    "usage_mb": 9539292
+  },
+  {
+    "usage_id": "VU-2026-07-0092",
+    "account_id": "VANTAGE-BILL-70572",
+    "device_uuid": "b86ee44c-faac-fe20-fd05-55e690f11f79",
+    "period": "2026-07",
+    "usage_mb": 6054221
+  },
+  {
+    "usage_id": "VU-2026-06-0093",
+    "account_id": "VANTAGE-BILL-70585",
+    "device_uuid": "8e2aa64b-862c-ead2-bc2e-1949e1fc1fe2",
+    "period": "2026-06",
+    "usage_mb": 3253090
+  },
+  {
+    "usage_id": "VU-2026-07-0094",
+    "account_id": "VANTAGE-BILL-70585",
+    "device_uuid": "8e5a7614-c0e6-66a5-0c21-64403a758859",
+    "period": "2026-07",
+    "usage_mb": 3205653
+  },
+  {
+    "usage_id": "VU-2026-06-0095",
+    "account_id": "VANTAGE-BILL-70598",
+    "device_uuid": "8df326a9-aa2a-b6fc-569f-90b596dd54b7",
+    "period": "2026-06",
+    "usage_mb": 766783
+  },
+  {
+    "usage_id": "VU-2026-07-0096",
+    "account_id": "VANTAGE-BILL-70598",
+    "device_uuid": "31b60861-2894-1b2c-7a7a-1687dd127b51",
+    "period": "2026-07",
+    "usage_mb": 683619
+  },
+  {
+    "usage_id": "VU-2026-06-0097",
+    "account_id": "VANTAGE-BILL-70611",
+    "device_uuid": "802be0a0-3119-7c1f-ce26-e86d5b1b1a4b",
+    "period": "2026-06",
+    "usage_mb": 663013
+  },
+  {
+    "usage_id": "VU-2026-07-0098",
+    "account_id": "VANTAGE-BILL-70611",
+    "device_uuid": "16da6a0d-cc2e-6d67-aab4-cf4d2bd0c8ac",
+    "period": "2026-07",
+    "usage_mb": 790427
+  },
+  {
+    "usage_id": "VU-2026-06-0099",
+    "account_id": "VANTAGE-BILL-70624",
+    "device_uuid": "f6d21429-9f9f-eee8-a28c-488251db0c0f",
+    "period": "2026-06",
+    "usage_mb": 290352
+  },
+  {
+    "usage_id": "VU-2026-07-0100",
+    "account_id": "VANTAGE-BILL-70624",
+    "device_uuid": "d2be2977-a296-796a-df8e-82cad24e96a2",
+    "period": "2026-07",
+    "usage_mb": 448926
+  },
+  {
+    "usage_id": "VU-2026-06-0101",
+    "account_id": "VANTAGE-BILL-70637",
+    "device_uuid": "ecfcc8f7-2bc8-a482-2065-a8b11e34cf28",
+    "period": "2026-06",
+    "usage_mb": 5120801
+  },
+  {
+    "usage_id": "VU-2026-07-0102",
+    "account_id": "VANTAGE-BILL-70637",
+    "device_uuid": "e5ca9a5e-7182-77df-fbe9-8a9891c307d9",
+    "period": "2026-07",
+    "usage_mb": 5120180
+  },
+  {
+    "usage_id": "VU-2026-06-0103",
+    "account_id": "VANTAGE-BILL-70650",
+    "device_uuid": "b7c6116a-4a06-da58-1918-afe7f87e2a9e",
+    "period": "2026-06",
+    "usage_mb": 4662351
+  },
+  {
+    "usage_id": "VU-2026-07-0104",
+    "account_id": "VANTAGE-BILL-70650",
+    "device_uuid": "18e1974b-0f3a-29dd-bf57-00cf20547833",
+    "period": "2026-07",
+    "usage_mb": 2852237
+  },
+  {
+    "usage_id": "VU-2026-06-0105",
+    "account_id": "VANTAGE-BILL-70663",
+    "device_uuid": "03a425d2-bf65-87ee-e2e8-e9f27bd160d7",
+    "period": "2026-06",
+    "usage_mb": 1650269
+  },
+  {
+    "usage_id": "VU-2026-07-0106",
+    "account_id": "VANTAGE-BILL-70663",
+    "device_uuid": "24123924-35de-0200-2afe-56ade978fb31",
+    "period": "2026-07",
+    "usage_mb": 1234122
+  },
+  {
+    "usage_id": "VU-2026-06-0107",
+    "account_id": "VANTAGE-BILL-70676",
+    "device_uuid": "8ee56815-57d0-26d7-eda9-d7c9e888a82d",
+    "period": "2026-06",
+    "usage_mb": 333993
+  },
+  {
+    "usage_id": "VU-2026-07-0108",
+    "account_id": "VANTAGE-BILL-70676",
+    "device_uuid": "dc2a0b66-707f-d616-74ea-93c6d699e9f1",
+    "period": "2026-07",
+    "usage_mb": 403069
+  },
+  {
+    "usage_id": "VU-2026-06-0109",
+    "account_id": "VANTAGE-BILL-70689",
+    "device_uuid": "46960980-2d0f-94b9-fd8e-16ddab18b137",
+    "period": "2026-06",
+    "usage_mb": 435973
+  },
+  {
+    "usage_id": "VU-2026-07-0110",
+    "account_id": "VANTAGE-BILL-70689",
+    "device_uuid": "b3cf9e85-c74d-ea30-7483-50c4efaf2554",
+    "period": "2026-07",
+    "usage_mb": 365307
+  },
+  {
+    "usage_id": "VU-2026-06-0111",
+    "account_id": "VANTAGE-BILL-70702",
+    "device_uuid": "74b1614d-9e8b-8d96-7dda-de02875dffda",
+    "period": "2026-06",
+    "usage_mb": 8471183
+  },
+  {
+    "usage_id": "VU-2026-07-0112",
+    "account_id": "VANTAGE-BILL-70702",
+    "device_uuid": "4ecb2332-8660-4eec-8b34-3d341420b135",
+    "period": "2026-07",
+    "usage_mb": 8139313
+  },
+  {
+    "usage_id": "VU-2026-06-0113",
+    "account_id": "VANTAGE-BILL-70715",
+    "device_uuid": "0dd2ac94-0b57-39a0-3ebf-69df6bcc1e34",
+    "period": "2026-06",
+    "usage_mb": 2560051
+  },
+  {
+    "usage_id": "VU-2026-07-0114",
+    "account_id": "VANTAGE-BILL-70715",
+    "device_uuid": "a4e00c91-92e0-01a5-68d1-2efde4c944a3",
+    "period": "2026-07",
+    "usage_mb": 2560100
+  },
+  {
+    "usage_id": "VU-2026-06-0115",
+    "account_id": "VANTAGE-BILL-70728",
+    "device_uuid": "617f8c7c-6d6a-4518-e929-76a65dd8dc40",
+    "period": "2026-06",
+    "usage_mb": 1785288
+  },
+  {
+    "usage_id": "VU-2026-07-0116",
+    "account_id": "VANTAGE-BILL-70728",
+    "device_uuid": "258e80d4-13fe-0e37-6fb8-d1eacb38dbf5",
+    "period": "2026-07",
+    "usage_mb": 1863766
+  },
+  {
+    "usage_id": "VU-2026-06-0117",
+    "account_id": "VANTAGE-BILL-70741",
+    "device_uuid": "96f16bad-61dd-6f88-2557-2bb4f740e275",
+    "period": "2026-06",
+    "usage_mb": 551186
+  },
+  {
+    "usage_id": "VU-2026-07-0118",
+    "account_id": "VANTAGE-BILL-70741",
+    "device_uuid": "7bf4d7cf-c033-91ce-51b5-2d5190de049a",
+    "period": "2026-07",
+    "usage_mb": 608150
+  },
+  {
+    "usage_id": "VU-2026-06-0119",
+    "account_id": "VANTAGE-BILL-70754",
+    "device_uuid": "d2d4b0e4-a3e5-9c51-571e-405e13333347",
+    "period": "2026-06",
+    "usage_mb": 216540
+  },
+  {
+    "usage_id": "VU-2026-07-0120",
+    "account_id": "VANTAGE-BILL-70754",
+    "device_uuid": "c8d4153b-50ec-f31a-d714-0202bd838c75",
+    "period": "2026-07",
+    "usage_mb": 173937
+  },
+  {
+    "usage_id": "VU-2026-06-0121",
+    "account_id": "VANTAGE-BILL-70767",
+    "device_uuid": "c1df83e8-cc3b-0963-bd51-8d14199f631e",
+    "period": "2026-06",
+    "usage_mb": 9435436
+  },
+  {
+    "usage_id": "VU-2026-07-0122",
+    "account_id": "VANTAGE-BILL-70767",
+    "device_uuid": "ac7f609e-d171-07cf-7468-6d1f2d544d59",
+    "period": "2026-07",
+    "usage_mb": 8621170
+  },
+  {
+    "usage_id": "VU-2026-06-0123",
+    "account_id": "VANTAGE-BILL-70780",
+    "device_uuid": "ba87e59b-aecc-1218-a93f-3251345f6ebe",
+    "period": "2026-06",
+    "usage_mb": 3104732
+  },
+  {
+    "usage_id": "VU-2026-07-0124",
+    "account_id": "VANTAGE-BILL-70780",
+    "device_uuid": "26623c43-b394-ed7e-7857-db4c12df8fe6",
+    "period": "2026-07",
+    "usage_mb": 2694354
+  },
+  {
+    "usage_id": "VU-2026-06-0125",
+    "account_id": "VANTAGE-BILL-70793",
+    "device_uuid": "1a2812c0-c1f6-853e-fb8e-fa8bb1d1d49c",
+    "period": "2026-06",
+    "usage_mb": 1024030
+  },
+  {
+    "usage_id": "VU-2026-07-0126",
+    "account_id": "VANTAGE-BILL-70793",
+    "device_uuid": "812803c8-550f-1803-76d2-25f0a04d3798",
+    "period": "2026-07",
+    "usage_mb": 1024619
+  },
+  {
+    "usage_id": "VU-2026-06-0127",
+    "account_id": "VANTAGE-BILL-70806",
+    "device_uuid": "8c8df540-97ff-b686-83b4-803715762288",
+    "period": "2026-06",
+    "usage_mb": 662982
+  },
+  {
+    "usage_id": "VU-2026-07-0128",
+    "account_id": "VANTAGE-BILL-70806",
+    "device_uuid": "35529b8c-96ad-e5a6-15a9-2841686a5ce5",
+    "period": "2026-07",
+    "usage_mb": 821996
+  },
+  {
+    "usage_id": "VU-2026-06-0129",
+    "account_id": "VANTAGE-BILL-70819",
+    "device_uuid": "4892894d-aec4-3bdd-a37e-7ee2190a34e5",
+    "period": "2026-06",
+    "usage_mb": 373906
+  },
+  {
+    "usage_id": "VU-2026-07-0130",
+    "account_id": "VANTAGE-BILL-70819",
+    "device_uuid": "3b72f69f-1cf8-3832-5493-4aa471e45e0f",
+    "period": "2026-07",
+    "usage_mb": 356662
+  },
+  {
+    "usage_id": "VU-2026-06-0131",
+    "account_id": "VANTAGE-BILL-70832",
+    "device_uuid": "3bb31f98-ef31-9db9-1442-7e9447396ebf",
+    "period": "2026-06",
+    "usage_mb": 4673820
+  },
+  {
+    "usage_id": "VU-2026-07-0132",
+    "account_id": "VANTAGE-BILL-70832",
+    "device_uuid": "9df62ce3-3f7c-ab2d-aecf-c0d0d0a3a6dc",
+    "period": "2026-07",
+    "usage_mb": 3559071
+  },
+  {
+    "usage_id": "VU-2026-06-0133",
+    "account_id": "VANTAGE-BILL-70845",
+    "device_uuid": "fdda0158-2c51-944f-f50a-b36b9144a7d2",
+    "period": "2026-06",
+    "usage_mb": 4204644
+  },
+  {
+    "usage_id": "VU-2026-07-0134",
+    "account_id": "VANTAGE-BILL-70845",
+    "device_uuid": "9855c3a9-d77d-46ef-2096-d463e6521a5f",
+    "period": "2026-07",
+    "usage_mb": 3261100
+  },
+  {
+    "usage_id": "VU-2026-06-0135",
+    "account_id": "VANTAGE-BILL-70858",
+    "device_uuid": "44a836e8-20b9-8ef5-d952-9bfc6b7d7a56",
+    "period": "2026-06",
+    "usage_mb": 1223921
+  },
+  {
+    "usage_id": "VU-2026-07-0136",
+    "account_id": "VANTAGE-BILL-70858",
+    "device_uuid": "9bae9818-a274-00f7-2d5d-d2cdd3015b3f",
+    "period": "2026-07",
+    "usage_mb": 1864645
+  },
+  {
+    "usage_id": "VU-2026-06-0137",
+    "account_id": "VANTAGE-BILL-70871",
+    "device_uuid": "b8f02108-a60e-ebbc-12c5-328eaabac52b",
+    "period": "2026-06",
+    "usage_mb": 512538
+  },
+  {
+    "usage_id": "VU-2026-07-0138",
+    "account_id": "VANTAGE-BILL-70871",
+    "device_uuid": "26d1ebbd-848e-d278-108f-23663aba2e06",
+    "period": "2026-07",
+    "usage_mb": 512488
+  },
+  {
+    "usage_id": "VU-2026-06-0139",
+    "account_id": "VANTAGE-BILL-70884",
+    "device_uuid": "32ab9fd9-ddc8-81a8-52bf-afa140608ee7",
+    "period": "2026-06",
+    "usage_mb": 365564
+  },
+  {
+    "usage_id": "VU-2026-07-0140",
+    "account_id": "VANTAGE-BILL-70884",
+    "device_uuid": "7f1e9bc0-0b02-f403-8047-ee90824d3416",
+    "period": "2026-07",
+    "usage_mb": 315952
+  },
+  {
+    "usage_id": "VU-2026-06-0141",
+    "account_id": "VANTAGE-BILL-70897",
+    "device_uuid": "adb91ae0-9dc1-aaa1-1249-166e7023ee14",
+    "period": "2026-06",
+    "usage_mb": 5784174
+  },
+  {
+    "usage_id": "VU-2026-07-0142",
+    "account_id": "VANTAGE-BILL-70897",
+    "device_uuid": "8be1755a-0d7b-8818-9894-79d61c51ac6b",
+    "period": "2026-07",
+    "usage_mb": 8476207
+  },
+  {
+    "usage_id": "VU-2026-06-0143",
+    "account_id": "VANTAGE-BILL-70910",
+    "device_uuid": "1e4184a7-560f-db42-d049-f1fd1d4b66bc",
+    "period": "2026-06",
+    "usage_mb": 1570980
+  },
+  {
+    "usage_id": "VU-2026-07-0144",
+    "account_id": "VANTAGE-BILL-70910",
+    "device_uuid": "6bb53b6e-4abe-4b21-46a0-f441caed4737",
+    "period": "2026-07",
+    "usage_mb": 2355342
+  },
+  {
+    "usage_id": "VU-2026-06-0145",
+    "account_id": "VANTAGE-BILL-70923",
+    "device_uuid": "b8f92b2e-a3bb-0ded-cbd5-04b8c3e750ef",
+    "period": "2026-06",
+    "usage_mb": 1304043
+  },
+  {
+    "usage_id": "VU-2026-07-0146",
+    "account_id": "VANTAGE-BILL-70923",
+    "device_uuid": "be98bf9f-d1c9-ef02-2874-1836238950f3",
+    "period": "2026-07",
+    "usage_mb": 1943704
+  },
+  {
+    "usage_id": "VU-2026-06-0147",
+    "account_id": "VANTAGE-BILL-70936",
+    "device_uuid": "fad04ca1-a82a-b3df-793e-c25ca29bb260",
+    "period": "2026-06",
+    "usage_mb": 629387
+  },
+  {
+    "usage_id": "VU-2026-07-0148",
+    "account_id": "VANTAGE-BILL-70936",
+    "device_uuid": "65afd1a7-5b9c-4d0c-9527-6968402fba7c",
+    "period": "2026-07",
+    "usage_mb": 748872
+  },
+  {
+    "usage_id": "VU-2026-06-0149",
+    "account_id": "VANTAGE-BILL-70949",
+    "device_uuid": "b238b1da-4e7d-3e23-42c0-1a109ceeb1c3",
+    "period": "2026-06",
+    "usage_mb": 256300
+  },
+  {
+    "usage_id": "VU-2026-07-0150",
+    "account_id": "VANTAGE-BILL-70949",
+    "device_uuid": "de32922f-1584-2c74-6cb2-8d1ff713f46b",
+    "period": "2026-07",
+    "usage_mb": 256754
+  },
+  {
+    "usage_id": "VU-2026-06-0151",
+    "account_id": "VANTAGE-BILL-70962",
+    "device_uuid": "7c869977-fc11-29b3-d04a-bdeb83c8ffa4",
+    "period": "2026-06",
+    "usage_mb": 8530931
+  },
+  {
+    "usage_id": "VU-2026-07-0152",
+    "account_id": "VANTAGE-BILL-70962",
+    "device_uuid": "99630929-715e-736f-022a-6f909add18e2",
+    "period": "2026-07",
+    "usage_mb": 9149025
+  },
+  {
+    "usage_id": "VU-2026-06-0153",
+    "account_id": "VANTAGE-BILL-70975",
+    "device_uuid": "3c3086be-a96e-c74c-fc10-cc41e81d33ff",
+    "period": "2026-06",
+    "usage_mb": 4600550
+  },
+  {
+    "usage_id": "VU-2026-07-0154",
+    "account_id": "VANTAGE-BILL-70975",
+    "device_uuid": "cf618078-0c40-2121-387c-b58f57a12091",
+    "period": "2026-07",
+    "usage_mb": 3643451
+  },
+  {
+    "usage_id": "VU-2026-06-0155",
+    "account_id": "VANTAGE-BILL-70988",
+    "device_uuid": "d74684a7-b1e4-40f5-ca92-9cf47b5ee5fa",
+    "period": "2026-06",
+    "usage_mb": 946961
+  },
+  {
+    "usage_id": "VU-2026-07-0156",
+    "account_id": "VANTAGE-BILL-70988",
+    "device_uuid": "ed84ea02-7911-5f47-e9fd-b1117aa8b666",
+    "period": "2026-07",
+    "usage_mb": 935755
+  },
+  {
+    "usage_id": "VU-2026-06-0157",
+    "account_id": "VANTAGE-BILL-71001",
+    "device_uuid": "989a8cc1-f4bb-7e05-8f70-6951e46b0582",
+    "period": "2026-06",
+    "usage_mb": 833506
+  },
+  {
+    "usage_id": "VU-2026-07-0158",
+    "account_id": "VANTAGE-BILL-71001",
+    "device_uuid": "e01ffafd-cb88-f79a-5fde-020732baac55",
+    "period": "2026-07",
+    "usage_mb": 648722
+  },
+  {
+    "usage_id": "VU-2026-06-0159",
+    "account_id": "VANTAGE-BILL-71014",
+    "device_uuid": "4963c959-c128-3d09-9aa8-ee110fee3e82",
+    "period": "2026-06",
+    "usage_mb": 314722
+  },
+  {
+    "usage_id": "VU-2026-07-0160",
+    "account_id": "VANTAGE-BILL-71014",
+    "device_uuid": "a4e4165d-a85f-3c22-2b82-4062e2a31b2b",
+    "period": "2026-07",
+    "usage_mb": 313279
+  },
+  {
+    "usage_id": "VU-2026-06-0161",
+    "account_id": "VANTAGE-BILL-71027",
+    "device_uuid": "e4c98ec1-0e0f-cfd7-08b3-befdcbe4b400",
+    "period": "2026-06",
+    "usage_mb": 5120095
+  },
+  {
+    "usage_id": "VU-2026-07-0162",
+    "account_id": "VANTAGE-BILL-71027",
+    "device_uuid": "74cb51d7-a554-93ab-7827-656789a15e2b",
+    "period": "2026-07",
+    "usage_mb": 5120194
+  },
+  {
+    "usage_id": "VU-2026-06-0163",
+    "account_id": "VANTAGE-BILL-71040",
+    "device_uuid": "c8da1ed9-0597-4704-40c1-ef6e8ff2cfdf",
+    "period": "2026-06",
+    "usage_mb": 3429717
+  },
+  {
+    "usage_id": "VU-2026-07-0164",
+    "account_id": "VANTAGE-BILL-71040",
+    "device_uuid": "a26a79ef-7fb0-1896-b581-21cd40abc3fe",
+    "period": "2026-07",
+    "usage_mb": 3947998
+  },
+  {
+    "usage_id": "VU-2026-06-0165",
+    "account_id": "VANTAGE-BILL-71053",
+    "device_uuid": "23ebf634-2ef6-365b-5d49-443b05fd3d0b",
+    "period": "2026-06",
+    "usage_mb": 1352066
+  },
+  {
+    "usage_id": "VU-2026-07-0166",
+    "account_id": "VANTAGE-BILL-71053",
+    "device_uuid": "b86ee44c-faac-fe20-fd05-55e690f11f79",
+    "period": "2026-07",
+    "usage_mb": 1184071
+  },
+  {
+    "usage_id": "VU-2026-06-0167",
+    "account_id": "VANTAGE-BILL-71066",
+    "device_uuid": "8e2aa64b-862c-ead2-bc2e-1949e1fc1fe2",
+    "period": "2026-06",
+    "usage_mb": 423029
+  },
+  {
+    "usage_id": "VU-2026-07-0168",
+    "account_id": "VANTAGE-BILL-71066",
+    "device_uuid": "8e5a7614-c0e6-66a5-0c21-64403a758859",
+    "period": "2026-07",
+    "usage_mb": 465993
+  },
+  {
+    "usage_id": "VU-2026-06-0169",
+    "account_id": "VANTAGE-BILL-71079",
+    "device_uuid": "8df326a9-aa2a-b6fc-569f-90b596dd54b7",
+    "period": "2026-06",
+    "usage_mb": 305814
+  },
+  {
+    "usage_id": "VU-2026-07-0170",
+    "account_id": "VANTAGE-BILL-71079",
+    "device_uuid": "31b60861-2894-1b2c-7a7a-1687dd127b51",
+    "period": "2026-07",
+    "usage_mb": 353549
+  },
+  {
+    "usage_id": "VU-2026-06-0171",
+    "account_id": "VANTAGE-BILL-71092",
+    "device_uuid": "802be0a0-3119-7c1f-ce26-e86d5b1b1a4b",
+    "period": "2026-06",
+    "usage_mb": 9254431
+  },
+  {
+    "usage_id": "VU-2026-07-0172",
+    "account_id": "VANTAGE-BILL-71092",
+    "device_uuid": "16da6a0d-cc2e-6d67-aab4-cf4d2bd0c8ac",
+    "period": "2026-07",
+    "usage_mb": 6998089
+  },
+  {
+    "usage_id": "VU-2026-06-0173",
+    "account_id": "VANTAGE-BILL-71105",
+    "device_uuid": "f6d21429-9f9f-eee8-a28c-488251db0c0f",
+    "period": "2026-06",
+    "usage_mb": 2560624
+  },
+  {
+    "usage_id": "VU-2026-07-0174",
+    "account_id": "VANTAGE-BILL-71105",
+    "device_uuid": "d2be2977-a296-796a-df8e-82cad24e96a2",
+    "period": "2026-07",
+    "usage_mb": 2560476
+  },
+  {
+    "usage_id": "VU-2026-06-0175",
+    "account_id": "VANTAGE-BILL-71118",
+    "device_uuid": "ecfcc8f7-2bc8-a482-2065-a8b11e34cf28",
+    "period": "2026-06",
+    "usage_mb": 1833337
+  },
+  {
+    "usage_id": "VU-2026-07-0176",
+    "account_id": "VANTAGE-BILL-71118",
+    "device_uuid": "e5ca9a5e-7182-77df-fbe9-8a9891c307d9",
+    "period": "2026-07",
+    "usage_mb": 1446058
+  },
+  {
+    "usage_id": "VU-2026-06-0177",
+    "account_id": "VANTAGE-BILL-71131",
+    "device_uuid": "b7c6116a-4a06-da58-1918-afe7f87e2a9e",
+    "period": "2026-06",
+    "usage_mb": 625270
+  },
+  {
+    "usage_id": "VU-2026-07-0178",
+    "account_id": "VANTAGE-BILL-71131",
+    "device_uuid": "18e1974b-0f3a-29dd-bf57-00cf20547833",
+    "period": "2026-07",
+    "usage_mb": 851924
+  },
+  {
+    "usage_id": "VU-2026-06-0179",
+    "account_id": "VANTAGE-BILL-71144",
+    "device_uuid": "03a425d2-bf65-87ee-e2e8-e9f27bd160d7",
+    "period": "2026-06",
+    "usage_mb": 163172
+  },
+  {
+    "usage_id": "VU-2026-07-0180",
+    "account_id": "VANTAGE-BILL-71144",
+    "device_uuid": "24123924-35de-0200-2afe-56ade978fb31",
+    "period": "2026-07",
+    "usage_mb": 246399
+  },
+  {
+    "usage_id": "VU-2026-06-0181",
+    "account_id": "VANTAGE-BILL-71157",
+    "device_uuid": "8ee56815-57d0-26d7-eda9-d7c9e888a82d",
+    "period": "2026-06",
+    "usage_mb": 8717972
+  },
+  {
+    "usage_id": "VU-2026-07-0182",
+    "account_id": "VANTAGE-BILL-71157",
+    "device_uuid": "dc2a0b66-707f-d616-74ea-93c6d699e9f1",
+    "period": "2026-07",
+    "usage_mb": 7141608
+  },
+  {
+    "usage_id": "VU-2026-06-0183",
+    "account_id": "VANTAGE-BILL-71170",
+    "device_uuid": "46960980-2d0f-94b9-fd8e-16ddab18b137",
+    "period": "2026-06",
+    "usage_mb": 3169527
+  },
+  {
+    "usage_id": "VU-2026-07-0184",
+    "account_id": "VANTAGE-BILL-71170",
+    "device_uuid": "b3cf9e85-c74d-ea30-7483-50c4efaf2554",
+    "period": "2026-07",
+    "usage_mb": 3951367
+  },
+  {
+    "usage_id": "VU-2026-06-0185",
+    "account_id": "VANTAGE-BILL-71183",
+    "device_uuid": "74b1614d-9e8b-8d96-7dda-de02875dffda",
+    "period": "2026-06",
+    "usage_mb": 1024422
+  },
+  {
+    "usage_id": "VU-2026-07-0186",
+    "account_id": "VANTAGE-BILL-71183",
+    "device_uuid": "4ecb2332-8660-4eec-8b34-3d341420b135",
+    "period": "2026-07",
+    "usage_mb": 1024509
+  },
+  {
+    "usage_id": "VU-2026-06-0187",
+    "account_id": "VANTAGE-BILL-71196",
+    "device_uuid": "0dd2ac94-0b57-39a0-3ebf-69df6bcc1e34",
+    "period": "2026-06",
+    "usage_mb": 867529
+  },
+  {
+    "usage_id": "VU-2026-07-0188",
+    "account_id": "VANTAGE-BILL-71196",
+    "device_uuid": "a4e00c91-92e0-01a5-68d1-2efde4c944a3",
+    "period": "2026-07",
+    "usage_mb": 926755
+  },
+  {
+    "usage_id": "VU-2026-06-0189",
+    "account_id": "VANTAGE-BILL-71209",
+    "device_uuid": "617f8c7c-6d6a-4518-e929-76a65dd8dc40",
+    "period": "2026-06",
+    "usage_mb": 274396
+  },
+  {
+    "usage_id": "VU-2026-07-0190",
+    "account_id": "VANTAGE-BILL-71209",
+    "device_uuid": "258e80d4-13fe-0e37-6fb8-d1eacb38dbf5",
+    "period": "2026-07",
+    "usage_mb": 473841
+  },
+  {
+    "usage_id": "VU-2026-06-0191",
+    "account_id": "VANTAGE-BILL-71222",
+    "device_uuid": "96f16bad-61dd-6f88-2557-2bb4f740e275",
+    "period": "2026-06",
+    "usage_mb": 4794639
+  },
+  {
+    "usage_id": "VU-2026-07-0192",
+    "account_id": "VANTAGE-BILL-71222",
+    "device_uuid": "7bf4d7cf-c033-91ce-51b5-2d5190de049a",
+    "period": "2026-07",
+    "usage_mb": 3503343
+  },
+  {
+    "usage_id": "VU-2026-06-0193",
+    "account_id": "VANTAGE-BILL-71235",
+    "device_uuid": "d2d4b0e4-a3e5-9c51-571e-405e13333347",
+    "period": "2026-06",
+    "usage_mb": 3374025
+  },
+  {
+    "usage_id": "VU-2026-07-0194",
+    "account_id": "VANTAGE-BILL-71235",
+    "device_uuid": "c8d4153b-50ec-f31a-d714-0202bd838c75",
+    "period": "2026-07",
+    "usage_mb": 3433101
+  },
+  {
+    "usage_id": "VU-2026-06-0195",
+    "account_id": "VANTAGE-BILL-71248",
+    "device_uuid": "c1df83e8-cc3b-0963-bd51-8d14199f631e",
+    "period": "2026-06",
+    "usage_mb": 1670113
+  },
+  {
+    "usage_id": "VU-2026-07-0196",
+    "account_id": "VANTAGE-BILL-71248",
+    "device_uuid": "ac7f609e-d171-07cf-7468-6d1f2d544d59",
+    "period": "2026-07",
+    "usage_mb": 1592348
+  },
+  {
+    "usage_id": "VU-2026-06-0197",
+    "account_id": "VANTAGE-BILL-71261",
+    "device_uuid": "ba87e59b-aecc-1218-a93f-3251345f6ebe",
+    "period": "2026-06",
+    "usage_mb": 512757
+  },
+  {
+    "usage_id": "VU-2026-07-0198",
+    "account_id": "VANTAGE-BILL-71261",
+    "device_uuid": "26623c43-b394-ed7e-7857-db4c12df8fe6",
+    "period": "2026-07",
+    "usage_mb": 512470
+  },
+  {
+    "usage_id": "VU-2026-06-0199",
+    "account_id": "VANTAGE-BILL-71274",
+    "device_uuid": "1a2812c0-c1f6-853e-fb8e-fa8bb1d1d49c",
+    "period": "2026-06",
+    "usage_mb": 384466
+  },
+  {
+    "usage_id": "VU-2026-07-0200",
+    "account_id": "VANTAGE-BILL-71274",
+    "device_uuid": "812803c8-550f-1803-76d2-25f0a04d3798",
+    "period": "2026-07",
+    "usage_mb": 304945
+  },
+  {
+    "usage_id": "VU-2026-06-0201",
+    "account_id": "VANTAGE-BILL-71287",
+    "device_uuid": "8c8df540-97ff-b686-83b4-803715762288",
+    "period": "2026-06",
+    "usage_mb": 7202384
+  },
+  {
+    "usage_id": "VU-2026-07-0202",
+    "account_id": "VANTAGE-BILL-71287",
+    "device_uuid": "35529b8c-96ad-e5a6-15a9-2841686a5ce5",
+    "period": "2026-07",
+    "usage_mb": 5717445
+  },
+  {
+    "usage_id": "VU-2026-06-0203",
+    "account_id": "VANTAGE-BILL-71300",
+    "device_uuid": "4892894d-aec4-3bdd-a37e-7ee2190a34e5",
+    "period": "2026-06",
+    "usage_mb": 2454971
+  },
+  {
+    "usage_id": "VU-2026-07-0204",
+    "account_id": "VANTAGE-BILL-71300",
+    "device_uuid": "3b72f69f-1cf8-3832-5493-4aa471e45e0f",
+    "period": "2026-07",
+    "usage_mb": 2447497
+  },
+  {
+    "usage_id": "VU-2026-06-0205",
+    "account_id": "VANTAGE-BILL-71313",
+    "device_uuid": "3bb31f98-ef31-9db9-1442-7e9447396ebf",
+    "period": "2026-06",
+    "usage_mb": 1697580
+  },
+  {
+    "usage_id": "VU-2026-07-0206",
+    "account_id": "VANTAGE-BILL-71313",
+    "device_uuid": "9df62ce3-3f7c-ab2d-aecf-c0d0d0a3a6dc",
+    "period": "2026-07",
+    "usage_mb": 1860321
+  },
+  {
+    "usage_id": "VU-2026-06-0207",
+    "account_id": "VANTAGE-BILL-71326",
+    "device_uuid": "fdda0158-2c51-944f-f50a-b36b9144a7d2",
+    "period": "2026-06",
+    "usage_mb": 847754
+  },
+  {
+    "usage_id": "VU-2026-07-0208",
+    "account_id": "VANTAGE-BILL-71326",
+    "device_uuid": "9855c3a9-d77d-46ef-2096-d463e6521a5f",
+    "period": "2026-07",
+    "usage_mb": 667194
+  },
+  {
+    "usage_id": "VU-2026-06-0209",
+    "account_id": "VANTAGE-BILL-71339",
+    "device_uuid": "44a836e8-20b9-8ef5-d952-9bfc6b7d7a56",
+    "period": "2026-06",
+    "usage_mb": 256761
+  },
+  {
+    "usage_id": "VU-2026-07-0210",
+    "account_id": "VANTAGE-BILL-71339",
+    "device_uuid": "9bae9818-a274-00f7-2d5d-d2cdd3015b3f",
+    "period": "2026-07",
+    "usage_mb": 256622
+  },
+  {
+    "usage_id": "VU-2026-06-0211",
+    "account_id": "VANTAGE-BILL-71352",
+    "device_uuid": "b8f02108-a60e-ebbc-12c5-328eaabac52b",
+    "period": "2026-06",
+    "usage_mb": 6269662
+  },
+  {
+    "usage_id": "VU-2026-07-0212",
+    "account_id": "VANTAGE-BILL-71352",
+    "device_uuid": "26d1ebbd-848e-d278-108f-23663aba2e06",
+    "period": "2026-07",
+    "usage_mb": 8360396
+  },
+  {
+    "usage_id": "VU-2026-06-0213",
+    "account_id": "VANTAGE-BILL-71365",
+    "device_uuid": "32ab9fd9-ddc8-81a8-52bf-afa140608ee7",
+    "period": "2026-06",
+    "usage_mb": 4400249
+  },
+  {
+    "usage_id": "VU-2026-07-0214",
+    "account_id": "VANTAGE-BILL-71365",
+    "device_uuid": "7f1e9bc0-0b02-f403-8047-ee90824d3416",
+    "period": "2026-07",
+    "usage_mb": 4293472
+  },
+  {
+    "usage_id": "VU-2026-06-0215",
+    "account_id": "VANTAGE-BILL-71378",
+    "device_uuid": "adb91ae0-9dc1-aaa1-1249-166e7023ee14",
+    "period": "2026-06",
+    "usage_mb": 908183
+  },
+  {
+    "usage_id": "VU-2026-07-0216",
+    "account_id": "VANTAGE-BILL-71378",
+    "device_uuid": "8be1755a-0d7b-8818-9894-79d61c51ac6b",
+    "period": "2026-07",
+    "usage_mb": 563837
+  },
+  {
+    "usage_id": "VU-2026-06-0217",
+    "account_id": "VANTAGE-BILL-71391",
+    "device_uuid": "1e4184a7-560f-db42-d049-f1fd1d4b66bc",
+    "period": "2026-06",
+    "usage_mb": 913674
+  },
+  {
+    "usage_id": "VU-2026-07-0218",
+    "account_id": "VANTAGE-BILL-71391",
+    "device_uuid": "6bb53b6e-4abe-4b21-46a0-f441caed4737",
+    "period": "2026-07",
+    "usage_mb": 675534
+  },
+  {
+    "usage_id": "VU-2026-06-0219",
+    "account_id": "VANTAGE-BILL-71404",
+    "device_uuid": "b8f92b2e-a3bb-0ded-cbd5-04b8c3e750ef",
+    "period": "2026-06",
+    "usage_mb": 271778
+  },
+  {
+    "usage_id": "VU-2026-07-0220",
+    "account_id": "VANTAGE-BILL-71404",
+    "device_uuid": "be98bf9f-d1c9-ef02-2874-1836238950f3",
+    "period": "2026-07",
+    "usage_mb": 339073
+  },
+  {
+    "usage_id": "VU-2026-06-0221",
+    "account_id": "VANTAGE-BILL-71417",
+    "device_uuid": "fad04ca1-a82a-b3df-793e-c25ca29bb260",
+    "period": "2026-06",
+    "usage_mb": 5120389
+  },
+  {
+    "usage_id": "VU-2026-07-0222",
+    "account_id": "VANTAGE-BILL-71417",
+    "device_uuid": "65afd1a7-5b9c-4d0c-9527-6968402fba7c",
+    "period": "2026-07",
+    "usage_mb": 5120537
+  },
+  {
+    "usage_id": "VU-2026-06-0223",
+    "account_id": "VANTAGE-BILL-71430",
+    "device_uuid": "b238b1da-4e7d-3e23-42c0-1a109ceeb1c3",
+    "period": "2026-06",
+    "usage_mb": 4522055
+  },
+  {
+    "usage_id": "VU-2026-07-0224",
+    "account_id": "VANTAGE-BILL-71430",
+    "device_uuid": "de32922f-1584-2c74-6cb2-8d1ff713f46b",
+    "period": "2026-07",
+    "usage_mb": 4776502
+  },
+  {
+    "usage_id": "VU-2026-06-0225",
+    "account_id": "VANTAGE-BILL-71443",
+    "device_uuid": "7c869977-fc11-29b3-d04a-bdeb83c8ffa4",
+    "period": "2026-06",
+    "usage_mb": 1234727
+  },
+  {
+    "usage_id": "VU-2026-07-0226",
+    "account_id": "VANTAGE-BILL-71443",
+    "device_uuid": "99630929-715e-736f-022a-6f909add18e2",
+    "period": "2026-07",
+    "usage_mb": 1749073
+  },
+  {
+    "usage_id": "VU-2026-06-0227",
+    "account_id": "VANTAGE-BILL-71456",
+    "device_uuid": "3c3086be-a96e-c74c-fc10-cc41e81d33ff",
+    "period": "2026-06",
+    "usage_mb": 380606
+  },
+  {
+    "usage_id": "VU-2026-07-0228",
+    "account_id": "VANTAGE-BILL-71456",
+    "device_uuid": "cf618078-0c40-2121-387c-b58f57a12091",
+    "period": "2026-07",
+    "usage_mb": 336704
+  },
+  {
+    "usage_id": "VU-2026-06-0229",
+    "account_id": "VANTAGE-BILL-71469",
+    "device_uuid": "d74684a7-b1e4-40f5-ca92-9cf47b5ee5fa",
+    "period": "2026-06",
+    "usage_mb": 418533
+  },
+  {
+    "usage_id": "VU-2026-07-0230",
+    "account_id": "VANTAGE-BILL-71469",
+    "device_uuid": "ed84ea02-7911-5f47-e9fd-b1117aa8b666",
+    "period": "2026-07",
+    "usage_mb": 311172
+  },
+  {
+    "usage_id": "VU-2026-06-0231",
+    "account_id": "VANTAGE-BILL-71482",
+    "device_uuid": "989a8cc1-f4bb-7e05-8f70-6951e46b0582",
+    "period": "2026-06",
+    "usage_mb": 7590422
+  },
+  {
+    "usage_id": "VU-2026-07-0232",
+    "account_id": "VANTAGE-BILL-71482",
+    "device_uuid": "e01ffafd-cb88-f79a-5fde-020732baac55",
+    "period": "2026-07",
+    "usage_mb": 7487450
+  },
+  {
+    "usage_id": "VU-2026-06-0233",
+    "account_id": "VANTAGE-BILL-71495",
+    "device_uuid": "4963c959-c128-3d09-9aa8-ee110fee3e82",
+    "period": "2026-06",
+    "usage_mb": 2560374
+  },
+  {
+    "usage_id": "VU-2026-07-0234",
+    "account_id": "VANTAGE-BILL-71495",
+    "device_uuid": "a4e4165d-a85f-3c22-2b82-4062e2a31b2b",
+    "period": "2026-07",
+    "usage_mb": 2560670
+  },
+  {
+    "usage_id": "VU-2026-06-0235",
+    "account_id": "VANTAGE-BILL-71508",
+    "device_uuid": "e4c98ec1-0e0f-cfd7-08b3-befdcbe4b400",
+    "period": "2026-06",
+    "usage_mb": 1424230
+  },
+  {
+    "usage_id": "VU-2026-07-0236",
+    "account_id": "VANTAGE-BILL-71508",
+    "device_uuid": "74cb51d7-a554-93ab-7827-656789a15e2b",
+    "period": "2026-07",
+    "usage_mb": 1300198
+  },
+  {
+    "usage_id": "VU-2026-06-0237",
+    "account_id": "VANTAGE-BILL-71521",
+    "device_uuid": "c8da1ed9-0597-4704-40c1-ef6e8ff2cfdf",
+    "period": "2026-06",
+    "usage_mb": 951448
+  },
+  {
+    "usage_id": "VU-2026-07-0238",
+    "account_id": "VANTAGE-BILL-71521",
+    "device_uuid": "a26a79ef-7fb0-1896-b581-21cd40abc3fe",
+    "period": "2026-07",
+    "usage_mb": 779220
+  },
+  {
+    "usage_id": "VU-2026-06-0239",
+    "account_id": "VANTAGE-BILL-71534",
+    "device_uuid": "23ebf634-2ef6-365b-5d49-443b05fd3d0b",
+    "period": "2026-06",
+    "usage_mb": 181674
+  },
+  {
+    "usage_id": "VU-2026-07-0240",
+    "account_id": "VANTAGE-BILL-71534",
+    "device_uuid": "b86ee44c-faac-fe20-fd05-55e690f11f79",
+    "period": "2026-07",
+    "usage_mb": 173568
+  },
+  {
+    "usage_id": "VU-2026-06-0241",
+    "account_id": "VANTAGE-BILL-71547",
+    "device_uuid": "8e2aa64b-862c-ead2-bc2e-1949e1fc1fe2",
+    "period": "2026-06",
+    "usage_mb": 7150802
+  },
+  {
+    "usage_id": "VU-2026-07-0242",
+    "account_id": "VANTAGE-BILL-71547",
+    "device_uuid": "8e5a7614-c0e6-66a5-0c21-64403a758859",
+    "period": "2026-07",
+    "usage_mb": 7290208
+  },
+  {
+    "usage_id": "VU-2026-06-0243",
+    "account_id": "VANTAGE-BILL-71560",
+    "device_uuid": "8df326a9-aa2a-b6fc-569f-90b596dd54b7",
+    "period": "2026-06",
+    "usage_mb": 4471624
+  },
+  {
+    "usage_id": "VU-2026-07-0244",
+    "account_id": "VANTAGE-BILL-71560",
+    "device_uuid": "31b60861-2894-1b2c-7a7a-1687dd127b51",
+    "period": "2026-07",
+    "usage_mb": 3365619
+  },
+  {
+    "usage_id": "VU-2026-06-0245",
+    "account_id": "VANTAGE-BILL-71573",
+    "device_uuid": "802be0a0-3119-7c1f-ce26-e86d5b1b1a4b",
+    "period": "2026-06",
+    "usage_mb": 1024016
+  },
+  {
+    "usage_id": "VU-2026-07-0246",
+    "account_id": "VANTAGE-BILL-71573",
+    "device_uuid": "16da6a0d-cc2e-6d67-aab4-cf4d2bd0c8ac",
+    "period": "2026-07",
+    "usage_mb": 1024734
+  },
+  {
+    "usage_id": "VU-2026-06-0247",
+    "account_id": "VANTAGE-BILL-71586",
+    "device_uuid": "f6d21429-9f9f-eee8-a28c-488251db0c0f",
+    "period": "2026-06",
+    "usage_mb": 683597
+  },
+  {
+    "usage_id": "VU-2026-07-0248",
+    "account_id": "VANTAGE-BILL-71586",
+    "device_uuid": "d2be2977-a296-796a-df8e-82cad24e96a2",
+    "period": "2026-07",
+    "usage_mb": 662002
+  },
+  {
+    "usage_id": "VU-2026-06-0249",
+    "account_id": "VANTAGE-BILL-71599",
+    "device_uuid": "ecfcc8f7-2bc8-a482-2065-a8b11e34cf28",
+    "period": "2026-06",
+    "usage_mb": 412319
+  },
+  {
+    "usage_id": "VU-2026-07-0250",
+    "account_id": "VANTAGE-BILL-71599",
+    "device_uuid": "e5ca9a5e-7182-77df-fbe9-8a9891c307d9",
+    "period": "2026-07",
+    "usage_mb": 395002
+  },
+  {
+    "usage_id": "VU-2026-06-0251",
+    "account_id": "VANTAGE-BILL-71612",
+    "device_uuid": "b7c6116a-4a06-da58-1918-afe7f87e2a9e",
+    "period": "2026-06",
+    "usage_mb": 3724590
+  },
+  {
+    "usage_id": "VU-2026-07-0252",
+    "account_id": "VANTAGE-BILL-71612",
+    "device_uuid": "18e1974b-0f3a-29dd-bf57-00cf20547833",
+    "period": "2026-07",
+    "usage_mb": 3666283
+  },
+  {
+    "usage_id": "VU-2026-06-0253",
+    "account_id": "VANTAGE-BILL-71625",
+    "device_uuid": "03a425d2-bf65-87ee-e2e8-e9f27bd160d7",
+    "period": "2026-06",
+    "usage_mb": 2984504
+  },
+  {
+    "usage_id": "VU-2026-07-0254",
+    "account_id": "VANTAGE-BILL-71625",
+    "device_uuid": "24123924-35de-0200-2afe-56ade978fb31",
+    "period": "2026-07",
+    "usage_mb": 4452718
+  },
+  {
+    "usage_id": "VU-2026-06-0255",
+    "account_id": "VANTAGE-BILL-71638",
+    "device_uuid": "8ee56815-57d0-26d7-eda9-d7c9e888a82d",
+    "period": "2026-06",
+    "usage_mb": 1189600
+  },
+  {
+    "usage_id": "VU-2026-07-0256",
+    "account_id": "VANTAGE-BILL-71638",
+    "device_uuid": "dc2a0b66-707f-d616-74ea-93c6d699e9f1",
+    "period": "2026-07",
+    "usage_mb": 1337427
+  },
+  {
+    "usage_id": "VU-2026-06-0257",
+    "account_id": "VANTAGE-BILL-71651",
+    "device_uuid": "46960980-2d0f-94b9-fd8e-16ddab18b137",
+    "period": "2026-06",
+    "usage_mb": 512089
+  },
+  {
+    "usage_id": "VU-2026-07-0258",
+    "account_id": "VANTAGE-BILL-71651",
+    "device_uuid": "b3cf9e85-c74d-ea30-7483-50c4efaf2554",
+    "period": "2026-07",
+    "usage_mb": 512552
+  },
+  {
+    "usage_id": "VU-2026-06-0259",
+    "account_id": "VANTAGE-BILL-71664",
+    "device_uuid": "74b1614d-9e8b-8d96-7dda-de02875dffda",
+    "period": "2026-06",
+    "usage_mb": 465300
+  },
+  {
+    "usage_id": "VU-2026-07-0260",
+    "account_id": "VANTAGE-BILL-71664",
+    "device_uuid": "4ecb2332-8660-4eec-8b34-3d341420b135",
+    "period": "2026-07",
+    "usage_mb": 284528
+  },
+  {
+    "usage_id": "VU-2026-06-0261",
+    "account_id": "VANTAGE-BILL-71677",
+    "device_uuid": "0dd2ac94-0b57-39a0-3ebf-69df6bcc1e34",
+    "period": "2026-06",
+    "usage_mb": 8955781
+  },
+  {
+    "usage_id": "VU-2026-07-0262",
+    "account_id": "VANTAGE-BILL-71677",
+    "device_uuid": "a4e00c91-92e0-01a5-68d1-2efde4c944a3",
+    "period": "2026-07",
+    "usage_mb": 9165255
+  },
+  {
+    "usage_id": "VU-2026-06-0263",
+    "account_id": "VANTAGE-BILL-71690",
+    "device_uuid": "617f8c7c-6d6a-4518-e929-76a65dd8dc40",
+    "period": "2026-06",
+    "usage_mb": 1625678
+  },
+  {
+    "usage_id": "VU-2026-07-0264",
+    "account_id": "VANTAGE-BILL-71690",
+    "device_uuid": "258e80d4-13fe-0e37-6fb8-d1eacb38dbf5",
+    "period": "2026-07",
+    "usage_mb": 2412655
+  },
+  {
+    "usage_id": "VU-2026-06-0265",
+    "account_id": "VANTAGE-BILL-71703",
+    "device_uuid": "96f16bad-61dd-6f88-2557-2bb4f740e275",
+    "period": "2026-06",
+    "usage_mb": 1891834
+  },
+  {
+    "usage_id": "VU-2026-07-0266",
+    "account_id": "VANTAGE-BILL-71703",
+    "device_uuid": "7bf4d7cf-c033-91ce-51b5-2d5190de049a",
+    "period": "2026-07",
+    "usage_mb": 1477224
+  },
+  {
+    "usage_id": "VU-2026-06-0267",
+    "account_id": "VANTAGE-BILL-71716",
+    "device_uuid": "d2d4b0e4-a3e5-9c51-571e-405e13333347",
+    "period": "2026-06",
+    "usage_mb": 624584
+  },
+  {
+    "usage_id": "VU-2026-07-0268",
+    "account_id": "VANTAGE-BILL-71716",
+    "device_uuid": "c8d4153b-50ec-f31a-d714-0202bd838c75",
+    "period": "2026-07",
+    "usage_mb": 577522
+  },
+  {
+    "usage_id": "VU-2026-06-0269",
+    "account_id": "VANTAGE-BILL-71729",
+    "device_uuid": "c1df83e8-cc3b-0963-bd51-8d14199f631e",
+    "period": "2026-06",
+    "usage_mb": 256800
+  },
+  {
+    "usage_id": "VU-2026-07-0270",
+    "account_id": "VANTAGE-BILL-71729",
+    "device_uuid": "ac7f609e-d171-07cf-7468-6d1f2d544d59",
+    "period": "2026-07",
+    "usage_mb": 256195
+  },
+  {
+    "usage_id": "VU-2026-06-0271",
+    "account_id": "VANTAGE-BILL-71742",
+    "device_uuid": "ba87e59b-aecc-1218-a93f-3251345f6ebe",
+    "period": "2026-06",
+    "usage_mb": 8977234
+  },
+  {
+    "usage_id": "VU-2026-07-0272",
+    "account_id": "VANTAGE-BILL-71742",
+    "device_uuid": "26623c43-b394-ed7e-7857-db4c12df8fe6",
+    "period": "2026-07",
+    "usage_mb": 6500635
+  },
+  {
+    "usage_id": "VU-2026-06-0273",
+    "account_id": "VANTAGE-BILL-71755",
+    "device_uuid": "1a2812c0-c1f6-853e-fb8e-fa8bb1d1d49c",
+    "period": "2026-06",
+    "usage_mb": 4661382
+  },
+  {
+    "usage_id": "VU-2026-07-0274",
+    "account_id": "VANTAGE-BILL-71755",
+    "device_uuid": "812803c8-550f-1803-76d2-25f0a04d3798",
+    "period": "2026-07",
+    "usage_mb": 4003703
+  },
+  {
+    "usage_id": "VU-2026-06-0275",
+    "account_id": "VANTAGE-BILL-71768",
+    "device_uuid": "8c8df540-97ff-b686-83b4-803715762288",
+    "period": "2026-06",
+    "usage_mb": 973605
+  },
+  {
+    "usage_id": "VU-2026-07-0276",
+    "account_id": "VANTAGE-BILL-71768",
+    "device_uuid": "35529b8c-96ad-e5a6-15a9-2841686a5ce5",
+    "period": "2026-07",
+    "usage_mb": 808860
+  },
+  {
+    "usage_id": "VU-2026-06-0277",
+    "account_id": "VANTAGE-BILL-71781",
+    "device_uuid": "4892894d-aec4-3bdd-a37e-7ee2190a34e5",
+    "period": "2026-06",
+    "usage_mb": 723942
+  },
+  {
+    "usage_id": "VU-2026-07-0278",
+    "account_id": "VANTAGE-BILL-71781",
+    "device_uuid": "3b72f69f-1cf8-3832-5493-4aa471e45e0f",
+    "period": "2026-07",
+    "usage_mb": 573120
+  },
+  {
+    "usage_id": "VU-2026-06-0279",
+    "account_id": "VANTAGE-BILL-71794",
+    "device_uuid": "3bb31f98-ef31-9db9-1442-7e9447396ebf",
+    "period": "2026-06",
+    "usage_mb": 447601
+  },
+  {
+    "usage_id": "VU-2026-07-0280",
+    "account_id": "VANTAGE-BILL-71794",
+    "device_uuid": "9df62ce3-3f7c-ab2d-aecf-c0d0d0a3a6dc",
+    "period": "2026-07",
+    "usage_mb": 467742
+  },
+  {
+    "usage_id": "VU-2026-06-0281",
+    "account_id": "VANTAGE-BILL-71807",
+    "device_uuid": "fdda0158-2c51-944f-f50a-b36b9144a7d2",
+    "period": "2026-06",
+    "usage_mb": 5120667
+  },
+  {
+    "usage_id": "VU-2026-07-0282",
+    "account_id": "VANTAGE-BILL-71807",
+    "device_uuid": "9855c3a9-d77d-46ef-2096-d463e6521a5f",
+    "period": "2026-07",
+    "usage_mb": 5120733
+  },
+  {
+    "usage_id": "VU-2026-06-0283",
+    "account_id": "VANTAGE-BILL-71820",
+    "device_uuid": "44a836e8-20b9-8ef5-d952-9bfc6b7d7a56",
+    "period": "2026-06",
+    "usage_mb": 2866331
+  },
+  {
+    "usage_id": "VU-2026-07-0284",
+    "account_id": "VANTAGE-BILL-71820",
+    "device_uuid": "9bae9818-a274-00f7-2d5d-d2cdd3015b3f",
+    "period": "2026-07",
+    "usage_mb": 2946224
+  },
+  {
+    "usage_id": "VU-2026-06-0285",
+    "account_id": "VANTAGE-BILL-71833",
+    "device_uuid": "b8f02108-a60e-ebbc-12c5-328eaabac52b",
+    "period": "2026-06",
+    "usage_mb": 1612036
+  },
+  {
+    "usage_id": "VU-2026-07-0286",
+    "account_id": "VANTAGE-BILL-71833",
+    "device_uuid": "26d1ebbd-848e-d278-108f-23663aba2e06",
+    "period": "2026-07",
+    "usage_mb": 1316695
+  },
+  {
+    "usage_id": "VU-2026-06-0287",
+    "account_id": "VANTAGE-BILL-71846",
+    "device_uuid": "32ab9fd9-ddc8-81a8-52bf-afa140608ee7",
+    "period": "2026-06",
+    "usage_mb": 361908
+  },
+  {
+    "usage_id": "VU-2026-07-0288",
+    "account_id": "VANTAGE-BILL-71846",
+    "device_uuid": "7f1e9bc0-0b02-f403-8047-ee90824d3416",
+    "period": "2026-07",
+    "usage_mb": 339162
+  },
+  {
+    "usage_id": "VU-2026-06-0289",
+    "account_id": "VANTAGE-BILL-71859",
+    "device_uuid": "adb91ae0-9dc1-aaa1-1249-166e7023ee14",
+    "period": "2026-06",
+    "usage_mb": 289314
+  },
+  {
+    "usage_id": "VU-2026-07-0290",
+    "account_id": "VANTAGE-BILL-71859",
+    "device_uuid": "8be1755a-0d7b-8818-9894-79d61c51ac6b",
+    "period": "2026-07",
+    "usage_mb": 463951
+  },
+  {
+    "usage_id": "VU-2026-06-0291",
+    "account_id": "VANTAGE-BILL-71872",
+    "device_uuid": "1e4184a7-560f-db42-d049-f1fd1d4b66bc",
+    "period": "2026-06",
+    "usage_mb": 8782844
+  },
+  {
+    "usage_id": "VU-2026-07-0292",
+    "account_id": "VANTAGE-BILL-71872",
+    "device_uuid": "6bb53b6e-4abe-4b21-46a0-f441caed4737",
+    "period": "2026-07",
+    "usage_mb": 6229887
+  },
+  {
+    "usage_id": "VU-2026-06-0293",
+    "account_id": "VANTAGE-BILL-71885",
+    "device_uuid": "b8f92b2e-a3bb-0ded-cbd5-04b8c3e750ef",
+    "period": "2026-06",
+    "usage_mb": 2560794
+  },
+  {
+    "usage_id": "VU-2026-07-0294",
+    "account_id": "VANTAGE-BILL-71885",
+    "device_uuid": "be98bf9f-d1c9-ef02-2874-1836238950f3",
+    "period": "2026-07",
+    "usage_mb": 2560581
+  },
+  {
+    "usage_id": "VU-2026-06-0295",
+    "account_id": "VANTAGE-BILL-71898",
+    "device_uuid": "fad04ca1-a82a-b3df-793e-c25ca29bb260",
+    "period": "2026-06",
+    "usage_mb": 1237020
+  },
+  {
+    "usage_id": "VU-2026-07-0296",
+    "account_id": "VANTAGE-BILL-71898",
+    "device_uuid": "65afd1a7-5b9c-4d0c-9527-6968402fba7c",
+    "period": "2026-07",
+    "usage_mb": 1423594
+  },
+  {
+    "usage_id": "VU-2026-06-0297",
+    "account_id": "VANTAGE-BILL-71911",
+    "device_uuid": "b238b1da-4e7d-3e23-42c0-1a109ceeb1c3",
+    "period": "2026-06",
+    "usage_mb": 876820
+  },
+  {
+    "usage_id": "VU-2026-07-0298",
+    "account_id": "VANTAGE-BILL-71911",
+    "device_uuid": "de32922f-1584-2c74-6cb2-8d1ff713f46b",
+    "period": "2026-07",
+    "usage_mb": 856023
+  },
+  {
+    "usage_id": "VU-2026-06-0299",
+    "account_id": "VANTAGE-BILL-71924",
+    "device_uuid": "7c869977-fc11-29b3-d04a-bdeb83c8ffa4",
+    "period": "2026-06",
+    "usage_mb": 170550
+  },
+  {
+    "usage_id": "VU-2026-07-0300",
+    "account_id": "VANTAGE-BILL-71924",
+    "device_uuid": "99630929-715e-736f-022a-6f909add18e2",
+    "period": "2026-07",
+    "usage_mb": 235443
+  },
+  {
+    "usage_id": "VU-2026-06-0301",
+    "account_id": "VANTAGE-BILL-71937",
+    "device_uuid": "3c3086be-a96e-c74c-fc10-cc41e81d33ff",
+    "period": "2026-06",
+    "usage_mb": 8141431
+  },
+  {
+    "usage_id": "VU-2026-07-0302",
+    "account_id": "VANTAGE-BILL-71937",
+    "device_uuid": "cf618078-0c40-2121-387c-b58f57a12091",
+    "period": "2026-07",
+    "usage_mb": 5746123
+  },
+  {
+    "usage_id": "VU-2026-06-0303",
+    "account_id": "VANTAGE-BILL-71950",
+    "device_uuid": "d74684a7-b1e4-40f5-ca92-9cf47b5ee5fa",
+    "period": "2026-06",
+    "usage_mb": 4472239
+  },
+  {
+    "usage_id": "VU-2026-07-0304",
+    "account_id": "VANTAGE-BILL-71950",
+    "device_uuid": "ed84ea02-7911-5f47-e9fd-b1117aa8b666",
+    "period": "2026-07",
+    "usage_mb": 4647176
+  },
+  {
+    "usage_id": "VU-2026-06-0305",
+    "account_id": "VANTAGE-BILL-71963",
+    "device_uuid": "989a8cc1-f4bb-7e05-8f70-6951e46b0582",
+    "period": "2026-06",
+    "usage_mb": 1024551
+  },
+  {
+    "usage_id": "VU-2026-07-0306",
+    "account_id": "VANTAGE-BILL-71963",
+    "device_uuid": "e01ffafd-cb88-f79a-5fde-020732baac55",
+    "period": "2026-07",
+    "usage_mb": 1024436
+  },
+  {
+    "usage_id": "VU-2026-06-0307",
+    "account_id": "VANTAGE-BILL-71976",
+    "device_uuid": "4963c959-c128-3d09-9aa8-ee110fee3e82",
+    "period": "2026-06",
+    "usage_mb": 763941
+  },
+  {
+    "usage_id": "VU-2026-07-0308",
+    "account_id": "VANTAGE-BILL-71976",
+    "device_uuid": "a4e4165d-a85f-3c22-2b82-4062e2a31b2b",
+    "period": "2026-07",
+    "usage_mb": 657690
+  },
+  {
+    "usage_id": "VU-2026-06-0309",
+    "account_id": "VANTAGE-BILL-71989",
+    "device_uuid": "e4c98ec1-0e0f-cfd7-08b3-befdcbe4b400",
+    "period": "2026-06",
+    "usage_mb": 422336
+  },
+  {
+    "usage_id": "VU-2026-07-0310",
+    "account_id": "VANTAGE-BILL-71989",
+    "device_uuid": "74cb51d7-a554-93ab-7827-656789a15e2b",
+    "period": "2026-07",
+    "usage_mb": 443995
+  },
+  {
+    "usage_id": "VU-2026-06-0311",
+    "account_id": "VANTAGE-BILL-72002",
+    "device_uuid": "c8da1ed9-0597-4704-40c1-ef6e8ff2cfdf",
+    "period": "2026-06",
+    "usage_mb": 2884036
+  },
+  {
+    "usage_id": "VU-2026-07-0312",
+    "account_id": "VANTAGE-BILL-72002",
+    "device_uuid": "a26a79ef-7fb0-1896-b581-21cd40abc3fe",
+    "period": "2026-07",
+    "usage_mb": 4686486
+  },
+  {
+    "usage_id": "VU-2026-06-0313",
+    "account_id": "VANTAGE-BILL-72015",
+    "device_uuid": "23ebf634-2ef6-365b-5d49-443b05fd3d0b",
+    "period": "2026-06",
+    "usage_mb": 4476700
+  },
+  {
+    "usage_id": "VU-2026-07-0314",
+    "account_id": "VANTAGE-BILL-72015",
+    "device_uuid": "b86ee44c-faac-fe20-fd05-55e690f11f79",
+    "period": "2026-07",
+    "usage_mb": 3589283
+  },
+  {
+    "usage_id": "VU-2026-06-0315",
+    "account_id": "VANTAGE-BILL-72028",
+    "device_uuid": "8e2aa64b-862c-ead2-bc2e-1949e1fc1fe2",
+    "period": "2026-06",
+    "usage_mb": 1767063
+  },
+  {
+    "usage_id": "VU-2026-07-0316",
+    "account_id": "VANTAGE-BILL-72028",
+    "device_uuid": "8e5a7614-c0e6-66a5-0c21-64403a758859",
+    "period": "2026-07",
+    "usage_mb": 1454547
+  },
+  {
+    "usage_id": "VU-2026-06-0317",
+    "account_id": "VANTAGE-BILL-72041",
+    "device_uuid": "8df326a9-aa2a-b6fc-569f-90b596dd54b7",
+    "period": "2026-06",
+    "usage_mb": 512347
+  },
+  {
+    "usage_id": "VU-2026-07-0318",
+    "account_id": "VANTAGE-BILL-72041",
+    "device_uuid": "31b60861-2894-1b2c-7a7a-1687dd127b51",
+    "period": "2026-07",
+    "usage_mb": 512345
+  },
+  {
+    "usage_id": "VU-2026-06-0319",
+    "account_id": "VANTAGE-BILL-72054",
+    "device_uuid": "802be0a0-3119-7c1f-ce26-e86d5b1b1a4b",
+    "period": "2026-06",
+    "usage_mb": 451045
+  },
+  {
+    "usage_id": "VU-2026-07-0320",
+    "account_id": "VANTAGE-BILL-72054",
+    "device_uuid": "16da6a0d-cc2e-6d67-aab4-cf4d2bd0c8ac",
+    "period": "2026-07",
+    "usage_mb": 430365
+  },
+  {
+    "usage_id": "VU-2026-06-0321",
+    "account_id": "VANTAGE-BILL-72067",
+    "device_uuid": "f6d21429-9f9f-eee8-a28c-488251db0c0f",
+    "period": "2026-06",
+    "usage_mb": 6042094
+  },
+  {
+    "usage_id": "VU-2026-07-0322",
+    "account_id": "VANTAGE-BILL-72067",
+    "device_uuid": "d2be2977-a296-796a-df8e-82cad24e96a2",
+    "period": "2026-07",
+    "usage_mb": 7116501
+  },
+  {
+    "usage_id": "VU-2026-06-0323",
+    "account_id": "VANTAGE-BILL-72080",
+    "device_uuid": "ecfcc8f7-2bc8-a482-2065-a8b11e34cf28",
+    "period": "2026-06",
+    "usage_mb": 2023622
+  },
+  {
+    "usage_id": "VU-2026-07-0324",
+    "account_id": "VANTAGE-BILL-72080",
+    "device_uuid": "e5ca9a5e-7182-77df-fbe9-8a9891c307d9",
+    "period": "2026-07",
+    "usage_mb": 2331749
+  },
+  {
+    "usage_id": "VU-2026-06-0325",
+    "account_id": "VANTAGE-BILL-72093",
+    "device_uuid": "b7c6116a-4a06-da58-1918-afe7f87e2a9e",
+    "period": "2026-06",
+    "usage_mb": 1646936
+  },
+  {
+    "usage_id": "VU-2026-07-0326",
+    "account_id": "VANTAGE-BILL-72093",
+    "device_uuid": "18e1974b-0f3a-29dd-bf57-00cf20547833",
+    "period": "2026-07",
+    "usage_mb": 1255440
+  },
+  {
+    "usage_id": "VU-2026-06-0327",
+    "account_id": "VANTAGE-BILL-72106",
+    "device_uuid": "03a425d2-bf65-87ee-e2e8-e9f27bd160d7",
+    "period": "2026-06",
+    "usage_mb": 808215
+  },
+  {
+    "usage_id": "VU-2026-07-0328",
+    "account_id": "VANTAGE-BILL-72106",
+    "device_uuid": "24123924-35de-0200-2afe-56ade978fb31",
+    "period": "2026-07",
+    "usage_mb": 539941
+  },
+  {
+    "usage_id": "VU-2026-06-0329",
+    "account_id": "VANTAGE-BILL-72119",
+    "device_uuid": "8ee56815-57d0-26d7-eda9-d7c9e888a82d",
+    "period": "2026-06",
+    "usage_mb": 256205
+  },
+  {
+    "usage_id": "VU-2026-07-0330",
+    "account_id": "VANTAGE-BILL-72119",
+    "device_uuid": "dc2a0b66-707f-d616-74ea-93c6d699e9f1",
+    "period": "2026-07",
+    "usage_mb": 256233
+  },
+  {
+    "usage_id": "VU-2026-06-0331",
+    "account_id": "VANTAGE-BILL-72132",
+    "device_uuid": "46960980-2d0f-94b9-fd8e-16ddab18b137",
+    "period": "2026-06",
+    "usage_mb": 9145995
+  },
+  {
+    "usage_id": "VU-2026-07-0332",
+    "account_id": "VANTAGE-BILL-72132",
+    "device_uuid": "b3cf9e85-c74d-ea30-7483-50c4efaf2554",
+    "period": "2026-07",
+    "usage_mb": 9302102
+  },
+  {
+    "usage_id": "VU-2026-06-0333",
+    "account_id": "VANTAGE-BILL-72145",
+    "device_uuid": "74b1614d-9e8b-8d96-7dda-de02875dffda",
+    "period": "2026-06",
+    "usage_mb": 4324565
+  },
+  {
+    "usage_id": "VU-2026-07-0334",
+    "account_id": "VANTAGE-BILL-72145",
+    "device_uuid": "4ecb2332-8660-4eec-8b34-3d341420b135",
+    "period": "2026-07",
+    "usage_mb": 4100276
+  },
+  {
+    "usage_id": "VU-2026-06-0335",
+    "account_id": "VANTAGE-BILL-72158",
+    "device_uuid": "0dd2ac94-0b57-39a0-3ebf-69df6bcc1e34",
+    "period": "2026-06",
+    "usage_mb": 946709
+  },
+  {
+    "usage_id": "VU-2026-07-0336",
+    "account_id": "VANTAGE-BILL-72158",
+    "device_uuid": "a4e00c91-92e0-01a5-68d1-2efde4c944a3",
+    "period": "2026-07",
+    "usage_mb": 623938
+  },
+  {
+    "usage_id": "VU-2026-06-0337",
+    "account_id": "VANTAGE-BILL-72171",
+    "device_uuid": "617f8c7c-6d6a-4518-e929-76a65dd8dc40",
+    "period": "2026-06",
+    "usage_mb": 650399
+  },
+  {
+    "usage_id": "VU-2026-07-0338",
+    "account_id": "VANTAGE-BILL-72171",
+    "device_uuid": "258e80d4-13fe-0e37-6fb8-d1eacb38dbf5",
+    "period": "2026-07",
+    "usage_mb": 876578
+  },
+  {
+    "usage_id": "VU-2026-06-0339",
+    "account_id": "VANTAGE-BILL-72184",
+    "device_uuid": "96f16bad-61dd-6f88-2557-2bb4f740e275",
+    "period": "2026-06",
+    "usage_mb": 300263
+  },
+  {
+    "usage_id": "VU-2026-07-0340",
+    "account_id": "VANTAGE-BILL-72184",
+    "device_uuid": "7bf4d7cf-c033-91ce-51b5-2d5190de049a",
+    "period": "2026-07",
+    "usage_mb": 484652
+  },
+  {
+    "usage_id": "VU-2026-06-0341",
+    "account_id": "VANTAGE-BILL-72197",
+    "device_uuid": "d2d4b0e4-a3e5-9c51-571e-405e13333347",
+    "period": "2026-06",
+    "usage_mb": 5120429
+  },
+  {
+    "usage_id": "VU-2026-07-0342",
+    "account_id": "VANTAGE-BILL-72197",
+    "device_uuid": "c8d4153b-50ec-f31a-d714-0202bd838c75",
+    "period": "2026-07",
+    "usage_mb": 5120553
+  },
+  {
+    "usage_id": "VU-2026-06-0343",
+    "account_id": "VANTAGE-BILL-72210",
+    "device_uuid": "c1df83e8-cc3b-0963-bd51-8d14199f631e",
+    "period": "2026-06",
+    "usage_mb": 4557616
+  },
+  {
+    "usage_id": "VU-2026-07-0344",
+    "account_id": "VANTAGE-BILL-72210",
+    "device_uuid": "ac7f609e-d171-07cf-7468-6d1f2d544d59",
+    "period": "2026-07",
+    "usage_mb": 2990157
+  },
+  {
+    "usage_id": "VU-2026-06-0345",
+    "account_id": "VANTAGE-BILL-72223",
+    "device_uuid": "ba87e59b-aecc-1218-a93f-3251345f6ebe",
+    "period": "2026-06",
+    "usage_mb": 1582196
+  },
+  {
+    "usage_id": "VU-2026-07-0346",
+    "account_id": "VANTAGE-BILL-72223",
+    "device_uuid": "26623c43-b394-ed7e-7857-db4c12df8fe6",
+    "period": "2026-07",
+    "usage_mb": 1563239
+  },
+  {
+    "usage_id": "VU-2026-06-0347",
+    "account_id": "VANTAGE-BILL-72236",
+    "device_uuid": "1a2812c0-c1f6-853e-fb8e-fa8bb1d1d49c",
+    "period": "2026-06",
+    "usage_mb": 365134
+  },
+  {
+    "usage_id": "VU-2026-07-0348",
+    "account_id": "VANTAGE-BILL-72236",
+    "device_uuid": "812803c8-550f-1803-76d2-25f0a04d3798",
+    "period": "2026-07",
+    "usage_mb": 357122
+  },
+  {
+    "usage_id": "VU-2026-06-0349",
+    "account_id": "VANTAGE-BILL-72249",
+    "device_uuid": "8c8df540-97ff-b686-83b4-803715762288",
+    "period": "2026-06",
+    "usage_mb": 365012
+  },
+  {
+    "usage_id": "VU-2026-07-0350",
+    "account_id": "VANTAGE-BILL-72249",
+    "device_uuid": "35529b8c-96ad-e5a6-15a9-2841686a5ce5",
+    "period": "2026-07",
+    "usage_mb": 447107
+  },
+  {
+    "usage_id": "VU-2026-06-0351",
+    "account_id": "VANTAGE-BILL-72262",
+    "device_uuid": "4892894d-aec4-3bdd-a37e-7ee2190a34e5",
+    "period": "2026-06",
+    "usage_mb": 6562269
+  },
+  {
+    "usage_id": "VU-2026-07-0352",
+    "account_id": "VANTAGE-BILL-72262",
+    "device_uuid": "3b72f69f-1cf8-3832-5493-4aa471e45e0f",
+    "period": "2026-07",
+    "usage_mb": 5481674
+  },
+  {
+    "usage_id": "VU-2026-06-0353",
+    "account_id": "VANTAGE-BILL-72275",
+    "device_uuid": "3bb31f98-ef31-9db9-1442-7e9447396ebf",
+    "period": "2026-06",
+    "usage_mb": 2560694
+  },
+  {
+    "usage_id": "VU-2026-07-0354",
+    "account_id": "VANTAGE-BILL-72275",
+    "device_uuid": "9df62ce3-3f7c-ab2d-aecf-c0d0d0a3a6dc",
+    "period": "2026-07",
+    "usage_mb": 2560668
+  },
+  {
+    "usage_id": "VU-2026-06-0355",
+    "account_id": "VANTAGE-BILL-72288",
+    "device_uuid": "fdda0158-2c51-944f-f50a-b36b9144a7d2",
+    "period": "2026-06",
+    "usage_mb": 1109569
+  },
+  {
+    "usage_id": "VU-2026-07-0356",
+    "account_id": "VANTAGE-BILL-72288",
+    "device_uuid": "9855c3a9-d77d-46ef-2096-d463e6521a5f",
+    "period": "2026-07",
+    "usage_mb": 1537911
+  },
+  {
+    "usage_id": "VU-2026-06-0357",
+    "account_id": "VANTAGE-BILL-72301",
+    "device_uuid": "44a836e8-20b9-8ef5-d952-9bfc6b7d7a56",
+    "period": "2026-06",
+    "usage_mb": 783000
+  },
+  {
+    "usage_id": "VU-2026-07-0358",
+    "account_id": "VANTAGE-BILL-72301",
+    "device_uuid": "9bae9818-a274-00f7-2d5d-d2cdd3015b3f",
+    "period": "2026-07",
+    "usage_mb": 883847
+  },
+  {
+    "usage_id": "VU-2026-06-0359",
+    "account_id": "VANTAGE-BILL-72314",
+    "device_uuid": "b8f02108-a60e-ebbc-12c5-328eaabac52b",
+    "period": "2026-06",
+    "usage_mb": 194929
+  },
+  {
+    "usage_id": "VU-2026-07-0360",
+    "account_id": "VANTAGE-BILL-72314",
+    "device_uuid": "26d1ebbd-848e-d278-108f-23663aba2e06",
+    "period": "2026-07",
+    "usage_mb": 168245
+  },
+  {
+    "usage_id": "VU-2026-06-0361",
+    "account_id": "VANTAGE-BILL-72327",
+    "device_uuid": "32ab9fd9-ddc8-81a8-52bf-afa140608ee7",
+    "period": "2026-06",
+    "usage_mb": 7492841
+  },
+  {
+    "usage_id": "VU-2026-07-0362",
+    "account_id": "VANTAGE-BILL-72327",
+    "device_uuid": "7f1e9bc0-0b02-f403-8047-ee90824d3416",
+    "period": "2026-07",
+    "usage_mb": 9187526
+  },
+  {
+    "usage_id": "VU-2026-06-0363",
+    "account_id": "VANTAGE-BILL-72340",
+    "device_uuid": "adb91ae0-9dc1-aaa1-1249-166e7023ee14",
+    "period": "2026-06",
+    "usage_mb": 4485825
+  },
+  {
+    "usage_id": "VU-2026-07-0364",
+    "account_id": "VANTAGE-BILL-72340",
+    "device_uuid": "8be1755a-0d7b-8818-9894-79d61c51ac6b",
+    "period": "2026-07",
+    "usage_mb": 4607614
+  },
+  {
+    "usage_id": "VU-2026-06-0365",
+    "account_id": "VANTAGE-BILL-72353",
+    "device_uuid": "1e4184a7-560f-db42-d049-f1fd1d4b66bc",
+    "period": "2026-06",
+    "usage_mb": 1024577
+  },
+  {
+    "usage_id": "VU-2026-07-0366",
+    "account_id": "VANTAGE-BILL-72353",
+    "device_uuid": "6bb53b6e-4abe-4b21-46a0-f441caed4737",
+    "period": "2026-07",
+    "usage_mb": 1024646
+  },
+  {
+    "usage_id": "VU-2026-06-0367",
+    "account_id": "VANTAGE-BILL-72366",
+    "device_uuid": "b8f92b2e-a3bb-0ded-cbd5-04b8c3e750ef",
+    "period": "2026-06",
+    "usage_mb": 565795
+  },
+  {
+    "usage_id": "VU-2026-07-0368",
+    "account_id": "VANTAGE-BILL-72366",
+    "device_uuid": "be98bf9f-d1c9-ef02-2874-1836238950f3",
+    "period": "2026-07",
+    "usage_mb": 662082
+  },
+  {
+    "usage_id": "VU-2026-06-0369",
+    "account_id": "VANTAGE-BILL-72379",
+    "device_uuid": "fad04ca1-a82a-b3df-793e-c25ca29bb260",
+    "period": "2026-06",
+    "usage_mb": 381742
+  },
+  {
+    "usage_id": "VU-2026-07-0370",
+    "account_id": "VANTAGE-BILL-72379",
+    "device_uuid": "65afd1a7-5b9c-4d0c-9527-6968402fba7c",
+    "period": "2026-07",
+    "usage_mb": 342887
+  },
+  {
+    "usage_id": "VU-2026-06-0371",
+    "account_id": "VANTAGE-BILL-72392",
+    "device_uuid": "b238b1da-4e7d-3e23-42c0-1a109ceeb1c3",
+    "period": "2026-06",
+    "usage_mb": 3737357
+  },
+  {
+    "usage_id": "VU-2026-07-0372",
+    "account_id": "VANTAGE-BILL-72392",
+    "device_uuid": "de32922f-1584-2c74-6cb2-8d1ff713f46b",
+    "period": "2026-07",
+    "usage_mb": 2987401
+  },
+  {
+    "usage_id": "VU-2026-06-0373",
+    "account_id": "VANTAGE-BILL-72405",
+    "device_uuid": "7c869977-fc11-29b3-d04a-bdeb83c8ffa4",
+    "period": "2026-06",
+    "usage_mb": 4258750
+  },
+  {
+    "usage_id": "VU-2026-07-0374",
+    "account_id": "VANTAGE-BILL-72405",
+    "device_uuid": "99630929-715e-736f-022a-6f909add18e2",
+    "period": "2026-07",
+    "usage_mb": 3924200
+  },
+  {
+    "usage_id": "VU-2026-06-0375",
+    "account_id": "VANTAGE-BILL-72418",
+    "device_uuid": "3c3086be-a96e-c74c-fc10-cc41e81d33ff",
+    "period": "2026-06",
+    "usage_mb": 1491199
+  },
+  {
+    "usage_id": "VU-2026-07-0376",
+    "account_id": "VANTAGE-BILL-72418",
+    "device_uuid": "cf618078-0c40-2121-387c-b58f57a12091",
+    "period": "2026-07",
+    "usage_mb": 1207092
+  },
+  {
+    "usage_id": "VU-2026-06-0377",
+    "account_id": "VANTAGE-BILL-72431",
+    "device_uuid": "d74684a7-b1e4-40f5-ca92-9cf47b5ee5fa",
+    "period": "2026-06",
+    "usage_mb": 512291
+  },
+  {
+    "usage_id": "VU-2026-07-0378",
+    "account_id": "VANTAGE-BILL-72431",
+    "device_uuid": "ed84ea02-7911-5f47-e9fd-b1117aa8b666",
+    "period": "2026-07",
+    "usage_mb": 512422
+  },
+  {
+    "usage_id": "VU-2026-06-0379",
+    "account_id": "VANTAGE-BILL-72444",
+    "device_uuid": "989a8cc1-f4bb-7e05-8f70-6951e46b0582",
+    "period": "2026-06",
+    "usage_mb": 423917
+  },
+  {
+    "usage_id": "VU-2026-07-0380",
+    "account_id": "VANTAGE-BILL-72444",
+    "device_uuid": "e01ffafd-cb88-f79a-5fde-020732baac55",
+    "period": "2026-07",
+    "usage_mb": 378957
+  },
+  {
+    "usage_id": "VU-2026-06-0381",
+    "account_id": "VANTAGE-BILL-72457",
+    "device_uuid": "4963c959-c128-3d09-9aa8-ee110fee3e82",
+    "period": "2026-06",
+    "usage_mb": 6624150
+  },
+  {
+    "usage_id": "VU-2026-07-0382",
+    "account_id": "VANTAGE-BILL-72457",
+    "device_uuid": "a4e4165d-a85f-3c22-2b82-4062e2a31b2b",
+    "period": "2026-07",
+    "usage_mb": 6998328
+  },
+  {
+    "usage_id": "VU-2026-06-0383",
+    "account_id": "VANTAGE-BILL-72470",
+    "device_uuid": "e4c98ec1-0e0f-cfd7-08b3-befdcbe4b400",
+    "period": "2026-06",
+    "usage_mb": 2248153
+  },
+  {
+    "usage_id": "VU-2026-07-0384",
+    "account_id": "VANTAGE-BILL-72470",
+    "device_uuid": "74cb51d7-a554-93ab-7827-656789a15e2b",
+    "period": "2026-07",
+    "usage_mb": 2388838
+  },
+  {
+    "usage_id": "VU-2026-06-0385",
+    "account_id": "VANTAGE-BILL-72483",
+    "device_uuid": "c8da1ed9-0597-4704-40c1-ef6e8ff2cfdf",
+    "period": "2026-06",
+    "usage_mb": 1456387
+  },
+  {
+    "usage_id": "VU-2026-07-0386",
+    "account_id": "VANTAGE-BILL-72483",
+    "device_uuid": "a26a79ef-7fb0-1896-b581-21cd40abc3fe",
+    "period": "2026-07",
+    "usage_mb": 1846271
+  },
+  {
+    "usage_id": "VU-2026-06-0387",
+    "account_id": "VANTAGE-BILL-72496",
+    "device_uuid": "23ebf634-2ef6-365b-5d49-443b05fd3d0b",
+    "period": "2026-06",
+    "usage_mb": 870524
+  },
+  {
+    "usage_id": "VU-2026-07-0388",
+    "account_id": "VANTAGE-BILL-72496",
+    "device_uuid": "b86ee44c-faac-fe20-fd05-55e690f11f79",
+    "period": "2026-07",
+    "usage_mb": 919202
+  },
+  {
+    "usage_id": "VU-2026-06-0389",
+    "account_id": "VANTAGE-BILL-72509",
+    "device_uuid": "8e2aa64b-862c-ead2-bc2e-1949e1fc1fe2",
+    "period": "2026-06",
+    "usage_mb": 256255
+  },
+  {
+    "usage_id": "VU-2026-07-0390",
+    "account_id": "VANTAGE-BILL-72509",
+    "device_uuid": "8e5a7614-c0e6-66a5-0c21-64403a758859",
+    "period": "2026-07",
+    "usage_mb": 256569
+  },
+  {
+    "usage_id": "VU-2026-06-0391",
+    "account_id": "VANTAGE-BILL-72522",
+    "device_uuid": "8df326a9-aa2a-b6fc-569f-90b596dd54b7",
+    "period": "2026-06",
+    "usage_mb": 9407350
+  },
+  {
+    "usage_id": "VU-2026-07-0392",
+    "account_id": "VANTAGE-BILL-72522",
+    "device_uuid": "31b60861-2894-1b2c-7a7a-1687dd127b51",
+    "period": "2026-07",
+    "usage_mb": 6256071
+  },
+  {
+    "usage_id": "VU-2026-06-0393",
+    "account_id": "VANTAGE-BILL-72535",
+    "device_uuid": "802be0a0-3119-7c1f-ce26-e86d5b1b1a4b",
+    "period": "2026-06",
+    "usage_mb": 4464041
+  },
+  {
+    "usage_id": "VU-2026-07-0394",
+    "account_id": "VANTAGE-BILL-72535",
+    "device_uuid": "16da6a0d-cc2e-6d67-aab4-cf4d2bd0c8ac",
+    "period": "2026-07",
+    "usage_mb": 4735243
+  },
+  {
+    "usage_id": "VU-2026-06-0395",
+    "account_id": "VANTAGE-BILL-72548",
+    "device_uuid": "f6d21429-9f9f-eee8-a28c-488251db0c0f",
+    "period": "2026-06",
+    "usage_mb": 648790
+  },
+  {
+    "usage_id": "VU-2026-07-0396",
+    "account_id": "VANTAGE-BILL-72548",
+    "device_uuid": "d2be2977-a296-796a-df8e-82cad24e96a2",
+    "period": "2026-07",
+    "usage_mb": 883922
+  },
+  {
+    "usage_id": "VU-2026-06-0397",
+    "account_id": "VANTAGE-BILL-72561",
+    "device_uuid": "ecfcc8f7-2bc8-a482-2065-a8b11e34cf28",
+    "period": "2026-06",
+    "usage_mb": 933107
+  },
+  {
+    "usage_id": "VU-2026-07-0398",
+    "account_id": "VANTAGE-BILL-72561",
+    "device_uuid": "e5ca9a5e-7182-77df-fbe9-8a9891c307d9",
+    "period": "2026-07",
+    "usage_mb": 739444
+  },
+  {
+    "usage_id": "VU-2026-06-0399",
+    "account_id": "VANTAGE-BILL-72574",
+    "device_uuid": "b7c6116a-4a06-da58-1918-afe7f87e2a9e",
+    "period": "2026-06",
+    "usage_mb": 273715
+  },
+  {
+    "usage_id": "VU-2026-07-0400",
+    "account_id": "VANTAGE-BILL-72574",
+    "device_uuid": "18e1974b-0f3a-29dd-bf57-00cf20547833",
+    "period": "2026-07",
+    "usage_mb": 437260
   },
   {
     "usage_id": "VU-2026-06-0447",
     "account_id": null,
     "device_uuid": "4424bc47-f1e7-2d27-b338-24241faaa002",
     "period": "2026-06",
-    "usage_mb": 812440
+    "usage_mb": 118442
   },
   {
     "usage_id": "VU-2026-07-0447",
     "account_id": null,
     "device_uuid": "4424bc47-f1e7-2d27-b338-24241faaa002",
     "period": "2026-07",
-    "usage_mb": 903117
-  },
-  {
-    "usage_id": "VU-2026-06-7926",
-    "account_id": "VANTAGE-BILL-70000",
-    "device_uuid": "37971b11-0f2d-60e1-6695-73883d60febd",
-    "period": "2026-06",
-    "usage_mb": 337345
-  },
-  {
-    "usage_id": "VU-2026-07-1545",
-    "account_id": "VANTAGE-BILL-70000",
-    "device_uuid": "55f9c4c3-70ed-b37b-1fe2-e197ffd4dc1f",
-    "period": "2026-07",
-    "usage_mb": 471554
-  },
-  {
-    "usage_id": "VU-2026-06-9859",
-    "account_id": "VANTAGE-BILL-70013",
-    "device_uuid": "a2cfba9a-4c22-21e8-7dfc-8107c95ba68f",
-    "period": "2026-06",
-    "usage_mb": 625248
-  },
-  {
-    "usage_id": "VU-2026-07-5209",
-    "account_id": "VANTAGE-BILL-70013",
-    "device_uuid": "6ebf0121-233d-c099-db9a-d1ee3b1534c1",
-    "period": "2026-07",
-    "usage_mb": 1405466
-  },
-  {
-    "usage_id": "VU-2026-06-7538",
-    "account_id": "VANTAGE-BILL-70026",
-    "device_uuid": "caad3d36-8a9e-c51f-8b48-5f0e0ec7db17",
-    "period": "2026-06",
-    "usage_mb": 1094513
-  },
-  {
-    "usage_id": "VU-2026-07-7603",
-    "account_id": "VANTAGE-BILL-70026",
-    "device_uuid": "e598576d-74ca-2de2-37ff-c24bfbbf581e",
-    "period": "2026-07",
-    "usage_mb": 1484112
-  },
-  {
-    "usage_id": "VU-2026-06-7238",
-    "account_id": "VANTAGE-BILL-70039",
-    "device_uuid": "4424bc47-f1e7-2d27-b338-24241faaa002",
-    "period": "2026-06",
-    "usage_mb": 548198
-  },
-  {
-    "usage_id": "VU-2026-07-2949",
-    "account_id": "VANTAGE-BILL-70039",
-    "device_uuid": "63e1e5ce-d69d-02ee-2267-a128966848da",
-    "period": "2026-07",
-    "usage_mb": 456944
+    "usage_mb": 121907
   }
 ]

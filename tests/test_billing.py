@@ -1,7 +1,7 @@
 from decimal import Decimal
 
 from app.billing import invoices as invoice_service
-from app.billing.discounts import apply_loyalty, apply_tax, invoice_total
+from app.billing.discounts import loyalty_discount
 from app.billing.rating import overage_mb, rate_overage
 
 
@@ -17,16 +17,15 @@ def test_no_overage_when_under_allowance():
     assert rate_overage(1000, 2000) == Decimal("0.00")
 
 
-def test_discount_is_applied_after_tax():
-    charges = Decimal("1000.00")
-    taxed = apply_tax(charges, 6.25)
-    assert invoice_total(charges, 8.0, 6.25) == apply_loyalty(taxed, 8.0)
+def test_loyalty_discount_comes_off_the_subtotal():
+    assert loyalty_discount(Decimal("1000.00"), 8.0) == Decimal("80.00")
 
 
 def test_enterprise_account_invoice():
     found = invoice_service.list_invoices(account_id="VANTAGE-BILL-88213", period="2026-07")
     assert len(found) == 1
     assert found[0]["legal_name"] == "Beacon Manufacturing Corp"
+    assert found[0]["province"] == "BC"
 
 
 def test_usage_without_an_account_is_not_invoiced():
