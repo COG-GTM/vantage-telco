@@ -4,3 +4,6 @@ pymongo>=4.6
 pydantic>=2.6
 pytest>=8.0
 httpx>=0.27
+# Shared inventory rules (canonical available-capacity logic). Track the branch
+# until unified-inventory-rules#<pr> merges, then switch this to @main.
+unified-inventory-rules @ git+https://github.com/joannayang371/unified-inventory-rules.git@devin/1786072171-shared-capacity-logic
