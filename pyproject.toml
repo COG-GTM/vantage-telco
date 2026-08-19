@@ -2,7 +2,7 @@
 name = "vantage-net"
 version = "2.4.0"
 description = "Vantage inventory, management addressing and billing services"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.110",
     "uvicorn>=0.27",
