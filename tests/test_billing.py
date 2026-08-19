@@ -1,16 +1,16 @@
 from decimal import Decimal
 
 from app.billing import invoices as invoice_service
-from app.billing.discounts import loyalty_discount
-from app.billing.rating import overage_mb, rate_overage
+from app.billing.rules import loyalty_discount, overage_gb, rate_overage, usage_gb_rounded
 
 
-def test_overage_is_measured_in_exact_megabytes():
-    assert overage_mb(3_000_000, 2000) == 3_000_000 - 2000 * 1024
+def test_usage_is_rated_in_whole_gigabytes():
+    assert usage_gb_rounded(2 * 1024 + 1) == 3
+    assert overage_gb(2001 * 1024, 2000) == 1
 
 
-def test_rate_overage_uses_per_mb_rate():
-    assert rate_overage(2000 * 1024 + 1000, 2000) == Decimal("12.00")
+def test_rate_overage_uses_the_per_gb_rate():
+    assert rate_overage(2000 * 1024 + 1000, 2000) == Decimal("10.00")
 
 
 def test_no_overage_when_under_allowance():

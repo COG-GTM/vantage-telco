@@ -56,21 +56,36 @@ Devices flagged `external_bgp` are customer-facing and must not be renumbered.
 
 ### `app/billing`
 
-- `rating.py` — usage is billed to the exact MB at $0.012/MB overage. No
-  gigabyte rounding.
-- `proration.py` — mid-cycle plan changes split on actual calendar days.
-- `promo.py` — promo credits stay live for 30 days from issue.
-- `suspension.py` — suspended days are credited back at the daily rate.
-- `lines.py` — 3-9 lines 5% off recurring, 10 or more 10%.
-- `latefee.py` — 10 days grace after the due date, then 1.5% of the balance.
-- `tax.py` — GST/HST/PST/QST, all assessed on the pre-discount subtotal.
-- `discounts.py` — the loyalty credit comes off the subtotal and does not change
-  the tax base.
+The rules themselves are not implemented here. They live in the shared library
+[COG-GTM/telco-billing-rules](https://github.com/COG-GTM/telco-billing-rules),
+vendored into `vendor/` and used by the meridian estate too, so the two
+registers cannot drift apart again:
+
+- usage rated in whole gigabytes, partial gigabytes rounding up, $10/GB overage.
+- mid-cycle plan changes split on a fixed 30-day billing month.
+- promo credits live only in the cycle they were issued in.
+- a suspended line is billed the full month, no credit.
+- 3-9 lines 5% off recurring, 10 or more 10%.
+- 10 days grace after the due date, then 1.5% of the balance.
+- GST/HST on the pre-discount subtotal, PST/QST on the post-loyalty amount.
+- every charge line rounded half-up to cents as it is produced.
+
+Provinces billed: BC, AB, ON, QC.
+
+This package holds the wiring only:
+
+- `rules.py` — the shared rules, re-exported. Import billing rules from here.
 - `invoices.py` — invoice construction, plus `unlinked_usage()` for usage that
   was mediated without a billing account.
 
-Charges are carried as `Decimal` at full precision and rounded once, at the
-invoice total. Provinces billed: BC, AB, ON, QC.
+Do not edit anything under `vendor/`. Change the rule upstream, then re-vendor:
+
+```bash
+python tools/vendor.py --python ../vantage-telco/vendor   # from the library repo
+```
+
+`make test` runs the shared conformance vectors and `vendor/vendor_check.py`,
+which fails if the vendored copy was patched in place.
 
 Endpoints: `GET /billing/invoices`, `GET /billing/usage-summary`. The invoice
 register page is `GET /dashboard/billing` (filter by `period`, `account_id` or
@@ -108,9 +123,12 @@ addressing/reference integrity, and the HTTP surface.
 
 The archived invoice artifacts the NOC keeps per cycle are rendered by a
 separate Maven module in `java/vantage-report`, built and run on Java 11. It
-re-implements the rating rules in `app/billing` (exact-MB overage, tax on the
-pre-discount subtotal, loyalty credit applied post-tax) and renders each
-invoice as plain text plus a per-charge CSV.
+re-implements a third set of rating rules of its own (exact-MB overage, one flat
+tax percentage, loyalty credit applied post-tax, no proration, promo, suspension
+or late fee) and renders each invoice as plain text plus a per-charge CSV. It
+does **not** go through the shared rules library, so its figures do not
+reconcile with the invoice register; treat the register as authoritative until
+the reporter is moved onto the library.
 
 ```bash
 cd java/vantage-report
