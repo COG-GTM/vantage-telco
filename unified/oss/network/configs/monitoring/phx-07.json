@@ -1,0 +1,26 @@
+{
+  "market": "PHX-07",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.14.30",
+      "device": "core-rtr-phx-07-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.14.37",
+      "device": "agg-sw-phx-07-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.14.44",
+      "device": "cell-rtr-phx-07-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.14.51",
+      "device": "cpe-gw-phx-07-04",
+      "interval_s": 60
+    }
+  ]
+}

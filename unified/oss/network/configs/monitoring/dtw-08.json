@@ -1,0 +1,26 @@
+{
+  "market": "DTW-08",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.12.30",
+      "device": "core-rtr-dtw-08-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.12.37",
+      "device": "agg-sw-dtw-08-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.12.44",
+      "device": "cell-rtr-dtw-08-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.12.51",
+      "device": "cpe-gw-dtw-08-04",
+      "interval_s": 60
+    }
+  ]
+}

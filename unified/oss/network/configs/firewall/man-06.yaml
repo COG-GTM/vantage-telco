@@ -1,0 +1,30 @@
+market: MAN-06
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.7.30
+    ports: [22, 161, 443]
+    device: core-rtr-man-06-01
+  - action: allow
+    host: 10.20.7.37
+    ports: [22, 161, 443]
+    device: agg-sw-man-06-02
+  - action: allow
+    host: 10.20.7.44
+    ports: [22, 161, 443]
+    device: cell-rtr-man-06-03
+  - action: allow
+    host: 10.20.7.51
+    ports: [22, 161, 443]
+    device: cpe-gw-man-06-04
+  - action: allow
+    host: 10.20.9.103
+    ports: [22, 161, 443]
+    device: peer-edge-04
+  - action: allow
+    host: 10.20.250.30
+    ports: [22, 161, 443]
+    device: agg-sw-growth-04

@@ -1,0 +1,200 @@
+[
+  {
+    "location_code": "RIV-01",
+    "customer_name": "Beacon Manufacturing Corp",
+    "location_name": "Riverside Crossing - Quincy Plant",
+    "market_id": "BOS-12",
+    "total_capacity_mbps": 1000,
+    "allocated_mbps": 600,
+    "maintenance_buffer_mbps": 150
+  },
+  {
+    "location_code": "GRH-02",
+    "customer_name": "Cedar Point Health Systems",
+    "location_name": "Granite Hill Medical Campus",
+    "market_id": "BOS-14",
+    "total_capacity_mbps": 2000,
+    "allocated_mbps": 1250,
+    "maintenance_buffer_mbps": 200
+  },
+  {
+    "location_code": "FVR-03",
+    "customer_name": "Foxglove Biotech",
+    "location_name": "Fairview Ridge Labs",
+    "market_id": "ATL-09",
+    "total_capacity_mbps": 1000,
+    "allocated_mbps": 720,
+    "maintenance_buffer_mbps": 100
+  },
+  {
+    "location_code": "LKN-04",
+    "customer_name": "Willow Grove Retail Group",
+    "location_name": "Lakeshore North Distribution",
+    "market_id": "CHI-05",
+    "total_capacity_mbps": 4000,
+    "allocated_mbps": 2600,
+    "maintenance_buffer_mbps": 400
+  },
+  {
+    "location_code": "DNM-05",
+    "customer_name": "Stonebridge Financial",
+    "location_name": "Dunmore Tower Data Hall",
+    "market_id": "PHX-07",
+    "total_capacity_mbps": 10000,
+    "allocated_mbps": 6400,
+    "maintenance_buffer_mbps": 800
+  },
+  {
+    "location_code": "WHS-06",
+    "customer_name": "Kingsley Media Networks",
+    "location_name": "Whitfield Summit Broadcast",
+    "market_id": "SEA-06",
+    "total_capacity_mbps": 4000,
+    "allocated_mbps": 2900,
+    "maintenance_buffer_mbps": 250
+  },
+  {
+    "location_code": "OAK-07",
+    "customer_name": "Northgate Logistics LLC",
+    "location_name": "Oakview Micro-Site Yard",
+    "market_id": "BOS-12",
+    "total_capacity_mbps": 1000,
+    "allocated_mbps": 250,
+    "maintenance_buffer_mbps": 50
+  },
+  {
+    "location_code": "ASH-08",
+    "customer_name": "Ashford Public Schools",
+    "location_name": "Ashford District Office",
+    "market_id": "MAN-06",
+    "total_capacity_mbps": 500,
+    "allocated_mbps": 300,
+    "maintenance_buffer_mbps": 50
+  },
+  {
+    "location_code": "PVD-09",
+    "customer_name": "Northgate Logistics LLC",
+    "location_name": "Providence Freight Terminal",
+    "market_id": "PVD-03",
+    "total_capacity_mbps": 1000,
+    "allocated_mbps": 850,
+    "maintenance_buffer_mbps": 100
+  },
+  {
+    "location_code": "CHS-10",
+    "customer_name": "Cedar Point Health Systems",
+    "location_name": "Charleston Outpatient Center",
+    "market_id": "CHS-02",
+    "total_capacity_mbps": 500,
+    "allocated_mbps": 260,
+    "maintenance_buffer_mbps": 50
+  },
+  {
+    "location_code": "RDU-11",
+    "customer_name": "Foxglove Biotech",
+    "location_name": "Research Triangle Annex",
+    "market_id": "RDU-11",
+    "total_capacity_mbps": 2000,
+    "allocated_mbps": 1100,
+    "maintenance_buffer_mbps": 150
+  },
+  {
+    "location_code": "DTW-12",
+    "customer_name": "Willow Grove Retail Group",
+    "location_name": "Detroit Fulfillment Center",
+    "market_id": "DTW-08",
+    "total_capacity_mbps": 2000,
+    "allocated_mbps": 1640,
+    "maintenance_buffer_mbps": 200
+  },
+  {
+    "location_code": "MSP-13",
+    "customer_name": "Stonebridge Financial",
+    "location_name": "Minneapolis Back Office",
+    "market_id": "MSP-04",
+    "total_capacity_mbps": 1000,
+    "allocated_mbps": 500,
+    "maintenance_buffer_mbps": 100
+  },
+  {
+    "location_code": "DAL-14",
+    "customer_name": "Kingsley Media Networks",
+    "location_name": "Dallas Production Facility",
+    "market_id": "DAL-13",
+    "total_capacity_mbps": 4000,
+    "allocated_mbps": 3100,
+    "maintenance_buffer_mbps": 300
+  },
+  {
+    "location_code": "ABQ-15",
+    "customer_name": "Ashford Public Schools",
+    "location_name": "Albuquerque Campus Network",
+    "market_id": "ABQ-02",
+    "total_capacity_mbps": 500,
+    "allocated_mbps": 380,
+    "maintenance_buffer_mbps": 50
+  },
+  {
+    "location_code": "PDX-16",
+    "customer_name": "Beacon Manufacturing Corp",
+    "location_name": "Portland Components Plant",
+    "market_id": "PDX-04",
+    "total_capacity_mbps": 2000,
+    "allocated_mbps": 1400,
+    "maintenance_buffer_mbps": 200
+  },
+  {
+    "location_code": "BOI-17",
+    "customer_name": "Northgate Logistics LLC",
+    "location_name": "Boise Regional Depot",
+    "market_id": "BOI-01",
+    "total_capacity_mbps": 1000,
+    "allocated_mbps": 620,
+    "maintenance_buffer_mbps": 100
+  },
+  {
+    "location_code": "PHL-18",
+    "customer_name": "Cedar Point Health Systems",
+    "location_name": "Philadelphia Imaging Center",
+    "market_id": "PHL-05",
+    "total_capacity_mbps": 1000,
+    "allocated_mbps": 700,
+    "maintenance_buffer_mbps": 150
+  },
+  {
+    "location_code": "ATL-19",
+    "customer_name": "Willow Grove Retail Group",
+    "location_name": "Atlanta Flagship Store",
+    "market_id": "ATL-09",
+    "total_capacity_mbps": 500,
+    "allocated_mbps": 340,
+    "maintenance_buffer_mbps": 50
+  },
+  {
+    "location_code": "CHI-20",
+    "customer_name": "Beacon Manufacturing Corp",
+    "location_name": "Chicago Machining Works",
+    "market_id": "CHI-05",
+    "total_capacity_mbps": 4000,
+    "allocated_mbps": 2200,
+    "maintenance_buffer_mbps": 400
+  },
+  {
+    "location_code": "SEA-21",
+    "customer_name": "Stonebridge Financial",
+    "location_name": "Seattle Trading Floor",
+    "market_id": "SEA-06",
+    "total_capacity_mbps": 10000,
+    "allocated_mbps": 7800,
+    "maintenance_buffer_mbps": 700
+  },
+  {
+    "location_code": "BOS-22",
+    "customer_name": "Kingsley Media Networks",
+    "location_name": "Boston Studio Complex",
+    "market_id": "BOS-12",
+    "total_capacity_mbps": 2000,
+    "allocated_mbps": 900,
+    "maintenance_buffer_mbps": 200
+  }
+]

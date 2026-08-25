@@ -1,0 +1,22 @@
+market: ABQ-02
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.15.30
+    ports: [22, 161, 443]
+    device: core-rtr-abq-02-01
+  - action: allow
+    host: 10.20.15.37
+    ports: [22, 161, 443]
+    device: agg-sw-abq-02-02
+  - action: allow
+    host: 10.20.15.44
+    ports: [22, 161, 443]
+    device: cell-rtr-abq-02-03
+  - action: allow
+    host: 10.20.15.51
+    ports: [22, 161, 443]
+    device: cpe-gw-abq-02-04

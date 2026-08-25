@@ -1,0 +1,28 @@
+[project]
+name = "unified-telco-oss"
+version = "1.0.0"
+description = "Merged Meridian and Vantage OSS: one engine, one rule set per estate"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn>=0.27",
+    "pydantic>=2.6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "httpx>=0.27", "ruff>=0.4", "mypy>=1.9"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+files = ["oss", "tools"]
+ignore_missing_imports = true

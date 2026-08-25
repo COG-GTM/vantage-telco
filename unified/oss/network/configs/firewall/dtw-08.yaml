@@ -1,0 +1,22 @@
+market: DTW-08
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.12.30
+    ports: [22, 161, 443]
+    device: core-rtr-dtw-08-01
+  - action: allow
+    host: 10.20.12.37
+    ports: [22, 161, 443]
+    device: agg-sw-dtw-08-02
+  - action: allow
+    host: 10.20.12.44
+    ports: [22, 161, 443]
+    device: cell-rtr-dtw-08-03
+  - action: allow
+    host: 10.20.12.51
+    ports: [22, 161, 443]
+    device: cpe-gw-dtw-08-04

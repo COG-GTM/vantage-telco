@@ -1,0 +1,30 @@
+market: BOS-14
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.5.30
+    ports: [22, 161, 443]
+    device: core-rtr-bos-14-01
+  - action: allow
+    host: 10.20.5.37
+    ports: [22, 161, 443]
+    device: agg-sw-bos-14-02
+  - action: allow
+    host: 10.20.5.44
+    ports: [22, 161, 443]
+    device: cell-rtr-bos-14-03
+  - action: allow
+    host: 10.20.5.51
+    ports: [22, 161, 443]
+    device: cpe-gw-bos-14-04
+  - action: allow
+    host: 10.20.9.101
+    ports: [22, 161, 443]
+    device: peer-edge-02
+  - action: allow
+    host: 10.20.250.18
+    ports: [22, 161, 443]
+    device: agg-sw-growth-02

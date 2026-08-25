@@ -1,0 +1,594 @@
+[
+  {
+    "device_name": "core-rtr-bos-12",
+    "market_id": "BOS-12",
+    "role": "core-router",
+    "mgmt_ip": "10.20.4.17",
+    "device_uuid": "b238b1da-4e7d-3e23-42c0-1a109ceeb1c3",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-bos-12-01",
+    "market_id": "BOS-12",
+    "role": "core",
+    "mgmt_ip": "10.20.4.30",
+    "device_uuid": "de32922f-1584-2c74-6cb2-8d1ff713f46b",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-bos-12-02",
+    "market_id": "BOS-12",
+    "role": "agg",
+    "mgmt_ip": "10.20.4.37",
+    "device_uuid": "7c869977-fc11-29b3-d04a-bdeb83c8ffa4",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-bos-12-03",
+    "market_id": "BOS-12",
+    "role": "cell",
+    "mgmt_ip": "10.20.4.44",
+    "device_uuid": "99630929-715e-736f-022a-6f909add18e2",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-bos-12-04",
+    "market_id": "BOS-12",
+    "role": "cpe",
+    "mgmt_ip": "10.20.4.51",
+    "device_uuid": "3c3086be-a96e-c74c-fc10-cc41e81d33ff",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-bos-14-01",
+    "market_id": "BOS-14",
+    "role": "core",
+    "mgmt_ip": "10.20.5.30",
+    "device_uuid": "cf618078-0c40-2121-387c-b58f57a12091",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-bos-14-02",
+    "market_id": "BOS-14",
+    "role": "agg",
+    "mgmt_ip": "10.20.5.37",
+    "device_uuid": "d74684a7-b1e4-40f5-ca92-9cf47b5ee5fa",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-bos-14-03",
+    "market_id": "BOS-14",
+    "role": "cell",
+    "mgmt_ip": "10.20.5.44",
+    "device_uuid": "ed84ea02-7911-5f47-e9fd-b1117aa8b666",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-bos-14-04",
+    "market_id": "BOS-14",
+    "role": "cpe",
+    "mgmt_ip": "10.20.5.51",
+    "device_uuid": "989a8cc1-f4bb-7e05-8f70-6951e46b0582",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-pvd-03-01",
+    "market_id": "PVD-03",
+    "role": "core",
+    "mgmt_ip": "10.20.6.30",
+    "device_uuid": "e01ffafd-cb88-f79a-5fde-020732baac55",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-pvd-03-02",
+    "market_id": "PVD-03",
+    "role": "agg",
+    "mgmt_ip": "10.20.6.37",
+    "device_uuid": "4963c959-c128-3d09-9aa8-ee110fee3e82",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-pvd-03-03",
+    "market_id": "PVD-03",
+    "role": "cell",
+    "mgmt_ip": "10.20.6.44",
+    "device_uuid": "a4e4165d-a85f-3c22-2b82-4062e2a31b2b",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-pvd-03-04",
+    "market_id": "PVD-03",
+    "role": "cpe",
+    "mgmt_ip": "10.20.6.51",
+    "device_uuid": "e4c98ec1-0e0f-cfd7-08b3-befdcbe4b400",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-man-06-01",
+    "market_id": "MAN-06",
+    "role": "core",
+    "mgmt_ip": "10.20.7.30",
+    "device_uuid": "74cb51d7-a554-93ab-7827-656789a15e2b",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-man-06-02",
+    "market_id": "MAN-06",
+    "role": "agg",
+    "mgmt_ip": "10.20.7.37",
+    "device_uuid": "c8da1ed9-0597-4704-40c1-ef6e8ff2cfdf",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-man-06-03",
+    "market_id": "MAN-06",
+    "role": "cell",
+    "mgmt_ip": "10.20.7.44",
+    "device_uuid": "a26a79ef-7fb0-1896-b581-21cd40abc3fe",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-man-06-04",
+    "market_id": "MAN-06",
+    "role": "cpe",
+    "mgmt_ip": "10.20.7.51",
+    "device_uuid": "23ebf634-2ef6-365b-5d49-443b05fd3d0b",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-atl-09-01",
+    "market_id": "ATL-09",
+    "role": "core",
+    "mgmt_ip": "10.20.8.30",
+    "device_uuid": "b86ee44c-faac-fe20-fd05-55e690f11f79",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-atl-09-02",
+    "market_id": "ATL-09",
+    "role": "agg",
+    "mgmt_ip": "10.20.8.37",
+    "device_uuid": "8e2aa64b-862c-ead2-bc2e-1949e1fc1fe2",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-atl-09-03",
+    "market_id": "ATL-09",
+    "role": "cell",
+    "mgmt_ip": "10.20.8.44",
+    "device_uuid": "8e5a7614-c0e6-66a5-0c21-64403a758859",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-atl-09-04",
+    "market_id": "ATL-09",
+    "role": "cpe",
+    "mgmt_ip": "10.20.8.51",
+    "device_uuid": "8df326a9-aa2a-b6fc-569f-90b596dd54b7",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-chs-02-01",
+    "market_id": "CHS-02",
+    "role": "core",
+    "mgmt_ip": "10.20.9.30",
+    "device_uuid": "31b60861-2894-1b2c-7a7a-1687dd127b51",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-chs-02-02",
+    "market_id": "CHS-02",
+    "role": "agg",
+    "mgmt_ip": "10.20.9.37",
+    "device_uuid": "802be0a0-3119-7c1f-ce26-e86d5b1b1a4b",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-chs-02-03",
+    "market_id": "CHS-02",
+    "role": "cell",
+    "mgmt_ip": "10.20.9.44",
+    "device_uuid": "16da6a0d-cc2e-6d67-aab4-cf4d2bd0c8ac",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-chs-02-04",
+    "market_id": "CHS-02",
+    "role": "cpe",
+    "mgmt_ip": "10.20.9.51",
+    "device_uuid": "f6d21429-9f9f-eee8-a28c-488251db0c0f",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-rdu-11-01",
+    "market_id": "RDU-11",
+    "role": "core",
+    "mgmt_ip": "10.20.10.30",
+    "device_uuid": "d2be2977-a296-796a-df8e-82cad24e96a2",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-rdu-11-02",
+    "market_id": "RDU-11",
+    "role": "agg",
+    "mgmt_ip": "10.20.10.37",
+    "device_uuid": "ecfcc8f7-2bc8-a482-2065-a8b11e34cf28",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-rdu-11-03",
+    "market_id": "RDU-11",
+    "role": "cell",
+    "mgmt_ip": "10.20.10.44",
+    "device_uuid": "e5ca9a5e-7182-77df-fbe9-8a9891c307d9",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-rdu-11-04",
+    "market_id": "RDU-11",
+    "role": "cpe",
+    "mgmt_ip": "10.20.10.51",
+    "device_uuid": "b7c6116a-4a06-da58-1918-afe7f87e2a9e",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-chi-05-01",
+    "market_id": "CHI-05",
+    "role": "core",
+    "mgmt_ip": "10.20.11.30",
+    "device_uuid": "18e1974b-0f3a-29dd-bf57-00cf20547833",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-chi-05-02",
+    "market_id": "CHI-05",
+    "role": "agg",
+    "mgmt_ip": "10.20.11.37",
+    "device_uuid": "03a425d2-bf65-87ee-e2e8-e9f27bd160d7",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-chi-05-03",
+    "market_id": "CHI-05",
+    "role": "cell",
+    "mgmt_ip": "10.20.11.44",
+    "device_uuid": "24123924-35de-0200-2afe-56ade978fb31",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-chi-05-04",
+    "market_id": "CHI-05",
+    "role": "cpe",
+    "mgmt_ip": "10.20.11.51",
+    "device_uuid": "8ee56815-57d0-26d7-eda9-d7c9e888a82d",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-dtw-08-01",
+    "market_id": "DTW-08",
+    "role": "core",
+    "mgmt_ip": "10.20.12.30",
+    "device_uuid": "dc2a0b66-707f-d616-74ea-93c6d699e9f1",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-dtw-08-02",
+    "market_id": "DTW-08",
+    "role": "agg",
+    "mgmt_ip": "10.20.12.37",
+    "device_uuid": "46960980-2d0f-94b9-fd8e-16ddab18b137",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-dtw-08-03",
+    "market_id": "DTW-08",
+    "role": "cell",
+    "mgmt_ip": "10.20.12.44",
+    "device_uuid": "b3cf9e85-c74d-ea30-7483-50c4efaf2554",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-dtw-08-04",
+    "market_id": "DTW-08",
+    "role": "cpe",
+    "mgmt_ip": "10.20.12.51",
+    "device_uuid": "74b1614d-9e8b-8d96-7dda-de02875dffda",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-msp-04-01",
+    "market_id": "MSP-04",
+    "role": "core",
+    "mgmt_ip": "10.20.13.30",
+    "device_uuid": "4ecb2332-8660-4eec-8b34-3d341420b135",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-msp-04-02",
+    "market_id": "MSP-04",
+    "role": "agg",
+    "mgmt_ip": "10.20.13.37",
+    "device_uuid": "0dd2ac94-0b57-39a0-3ebf-69df6bcc1e34",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-msp-04-03",
+    "market_id": "MSP-04",
+    "role": "cell",
+    "mgmt_ip": "10.20.13.44",
+    "device_uuid": "a4e00c91-92e0-01a5-68d1-2efde4c944a3",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-msp-04-04",
+    "market_id": "MSP-04",
+    "role": "cpe",
+    "mgmt_ip": "10.20.13.51",
+    "device_uuid": "617f8c7c-6d6a-4518-e929-76a65dd8dc40",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-phx-07-01",
+    "market_id": "PHX-07",
+    "role": "core",
+    "mgmt_ip": "10.20.14.30",
+    "device_uuid": "258e80d4-13fe-0e37-6fb8-d1eacb38dbf5",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-phx-07-02",
+    "market_id": "PHX-07",
+    "role": "agg",
+    "mgmt_ip": "10.20.14.37",
+    "device_uuid": "96f16bad-61dd-6f88-2557-2bb4f740e275",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-phx-07-03",
+    "market_id": "PHX-07",
+    "role": "cell",
+    "mgmt_ip": "10.20.14.44",
+    "device_uuid": "7bf4d7cf-c033-91ce-51b5-2d5190de049a",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-phx-07-04",
+    "market_id": "PHX-07",
+    "role": "cpe",
+    "mgmt_ip": "10.20.14.51",
+    "device_uuid": "d2d4b0e4-a3e5-9c51-571e-405e13333347",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-abq-02-01",
+    "market_id": "ABQ-02",
+    "role": "core",
+    "mgmt_ip": "10.20.15.30",
+    "device_uuid": "c8d4153b-50ec-f31a-d714-0202bd838c75",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-abq-02-02",
+    "market_id": "ABQ-02",
+    "role": "agg",
+    "mgmt_ip": "10.20.15.37",
+    "device_uuid": "c1df83e8-cc3b-0963-bd51-8d14199f631e",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-abq-02-03",
+    "market_id": "ABQ-02",
+    "role": "cell",
+    "mgmt_ip": "10.20.15.44",
+    "device_uuid": "ac7f609e-d171-07cf-7468-6d1f2d544d59",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-abq-02-04",
+    "market_id": "ABQ-02",
+    "role": "cpe",
+    "mgmt_ip": "10.20.15.51",
+    "device_uuid": "ba87e59b-aecc-1218-a93f-3251345f6ebe",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-dal-13-01",
+    "market_id": "DAL-13",
+    "role": "core",
+    "mgmt_ip": "10.20.16.30",
+    "device_uuid": "26623c43-b394-ed7e-7857-db4c12df8fe6",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-dal-13-02",
+    "market_id": "DAL-13",
+    "role": "agg",
+    "mgmt_ip": "10.20.16.37",
+    "device_uuid": "1a2812c0-c1f6-853e-fb8e-fa8bb1d1d49c",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-dal-13-03",
+    "market_id": "DAL-13",
+    "role": "cell",
+    "mgmt_ip": "10.20.16.44",
+    "device_uuid": "812803c8-550f-1803-76d2-25f0a04d3798",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-dal-13-04",
+    "market_id": "DAL-13",
+    "role": "cpe",
+    "mgmt_ip": "10.20.16.51",
+    "device_uuid": "8c8df540-97ff-b686-83b4-803715762288",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-sea-06-01",
+    "market_id": "SEA-06",
+    "role": "core",
+    "mgmt_ip": "10.20.17.30",
+    "device_uuid": "35529b8c-96ad-e5a6-15a9-2841686a5ce5",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-sea-06-02",
+    "market_id": "SEA-06",
+    "role": "agg",
+    "mgmt_ip": "10.20.17.37",
+    "device_uuid": "4892894d-aec4-3bdd-a37e-7ee2190a34e5",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-sea-06-03",
+    "market_id": "SEA-06",
+    "role": "cell",
+    "mgmt_ip": "10.20.17.44",
+    "device_uuid": "3b72f69f-1cf8-3832-5493-4aa471e45e0f",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-sea-06-04",
+    "market_id": "SEA-06",
+    "role": "cpe",
+    "mgmt_ip": "10.20.17.51",
+    "device_uuid": "3bb31f98-ef31-9db9-1442-7e9447396ebf",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-pdx-04-01",
+    "market_id": "PDX-04",
+    "role": "core",
+    "mgmt_ip": "10.20.18.30",
+    "device_uuid": "9df62ce3-3f7c-ab2d-aecf-c0d0d0a3a6dc",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-pdx-04-02",
+    "market_id": "PDX-04",
+    "role": "agg",
+    "mgmt_ip": "10.20.18.37",
+    "device_uuid": "fdda0158-2c51-944f-f50a-b36b9144a7d2",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-pdx-04-03",
+    "market_id": "PDX-04",
+    "role": "cell",
+    "mgmt_ip": "10.20.18.44",
+    "device_uuid": "9855c3a9-d77d-46ef-2096-d463e6521a5f",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-pdx-04-04",
+    "market_id": "PDX-04",
+    "role": "cpe",
+    "mgmt_ip": "10.20.18.51",
+    "device_uuid": "44a836e8-20b9-8ef5-d952-9bfc6b7d7a56",
+    "external_bgp": false
+  },
+  {
+    "device_name": "core-rtr-boi-01-01",
+    "market_id": "BOI-01",
+    "role": "core",
+    "mgmt_ip": "10.20.19.30",
+    "device_uuid": "9bae9818-a274-00f7-2d5d-d2cdd3015b3f",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-boi-01-02",
+    "market_id": "BOI-01",
+    "role": "agg",
+    "mgmt_ip": "10.20.19.37",
+    "device_uuid": "b8f02108-a60e-ebbc-12c5-328eaabac52b",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cell-rtr-boi-01-03",
+    "market_id": "BOI-01",
+    "role": "cell",
+    "mgmt_ip": "10.20.19.44",
+    "device_uuid": "26d1ebbd-848e-d278-108f-23663aba2e06",
+    "external_bgp": false
+  },
+  {
+    "device_name": "cpe-gw-boi-01-04",
+    "market_id": "BOI-01",
+    "role": "cpe",
+    "mgmt_ip": "10.20.19.51",
+    "device_uuid": "32ab9fd9-ddc8-81a8-52bf-afa140608ee7",
+    "external_bgp": false
+  },
+  {
+    "device_name": "peer-edge-01",
+    "market_id": "BOS-12",
+    "role": "peer-edge",
+    "mgmt_ip": "10.20.9.100",
+    "device_uuid": "7f1e9bc0-0b02-f403-8047-ee90824d3416",
+    "external_bgp": true
+  },
+  {
+    "device_name": "peer-edge-02",
+    "market_id": "BOS-14",
+    "role": "peer-edge",
+    "mgmt_ip": "10.20.9.101",
+    "device_uuid": "adb91ae0-9dc1-aaa1-1249-166e7023ee14",
+    "external_bgp": true
+  },
+  {
+    "device_name": "peer-edge-03",
+    "market_id": "PVD-03",
+    "role": "peer-edge",
+    "mgmt_ip": "10.20.9.102",
+    "device_uuid": "8be1755a-0d7b-8818-9894-79d61c51ac6b",
+    "external_bgp": true
+  },
+  {
+    "device_name": "peer-edge-04",
+    "market_id": "MAN-06",
+    "role": "peer-edge",
+    "mgmt_ip": "10.20.9.103",
+    "device_uuid": "1e4184a7-560f-db42-d049-f1fd1d4b66bc",
+    "external_bgp": true
+  },
+  {
+    "device_name": "agg-sw-growth-01",
+    "market_id": "BOS-12",
+    "role": "agg-sw",
+    "mgmt_ip": "10.20.250.12",
+    "device_uuid": "6bb53b6e-4abe-4b21-46a0-f441caed4737",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-growth-02",
+    "market_id": "BOS-14",
+    "role": "agg-sw",
+    "mgmt_ip": "10.20.250.18",
+    "device_uuid": "b8f92b2e-a3bb-0ded-cbd5-04b8c3e750ef",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-growth-03",
+    "market_id": "PVD-03",
+    "role": "agg-sw",
+    "mgmt_ip": "10.20.250.24",
+    "device_uuid": "be98bf9f-d1c9-ef02-2874-1836238950f3",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-growth-04",
+    "market_id": "MAN-06",
+    "role": "agg-sw",
+    "mgmt_ip": "10.20.250.30",
+    "device_uuid": "fad04ca1-a82a-b3df-793e-c25ca29bb260",
+    "external_bgp": false
+  },
+  {
+    "device_name": "agg-sw-growth-05",
+    "market_id": "ATL-09",
+    "role": "agg-sw",
+    "mgmt_ip": "10.20.250.36",
+    "device_uuid": "65afd1a7-5b9c-4d0c-9527-6968402fba7c",
+    "external_bgp": false
+  }
+]

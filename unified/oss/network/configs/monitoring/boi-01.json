@@ -1,0 +1,26 @@
+{
+  "market": "BOI-01",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.19.30",
+      "device": "core-rtr-boi-01-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.19.37",
+      "device": "agg-sw-boi-01-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.19.44",
+      "device": "cell-rtr-boi-01-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.19.51",
+      "device": "cpe-gw-boi-01-04",
+      "interval_s": 60
+    }
+  ]
+}

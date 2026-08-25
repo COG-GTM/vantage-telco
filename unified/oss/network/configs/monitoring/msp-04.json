@@ -1,0 +1,26 @@
+{
+  "market": "MSP-04",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.13.30",
+      "device": "core-rtr-msp-04-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.13.37",
+      "device": "agg-sw-msp-04-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.13.44",
+      "device": "cell-rtr-msp-04-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.13.51",
+      "device": "cpe-gw-msp-04-04",
+      "interval_s": 60
+    }
+  ]
+}

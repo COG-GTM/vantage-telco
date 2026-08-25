@@ -1,0 +1,36 @@
+{
+  "market": "MAN-06",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.7.30",
+      "device": "core-rtr-man-06-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.7.37",
+      "device": "agg-sw-man-06-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.7.44",
+      "device": "cell-rtr-man-06-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.7.51",
+      "device": "cpe-gw-man-06-04",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.9.103",
+      "device": "peer-edge-04",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.250.30",
+      "device": "agg-sw-growth-04",
+      "interval_s": 60
+    }
+  ]
+}

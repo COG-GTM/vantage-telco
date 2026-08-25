@@ -1,0 +1,11 @@
+{
+  "management_supernet": "10.20.0.0/16",
+  "growth_pool": "10.20.250.0/24",
+  "notes": "growth pool assumed free at time of allocation (2024-02)",
+  "external_bgp_devices": [
+    "peer-edge-01",
+    "peer-edge-02",
+    "peer-edge-03",
+    "peer-edge-04"
+  ]
+}

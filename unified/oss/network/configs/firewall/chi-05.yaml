@@ -1,0 +1,22 @@
+market: CHI-05
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.11.30
+    ports: [22, 161, 443]
+    device: core-rtr-chi-05-01
+  - action: allow
+    host: 10.20.11.37
+    ports: [22, 161, 443]
+    device: agg-sw-chi-05-02
+  - action: allow
+    host: 10.20.11.44
+    ports: [22, 161, 443]
+    device: cell-rtr-chi-05-03
+  - action: allow
+    host: 10.20.11.51
+    ports: [22, 161, 443]
+    device: cpe-gw-chi-05-04

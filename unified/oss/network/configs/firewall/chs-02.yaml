@@ -1,0 +1,22 @@
+market: CHS-02
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.9.30
+    ports: [22, 161, 443]
+    device: core-rtr-chs-02-01
+  - action: allow
+    host: 10.20.9.37
+    ports: [22, 161, 443]
+    device: agg-sw-chs-02-02
+  - action: allow
+    host: 10.20.9.44
+    ports: [22, 161, 443]
+    device: cell-rtr-chs-02-03
+  - action: allow
+    host: 10.20.9.51
+    ports: [22, 161, 443]
+    device: cpe-gw-chs-02-04

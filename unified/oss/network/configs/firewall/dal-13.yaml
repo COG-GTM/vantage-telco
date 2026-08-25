@@ -1,0 +1,22 @@
+market: DAL-13
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.16.30
+    ports: [22, 161, 443]
+    device: core-rtr-dal-13-01
+  - action: allow
+    host: 10.20.16.37
+    ports: [22, 161, 443]
+    device: agg-sw-dal-13-02
+  - action: allow
+    host: 10.20.16.44
+    ports: [22, 161, 443]
+    device: cell-rtr-dal-13-03
+  - action: allow
+    host: 10.20.16.51
+    ports: [22, 161, 443]
+    device: cpe-gw-dal-13-04

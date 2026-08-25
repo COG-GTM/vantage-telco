@@ -1,0 +1,23 @@
+$TTL 300
+@ IN SOA ns1.mgmt.vantage.net. noc.vantage.net. (2025110301 300 120 86400 300)
+@ IN NS ns1.mgmt.vantage.net.
+core-rtr-phx-07-01 IN A 10.20.14.30
+agg-sw-phx-07-02 IN A 10.20.14.37
+cell-rtr-phx-07-03 IN A 10.20.14.44
+cpe-gw-phx-07-04 IN A 10.20.14.51
+core-rtr-abq-02-01 IN A 10.20.15.30
+agg-sw-abq-02-02 IN A 10.20.15.37
+cell-rtr-abq-02-03 IN A 10.20.15.44
+cpe-gw-abq-02-04 IN A 10.20.15.51
+core-rtr-sea-06-01 IN A 10.20.17.30
+agg-sw-sea-06-02 IN A 10.20.17.37
+cell-rtr-sea-06-03 IN A 10.20.17.44
+cpe-gw-sea-06-04 IN A 10.20.17.51
+core-rtr-pdx-04-01 IN A 10.20.18.30
+agg-sw-pdx-04-02 IN A 10.20.18.37
+cell-rtr-pdx-04-03 IN A 10.20.18.44
+cpe-gw-pdx-04-04 IN A 10.20.18.51
+core-rtr-boi-01-01 IN A 10.20.19.30
+agg-sw-boi-01-02 IN A 10.20.19.37
+cell-rtr-boi-01-03 IN A 10.20.19.44
+cpe-gw-boi-01-04 IN A 10.20.19.51

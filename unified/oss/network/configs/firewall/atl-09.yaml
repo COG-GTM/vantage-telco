@@ -1,0 +1,26 @@
+market: ATL-09
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.8.30
+    ports: [22, 161, 443]
+    device: core-rtr-atl-09-01
+  - action: allow
+    host: 10.20.8.37
+    ports: [22, 161, 443]
+    device: agg-sw-atl-09-02
+  - action: allow
+    host: 10.20.8.44
+    ports: [22, 161, 443]
+    device: cell-rtr-atl-09-03
+  - action: allow
+    host: 10.20.8.51
+    ports: [22, 161, 443]
+    device: cpe-gw-atl-09-04
+  - action: allow
+    host: 10.20.250.36
+    ports: [22, 161, 443]
+    device: agg-sw-growth-05

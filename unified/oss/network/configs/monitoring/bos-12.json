@@ -1,0 +1,41 @@
+{
+  "market": "BOS-12",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.4.17",
+      "device": "core-rtr-bos-12",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.4.30",
+      "device": "core-rtr-bos-12-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.4.37",
+      "device": "agg-sw-bos-12-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.4.44",
+      "device": "cell-rtr-bos-12-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.4.51",
+      "device": "cpe-gw-bos-12-04",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.9.100",
+      "device": "peer-edge-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.250.12",
+      "device": "agg-sw-growth-01",
+      "interval_s": 60
+    }
+  ]
+}

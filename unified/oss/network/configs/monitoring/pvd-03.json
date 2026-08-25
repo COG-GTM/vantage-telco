@@ -1,0 +1,36 @@
+{
+  "market": "PVD-03",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.6.30",
+      "device": "core-rtr-pvd-03-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.6.37",
+      "device": "agg-sw-pvd-03-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.6.44",
+      "device": "cell-rtr-pvd-03-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.6.51",
+      "device": "cpe-gw-pvd-03-04",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.9.102",
+      "device": "peer-edge-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.250.24",
+      "device": "agg-sw-growth-03",
+      "interval_s": 60
+    }
+  ]
+}

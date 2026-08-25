@@ -1,0 +1,30 @@
+market: PVD-03
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.6.30
+    ports: [22, 161, 443]
+    device: core-rtr-pvd-03-01
+  - action: allow
+    host: 10.20.6.37
+    ports: [22, 161, 443]
+    device: agg-sw-pvd-03-02
+  - action: allow
+    host: 10.20.6.44
+    ports: [22, 161, 443]
+    device: cell-rtr-pvd-03-03
+  - action: allow
+    host: 10.20.6.51
+    ports: [22, 161, 443]
+    device: cpe-gw-pvd-03-04
+  - action: allow
+    host: 10.20.9.102
+    ports: [22, 161, 443]
+    device: peer-edge-03
+  - action: allow
+    host: 10.20.250.24
+    ports: [22, 161, 443]
+    device: agg-sw-growth-03

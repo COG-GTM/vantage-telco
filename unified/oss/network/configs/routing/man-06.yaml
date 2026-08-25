@@ -1,0 +1,21 @@
+market: MAN-06
+management_supernet: 10.20.0.0/16
+routes:
+  - prefix: 10.20.7.30/32
+    next_hop: 10.20.0.1
+    device: core-rtr-man-06-01
+  - prefix: 10.20.7.37/32
+    next_hop: 10.20.0.1
+    device: agg-sw-man-06-02
+  - prefix: 10.20.7.44/32
+    next_hop: 10.20.0.1
+    device: cell-rtr-man-06-03
+  - prefix: 10.20.7.51/32
+    next_hop: 10.20.0.1
+    device: cpe-gw-man-06-04
+  - prefix: 10.20.9.103/32
+    next_hop: 10.20.0.1
+    device: peer-edge-04
+  - prefix: 10.20.250.30/32
+    next_hop: 10.20.0.1
+    device: agg-sw-growth-04

@@ -1,0 +1,22 @@
+market: PDX-04
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.18.30
+    ports: [22, 161, 443]
+    device: core-rtr-pdx-04-01
+  - action: allow
+    host: 10.20.18.37
+    ports: [22, 161, 443]
+    device: agg-sw-pdx-04-02
+  - action: allow
+    host: 10.20.18.44
+    ports: [22, 161, 443]
+    device: cell-rtr-pdx-04-03
+  - action: allow
+    host: 10.20.18.51
+    ports: [22, 161, 443]
+    device: cpe-gw-pdx-04-04

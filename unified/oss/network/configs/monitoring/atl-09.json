@@ -1,0 +1,31 @@
+{
+  "market": "ATL-09",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.8.30",
+      "device": "core-rtr-atl-09-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.8.37",
+      "device": "agg-sw-atl-09-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.8.44",
+      "device": "cell-rtr-atl-09-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.8.51",
+      "device": "cpe-gw-atl-09-04",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.250.36",
+      "device": "agg-sw-growth-05",
+      "interval_s": 60
+    }
+  ]
+}

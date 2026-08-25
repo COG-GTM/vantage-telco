@@ -1,0 +1,22 @@
+market: MSP-04
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.13.30
+    ports: [22, 161, 443]
+    device: core-rtr-msp-04-01
+  - action: allow
+    host: 10.20.13.37
+    ports: [22, 161, 443]
+    device: agg-sw-msp-04-02
+  - action: allow
+    host: 10.20.13.44
+    ports: [22, 161, 443]
+    device: cell-rtr-msp-04-03
+  - action: allow
+    host: 10.20.13.51
+    ports: [22, 161, 443]
+    device: cpe-gw-msp-04-04

@@ -1,0 +1,15 @@
+market: BOI-01
+management_supernet: 10.20.0.0/16
+routes:
+  - prefix: 10.20.19.30/32
+    next_hop: 10.20.0.1
+    device: core-rtr-boi-01-01
+  - prefix: 10.20.19.37/32
+    next_hop: 10.20.0.1
+    device: agg-sw-boi-01-02
+  - prefix: 10.20.19.44/32
+    next_hop: 10.20.0.1
+    device: cell-rtr-boi-01-03
+  - prefix: 10.20.19.51/32
+    next_hop: 10.20.0.1
+    device: cpe-gw-boi-01-04

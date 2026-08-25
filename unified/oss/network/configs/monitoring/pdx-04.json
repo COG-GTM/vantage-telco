@@ -1,0 +1,26 @@
+{
+  "market": "PDX-04",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.18.30",
+      "device": "core-rtr-pdx-04-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.18.37",
+      "device": "agg-sw-pdx-04-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.18.44",
+      "device": "cell-rtr-pdx-04-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.18.51",
+      "device": "cpe-gw-pdx-04-04",
+      "interval_s": 60
+    }
+  ]
+}

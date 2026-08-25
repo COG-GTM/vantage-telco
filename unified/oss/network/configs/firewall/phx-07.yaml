@@ -1,0 +1,22 @@
+market: PHX-07
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.14.30
+    ports: [22, 161, 443]
+    device: core-rtr-phx-07-01
+  - action: allow
+    host: 10.20.14.37
+    ports: [22, 161, 443]
+    device: agg-sw-phx-07-02
+  - action: allow
+    host: 10.20.14.44
+    ports: [22, 161, 443]
+    device: cell-rtr-phx-07-03
+  - action: allow
+    host: 10.20.14.51
+    ports: [22, 161, 443]
+    device: cpe-gw-phx-07-04

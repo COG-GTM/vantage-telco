@@ -1,0 +1,26 @@
+{
+  "market": "CHI-05",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.11.30",
+      "device": "core-rtr-chi-05-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.11.37",
+      "device": "agg-sw-chi-05-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.11.44",
+      "device": "cell-rtr-chi-05-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.11.51",
+      "device": "cpe-gw-chi-05-04",
+      "interval_s": 60
+    }
+  ]
+}

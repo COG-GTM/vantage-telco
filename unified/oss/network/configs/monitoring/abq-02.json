@@ -1,0 +1,26 @@
+{
+  "market": "ABQ-02",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.15.30",
+      "device": "core-rtr-abq-02-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.15.37",
+      "device": "agg-sw-abq-02-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.15.44",
+      "device": "cell-rtr-abq-02-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.15.51",
+      "device": "cpe-gw-abq-02-04",
+      "interval_s": 60
+    }
+  ]
+}

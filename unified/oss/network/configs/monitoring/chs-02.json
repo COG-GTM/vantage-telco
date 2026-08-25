@@ -1,0 +1,26 @@
+{
+  "market": "CHS-02",
+  "poller": "vantage-noc",
+  "targets": [
+    {
+      "host": "10.20.9.30",
+      "device": "core-rtr-chs-02-01",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.9.37",
+      "device": "agg-sw-chs-02-02",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.9.44",
+      "device": "cell-rtr-chs-02-03",
+      "interval_s": 60
+    },
+    {
+      "host": "10.20.9.51",
+      "device": "cpe-gw-chs-02-04",
+      "interval_s": 60
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+market: RDU-11
+rules:
+  - action: allow
+    src: 10.20.0.0/16
+    dst: 10.20.0.0/16
+    proto: any
+  - action: allow
+    host: 10.20.10.30
+    ports: [22, 161, 443]
+    device: core-rtr-rdu-11-01
+  - action: allow
+    host: 10.20.10.37
+    ports: [22, 161, 443]
+    device: agg-sw-rdu-11-02
+  - action: allow
+    host: 10.20.10.44
+    ports: [22, 161, 443]
+    device: cell-rtr-rdu-11-03
+  - action: allow
+    host: 10.20.10.51
+    ports: [22, 161, 443]
+    device: cpe-gw-rdu-11-04
