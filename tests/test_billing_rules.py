@@ -9,20 +9,19 @@ from app.billing.suspension import suspended_days, suspension_credit
 from app.billing.tax import federal_tax, provincial_tax, rates_for_province
 
 
-def test_proration_uses_actual_calendar_days():
-    # 30 days on the old plan, 1 on the new, in a 31 day month.
+def test_proration_uses_shared_30_day_month():
     charge = prorated_plan_charge(Decimal("310"), Decimal("620"), 31, "2026-07")
-    assert charge == Decimal("620") / 31 * 30 + Decimal("310") / 31
+    assert charge == Decimal("620.00")
 
 
 def test_proration_of_a_full_month_is_the_plan_fee():
     assert prorated_plan_charge(Decimal("640"), Decimal("0"), 0, "2026-07") == Decimal("640")
 
 
-def test_february_days_cost_more_than_july_days():
+def test_february_and_july_use_the_same_rules():
     february = prorated_plan_charge(Decimal("280"), Decimal("560"), 15, "2026-02")
     july = prorated_plan_charge(Decimal("280"), Decimal("560"), 15, "2026-07")
-    assert february > july
+    assert february == july
 
 
 def test_promo_credit_lives_thirty_days_past_issue():
@@ -66,16 +65,17 @@ def test_harmonized_province_has_no_separate_provincial_line():
     assert provincial_tax(Decimal("100"), Decimal("10"), rates) == Decimal("0")
 
 
-def test_provincial_tax_is_assessed_before_the_loyalty_discount():
+def test_provincial_tax_is_assessed_after_the_loyalty_discount():
     rates = rates_for_province("BC")
     assert federal_tax(Decimal("100"), rates) == Decimal("5")
-    assert provincial_tax(Decimal("100"), Decimal("10"), rates) == Decimal("7")
+    assert provincial_tax(Decimal("100"), Decimal("10"), rates) == Decimal("6.30")
 
 
 def test_quebec_uses_qst():
     rates = rates_for_province("QC")
     assert rates.provincial_label == "QST"
-    assert provincial_tax(Decimal("1000"), Decimal("0"), rates) == Decimal("99.750")
+    assert provincial_tax(Decimal("1000"), Decimal("0"), rates) == Decimal("99.75")
+    assert provincial_tax(Decimal("1000"), Decimal("100"), rates) == Decimal("89.78")
 
 
 def test_invoice_carries_province_and_tax_lines():

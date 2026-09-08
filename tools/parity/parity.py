@@ -66,13 +66,14 @@ def _rule_hints(legacy: Dict[str, Any], modern: Dict[str, Any]) -> List[str]:
     if abs(Decimal(str(legacy["overage_charges"])) - Decimal(str(modern["overage_charges"]))) > CENT:
         hints.append("overage")
     plan_charges_agree = abs(Decimal(str(legacy["plan_charge"])) - Decimal(str(modern["plan_charge"]))) <= CENT
+    subtotals_agree = abs(Decimal(str(legacy["subtotal"])) - Decimal(str(modern["subtotal"]))) <= CENT
     if not plan_charges_agree:
         hints.append("proration")
     if abs(Decimal(str(legacy["promo_credit"])) - Decimal(str(modern["promo_credit"]))) > CENT:
         hints.append("promo-expiry")
     if abs(Decimal(str(legacy["suspension_credit"])) - Decimal(str(modern["suspension_credit"]))) > CENT:
         hints.append("suspension")
-    if abs(Decimal(str(legacy["provincial_tax"])) - Decimal(str(modern["provincial_tax"]))) > CENT:
+    if subtotals_agree and abs(Decimal(str(legacy["provincial_tax"])) - Decimal(str(modern["provincial_tax"]))) > CENT:
         hints.append("tax-base")
     if abs(Decimal(str(legacy["late_fee"])) - Decimal(str(modern["late_fee"]))) > CENT:
         hints.append("late-fee")

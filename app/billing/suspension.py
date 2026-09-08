@@ -6,9 +6,17 @@ was suspended at the plan's daily rate.
 
 from __future__ import annotations
 
+from calendar import monthrange
 from decimal import Decimal
 
-from app.billing.proration import daily_rate
+
+def days_in_period(period: str) -> int:
+    year, month = (int(part) for part in period.split("-")[:2])
+    return monthrange(year, month)[1]
+
+
+def daily_rate(monthly_fee: Decimal, period: str) -> Decimal:
+    return Decimal(monthly_fee) / Decimal(days_in_period(period))
 
 
 def suspended_days(start_day: int, end_day: int) -> int:

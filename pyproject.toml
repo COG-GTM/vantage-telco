@@ -8,6 +8,7 @@ dependencies = [
     "uvicorn>=0.27",
     "pymongo>=4.6",
     "pydantic>=2.6",
+    "telco-billing-rules @ git+https://github.com/COG-GTM/meridian-telco.git@3d5729a518b59b4e44bef8ca8f4c1b4c709854b2#subdirectory=billing-rules",
 ]
 
 [project.optional-dependencies]

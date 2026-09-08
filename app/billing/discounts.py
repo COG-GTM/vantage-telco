@@ -8,11 +8,11 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-from app.billing.rating import money
+from telco_billing_rules import money
 
 
 def loyalty_discount(amount: Decimal, loyalty_pct: float) -> Decimal:
-    return Decimal(amount) * Decimal(str(loyalty_pct)) / Decimal(100)
+    return money(Decimal(str(amount)) * Decimal(str(loyalty_pct)) / Decimal(100))
 
 
 def apply_loyalty(amount: Decimal, loyalty_pct: float) -> Decimal:

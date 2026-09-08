@@ -8,7 +8,7 @@ from app.billing.latefee import late_fee
 from app.billing.lines import multi_line_discount
 from app.billing.promo import promo_credit
 from app.billing.proration import prorated_plan_charge
-from app.billing.rating import money, overage_mb, rate_overage
+from app.billing.rating import money, overage_gb, overage_mb, rate_overage, usage_gb_rounded
 from app.billing.suspension import suspension_credit
 from app.billing.tax import federal_tax, provincial_tax, rates_for_province
 from app.db import all_documents
@@ -37,8 +37,8 @@ def find_account(account_id: str) -> Optional[Dict[str, Any]]:
 def build_invoice(account: Dict[str, Any], usage: Dict[str, Any]) -> Dict[str, Any]:
     """Assemble one invoice.
 
-    Charges are carried at full precision and rounded once, at the total: the
-    invoice is a single amount owed, not a stack of separately rounded lines.
+    Each charge line is rounded to cents before the next invoice calculation,
+    matching the shared billing rules.
     """
     period = usage["period"]
     usage_mb = int(usage["usage_mb"])
@@ -51,28 +51,34 @@ def build_invoice(account: Dict[str, Any], usage: Dict[str, Any]) -> Dict[str, A
         int(account.get("plan_change_day", 0) or 0),
         period,
     )
-    line_discount = multi_line_discount(plan_charge, int(account.get("line_count", 1) or 1))
-    recurring = plan_charge - line_discount
+    line_discount = money(
+        multi_line_discount(plan_charge, int(account.get("line_count", 1) or 1))
+    )
+    recurring = money(plan_charge - line_discount)
     overage_charges = rate_overage(usage_mb, included_gb)
-    credit = suspension_credit(
+    credit = money(suspension_credit(
         plan_fee,
         int(account.get("suspension_start_day", 0) or 0),
         int(account.get("suspension_end_day", 0) or 0),
         period,
-    )
-    promo = promo_credit(
+    ))
+    promo = money(promo_credit(
         Decimal(str(account.get("promo_credit_amount", 0) or 0)),
         account.get("promo_issued_on"),
         period,
-    )
-    fee = late_fee(Decimal(str(account.get("prior_balance", 0) or 0)), account.get("prior_due_date"), period)
+    ))
+    fee = money(late_fee(
+        Decimal(str(account.get("prior_balance", 0) or 0)),
+        account.get("prior_due_date"),
+        period,
+    ))
 
-    subtotal = max(recurring + overage_charges + fee - credit - promo, Decimal("0"))
+    subtotal = money(max(recurring + overage_charges + fee - credit - promo, Decimal("0")))
     rates = rates_for_province(account.get("province", ""))
     loyalty = loyalty_discount(subtotal, account["loyalty_discount_pct"])
     federal = federal_tax(subtotal, rates)
     provincial = provincial_tax(subtotal, loyalty, rates)
-    total = subtotal - loyalty + federal + provincial
+    total = money(subtotal - loyalty + federal + provincial)
 
     return {
         "account_id": account["account_id"],
@@ -85,6 +91,8 @@ def build_invoice(account: Dict[str, Any], usage: Dict[str, Any]) -> Dict[str, A
         "period": period,
         "usage_mb": usage_mb,
         "included_gb": included_gb,
+        "usage_gb_rated": usage_gb_rounded(usage_mb),
+        "overage_gb": overage_gb(usage_mb, included_gb),
         "overage_mb": overage_mb(usage_mb, included_gb),
         "plan_charge": float(money(plan_charge)),
         "line_discount": float(money(line_discount)),
