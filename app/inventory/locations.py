@@ -10,10 +10,12 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
+from telco_capacity import RULE, can_support
+
 from app.db import all_documents
 from app.inventory.capacity import available_capacity, utilization_pct
 
-AVAILABILITY_RULE = "available = total_capacity - allocated - maintenance_buffer"
+AVAILABILITY_RULE = RULE
 
 
 def enrich_location(location: Dict[str, Any], requested_mbps: int = 0) -> Dict[str, Any]:
@@ -25,7 +27,7 @@ def enrich_location(location: Dict[str, Any], requested_mbps: int = 0) -> Dict[s
     enriched.update(
         available_mbps=available,
         utilization_pct=utilization_pct(total, allocated, buffer_mbps),
-        can_support=available >= requested_mbps,
+        can_support=can_support(available, requested_mbps),
         headroom_mbps=available - requested_mbps,
     )
     return enriched

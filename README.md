@@ -14,6 +14,12 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 
+`telco-capacity-rules` is a private GitHub dependency. Local installs need
+GitHub access to `COG-GTM`, for example through `gh auth setup-git`, an
+SSH-based `insteadOf` rewrite, or a PAT configured with the same
+`git config --global url.…insteadOf` rewrite used by CI. CI reads the
+`TELCO_CAPACITY_RULES_TOKEN` Actions secret.
+
 Point the app at a real database by exporting `MONGO_URI` (and optionally
 `MONGO_DB`, default `vantage`).
 
