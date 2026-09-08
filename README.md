@@ -56,21 +56,23 @@ Devices flagged `external_bgp` are customer-facing and must not be renumbered.
 
 ### `app/billing`
 
-- `rating.py` — usage is billed to the exact MB at $0.012/MB overage. No
-  gigabyte rounding.
-- `proration.py` — mid-cycle plan changes split on actual calendar days.
-- `promo.py` — promo credits stay live for 30 days from issue.
-- `suspension.py` — suspended days are credited back at the daily rate.
+- `rating.py` — usage is rated in whole gigabytes, with partial gigabytes
+  rounded up and overage charged at $10 per GB.
+- `proration.py` — mid-cycle plan changes split across a 30-day billing month.
+- `promo.py` — promo credits belong to the cycle in which they were issued.
+- `suspension.py` — suspended days remain billed with no credit.
 - `lines.py` — 3-9 lines 5% off recurring, 10 or more 10%.
 - `latefee.py` — 10 days grace after the due date, then 1.5% of the balance.
-- `tax.py` — GST/HST/PST/QST, all assessed on the pre-discount subtotal.
-- `discounts.py` — the loyalty credit comes off the subtotal and does not change
-  the tax base.
+- `tax.py` — GST/HST on the pre-discount subtotal and PST/QST after loyalty.
+- `discounts.py` — the loyalty credit comes off the subtotal.
 - `invoices.py` — invoice construction, plus `unlinked_usage()` for usage that
   was mediated without a billing account.
 
-Charges are carried as `Decimal` at full precision and rounded once, at the
-invoice total. Provinces billed: BC, AB, ON, QC.
+The implementation consumes the shared `telco-capacity-rules` package, so
+Meridian and Vantage use the same default rules. The dependency is declared in
+`requirements.txt` and currently follows the shared-rules development branch;
+pin it to `main` after PR #1 merges. Monetary values remain `Decimal` at the
+application boundary. Provinces billed: BC, AB, ON, QC.
 
 Endpoints: `GET /billing/invoices`, `GET /billing/usage-summary`. The invoice
 register page is `GET /dashboard/billing` (filter by `period`, `account_id` or

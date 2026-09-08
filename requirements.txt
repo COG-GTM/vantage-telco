@@ -4,3 +4,5 @@ pymongo>=4.6
 pydantic>=2.6
 pytest>=8.0
 httpx>=0.27
+# TODO: pin to main after telco-capacity-rules#1 merges
+telco-capacity-rules @ git+https://github.com/COG-GTM/telco-capacity-rules@devin/1788887793-shared-billing-rules#subdirectory=python

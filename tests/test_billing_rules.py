@@ -9,36 +9,35 @@ from app.billing.suspension import suspended_days, suspension_credit
 from app.billing.tax import federal_tax, provincial_tax, rates_for_province
 
 
-def test_proration_uses_actual_calendar_days():
-    # 30 days on the old plan, 1 on the new, in a 31 day month.
+def test_proration_uses_thirty_day_billing_month():
     charge = prorated_plan_charge(Decimal("310"), Decimal("620"), 31, "2026-07")
-    assert charge == Decimal("620") / 31 * 30 + Decimal("310") / 31
+    assert charge == Decimal("620.00")
 
 
 def test_proration_of_a_full_month_is_the_plan_fee():
     assert prorated_plan_charge(Decimal("640"), Decimal("0"), 0, "2026-07") == Decimal("640")
 
 
-def test_february_days_cost_more_than_july_days():
+def test_february_and_july_use_the_same_billing_month():
     february = prorated_plan_charge(Decimal("280"), Decimal("560"), 15, "2026-02")
     july = prorated_plan_charge(Decimal("280"), Decimal("560"), 15, "2026-07")
-    assert february > july
+    assert february == july
 
 
-def test_promo_credit_lives_thirty_days_past_issue():
-    assert promo_is_live("2026-06-24", "2026-07")
-    assert promo_credit(Decimal("120"), "2026-06-24", "2026-07") == Decimal("120")
+def test_promo_credit_belongs_to_issue_cycle():
+    assert not promo_is_live("2026-06-24", "2026-07")
+    assert promo_credit(Decimal("120"), "2026-06-24", "2026-07") == Decimal("0.00")
 
 
-def test_promo_credit_expires_after_thirty_days():
+def test_promo_credit_from_another_cycle_is_not_live():
     assert not promo_is_live("2026-05-20", "2026-07")
     assert promo_credit(Decimal("120"), "2026-05-20", "2026-07") == Decimal("0")
 
 
-def test_suspended_days_are_credited_back():
+def test_suspended_days_remain_billed():
     days = suspended_days(10, 14)
     assert days == 5
-    assert suspension_credit(Decimal("620"), 10, 14, "2026-07") == Decimal("620") / 31 * 5
+    assert suspension_credit(Decimal("620"), 10, 14, "2026-07") == Decimal("0.00")
 
 
 def test_no_suspension_means_no_credit():
@@ -66,10 +65,10 @@ def test_harmonized_province_has_no_separate_provincial_line():
     assert provincial_tax(Decimal("100"), Decimal("10"), rates) == Decimal("0")
 
 
-def test_provincial_tax_is_assessed_before_the_loyalty_discount():
+def test_provincial_tax_is_assessed_after_the_loyalty_discount():
     rates = rates_for_province("BC")
     assert federal_tax(Decimal("100"), rates) == Decimal("5")
-    assert provincial_tax(Decimal("100"), Decimal("10"), rates) == Decimal("7")
+    assert provincial_tax(Decimal("100"), Decimal("10"), rates) == Decimal("6.30")
 
 
 def test_quebec_uses_qst():

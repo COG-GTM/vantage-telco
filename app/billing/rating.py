@@ -1,26 +1,27 @@
-"""Usage rating.
-
-Vantage rates to the exact megabyte — customers are billed for what they used,
-never for a rounded-up gigabyte — at a flat per-MB overage rate.
-"""
-
 from __future__ import annotations
 
-from decimal import ROUND_HALF_UP, Decimal
+from decimal import Decimal
 
-OVERAGE_RATE_PER_MB = Decimal("0.012")
-MB_PER_GB = 1024
+import telco_rules
+
+from app.billing.rules import PROFILE, to_money
+
+
+def usage_gb_rounded(usage_mb: int) -> int:
+    return telco_rules.usage_gb_rounded(int(usage_mb))
 
 
 def overage_mb(usage_mb: int, included_gb: int) -> int:
-    included_mb = included_gb * MB_PER_GB
-    return max(usage_mb - included_mb, 0)
+    return telco_rules.overage_mb(int(usage_mb), int(included_gb))
+
+
+def overage_gb(usage_mb: int, included_gb: int) -> int:
+    return telco_rules.overage_gb(int(usage_mb), int(included_gb))
 
 
 def rate_overage(usage_mb: int, included_gb: int) -> Decimal:
-    charge = Decimal(overage_mb(usage_mb, included_gb)) * OVERAGE_RATE_PER_MB
-    return money(charge)
+    return to_money(telco_rules.rate_overage(PROFILE, int(usage_mb), int(included_gb)))
 
 
-def money(amount: Decimal) -> Decimal:
-    return Decimal(amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+def money(amount: Decimal | int | float) -> Decimal:
+    return to_money(float(amount))

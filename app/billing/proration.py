@@ -1,34 +1,32 @@
-"""Proration on a mid-cycle plan change.
-
-A partial month is priced on the calendar: a day in February costs more than a
-day in July, because the customer had the service for a larger share of the
-cycle. There is no 30-day convention here.
-"""
-
 from __future__ import annotations
 
-from calendar import monthrange
 from decimal import Decimal
+
+import telco_rules
+
+from app.billing.rules import PROFILE, to_money
 
 
 def days_in_period(period: str) -> int:
-    year, month = (int(part) for part in period.split("-")[:2])
-    return monthrange(year, month)[1]
+    return telco_rules.days_in_period(PROFILE, period)
 
 
-def daily_rate(monthly_fee: Decimal, period: str) -> Decimal:
-    return Decimal(monthly_fee) / Decimal(days_in_period(period))
+def daily_rate(monthly_fee: Decimal | int | float, period: str) -> Decimal:
+    return to_money(telco_rules.daily_rate(PROFILE, float(monthly_fee), period))
 
 
 def prorated_plan_charge(
-    monthly_fee: Decimal, previous_monthly_fee: Decimal, change_day: int, period: str
+    monthly_fee: Decimal | int | float,
+    previous_monthly_fee: Decimal | int | float,
+    change_day: int,
+    period: str,
 ) -> Decimal:
-    total_days = days_in_period(period)
-    if not change_day:
-        return Decimal(monthly_fee)
-    days_on_old = max(0, min(int(change_day) - 1, total_days))
-    days_on_new = total_days - days_on_old
-    return (
-        daily_rate(previous_monthly_fee, period) * days_on_old
-        + daily_rate(monthly_fee, period) * days_on_new
+    return to_money(
+        telco_rules.prorated_plan_charge(
+            PROFILE,
+            float(monthly_fee),
+            float(previous_monthly_fee),
+            int(change_day),
+            period,
+        )
     )
