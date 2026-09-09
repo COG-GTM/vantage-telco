@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, Query
+import html
+
+from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import HTMLResponse
 
 from app.inventory.locations import (
@@ -9,6 +11,7 @@ from app.inventory.locations import (
     get_location,
     list_locations,
 )
+from app.security import Principal, sales_principal
 
 router = APIRouter(tags=["capacity"])
 
@@ -18,6 +21,7 @@ def get_locations(
     requested_mbps: int = Query(default=0, ge=0),
     market_id: str | None = Query(default=None),
     search: str | None = Query(default=None),
+    principal: Principal = Depends(sales_principal),  # noqa: B008
 ):
     locations = list_locations(requested_mbps=requested_mbps, market_id=market_id, search=search)
     return {
@@ -34,7 +38,11 @@ def get_locations(
 
 
 @router.get("/capacity/locations/{location_code}")
-def get_single_location(location_code: str, requested_mbps: int = Query(default=0, ge=0)):
+def get_single_location(
+    location_code: str,
+    requested_mbps: int = Query(default=0, ge=0),
+    principal: Principal = Depends(sales_principal),  # noqa: B008
+):
     location = get_location(location_code, requested_mbps=requested_mbps)
     if location is None:
         raise HTTPException(status_code=404, detail="location not found")
@@ -42,14 +50,18 @@ def get_single_location(location_code: str, requested_mbps: int = Query(default=
 
 
 @router.get("/capacity", response_class=HTMLResponse)
-def capacity_check(requested_mbps: int = Query(default=350, ge=0)):
+def capacity_check(
+    requested_mbps: int = Query(default=350, ge=0),
+    principal: Principal = Depends(sales_principal),  # noqa: B008
+):
     locations = list_locations(requested_mbps=requested_mbps)
+    e = html.escape
     markets = sorted({location["market_id"] for location in locations})
-    market_options = "".join(f'<option value="{m}">{m}</option>' for m in markets)
+    market_options = "".join(f'<option value="{e(str(m))}">{e(str(m))}</option>' for m in markets)
     payload = "".join(_row(location, index) for index, location in enumerate(locations))
     return _PAGE.format(
         rule=AVAILABILITY_RULE,
-        requested=requested_mbps,
+        requested=str(requested_mbps),
         market_options=market_options,
         rows=payload,
         location_count=len(locations),
@@ -60,16 +72,21 @@ def capacity_check(requested_mbps: int = Query(default=350, ge=0)):
 
 
 def _row(location: dict, index: int) -> str:
+    e = html.escape
+    location_code = e(str(location["location_code"]))
+    customer_name = e(str(location["customer_name"]))
+    location_name = e(str(location["location_name"]))
+    market_id = e(str(location["market_id"]))
     verdict = "yes" if location["can_support"] else "no"
     verdict_label = "Serviceable" if location["can_support"] else "Not serviceable"
     return f"""
-      <tr data-market="{location["market_id"]}" data-available="{location["available_mbps"]}"
-          data-search="{location["customer_name"].lower()} {location["location_name"].lower()} {location["location_code"].lower()}"
+      <tr data-market="{market_id}" data-available="{location["available_mbps"]}"
+          data-search="{e(str(location["customer_name"]).lower())} {e(str(location["location_name"]).lower())} {e(str(location["location_code"]).lower())}"
           class="{"lead" if index == 0 else ""}">
-        <td class="code">{location["location_code"]}</td>
-        <td class="customer">{location["customer_name"]}</td>
-        <td class="site">{location["location_name"]}</td>
-        <td><span class="chip">{location["market_id"]}</span></td>
+        <td class="code">{location_code}</td>
+        <td class="customer">{customer_name}</td>
+        <td class="site">{location_name}</td>
+        <td><span class="chip">{market_id}</span></td>
         <td class="num">{location["total_capacity_mbps"]:,}</td>
         <td class="num">{location["allocated_mbps"]:,}</td>
         <td class="num buffer">{location["maintenance_buffer_mbps"]:,}</td>
