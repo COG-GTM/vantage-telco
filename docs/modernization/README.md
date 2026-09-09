@@ -10,7 +10,7 @@ code. Artifacts live under `docs/modernization/<phase>/` and are named
 | 0 | `phase0-baseline/` | Tooling + CI; baseline of the current app (`pre-*` only) |
 | 1 | `phase1-security/` | OAuth2, PII gating, XSS escaping, security headers |
 | 2 | `phase2-data-layer/` | Mongo client lifecycle, query push-down, invoice N+1 |
-| 3 | `phase3-api/` | async handlers, pagination, Jinja2 templates, `/v1` |
+| 3 | `phase3-api-templating/` | async handlers, pagination, Jinja2 templates, `/v1` |
 | 4 | `phase4-java21/` | Java 21 + virtual threads in `java/vantage-report` |
 | 5 | `phase5-deploy/` | Docker, secrets, SBOM, final validation + `summary.md` |
 
@@ -54,6 +54,18 @@ Captures are headless (no browser chrome, cursor or scrollbars). If a phase
 needs an extra surface (e.g. an XSS payload URL, an unauthenticated request
 being rejected, `mvn exec:java` output), add it alongside with the same
 `pre-`/`post-` naming and mention it in the phase's PR description.
+
+## Authenticated captures
+
+Mint a local development token with the scopes needed for the surfaces being
+captured, and run uvicorn with the same development secret:
+
+```bash
+TOKEN=$(VANTAGE_AUTH_DEV_SECRET=dev .venv/bin/python -m app.security \
+  --scopes billing-ops noc sales-engineering inventory:read network:read)
+VANTAGE_AUTH_DEV_SECRET=dev .venv/bin/uvicorn app.main:app --port 8000 &
+python docs/modernization/capture.py docs/modernization/<phase> post --bearer "$TOKEN"
+```
 
 ## Rules
 

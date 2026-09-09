@@ -4,7 +4,7 @@ import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import db
@@ -46,11 +46,22 @@ app.add_middleware(
 )
 app.add_middleware(SecurityHeadersMiddleware)
 
-app.include_router(inventory.router)
-app.include_router(network.router)
-app.include_router(billing.router)
-app.include_router(capacity.router)
-app.include_router(dashboard.router)
+ROUTERS = (inventory.router, network.router, billing.router, capacity.router, dashboard.router)
+v1 = APIRouter(prefix="/v1")
+for router in ROUTERS:
+    v1.include_router(router)
+app.include_router(v1)
+for router in ROUTERS:
+    app.include_router(
+        router,
+        deprecated=True,
+        generate_unique_id_function=lambda route: (
+            f"legacy_{route.name}_{route.path_format}"
+            .replace("/", "_")
+            .replace("{", "")
+            .replace("}", "")
+        ),
+    )
 
 
 @app.get("/health")

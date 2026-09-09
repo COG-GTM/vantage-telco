@@ -30,6 +30,12 @@ Security configuration, the full scope-to-router matrix, token command, capture
 commands, and the PII policy are documented in
 `docs/modernization/phase1-security/README.md`.
 
+## API versioning and pagination
+
+The current API is available under the `/v1` prefix. Unprefixed routes remain
+as deprecated aliases for one release. List endpoints return an envelope with
+`{items, total, limit, offset}`; `limit` defaults to 50 and is capped at 500.
+
 ### MongoDB connection and indexes
 
 In Mongo mode `app/db.py` holds one process-wide `MongoClient` (created lazily

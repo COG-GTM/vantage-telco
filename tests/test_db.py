@@ -215,9 +215,22 @@ def test_accounts_by_id_matches_linear_find_account():
 
 
 def test_billing_invoices_json_byte_for_byte_matches_fixture(client):
-    response = client.get("/billing/invoices?period=2026-07")
+    response = client.get("/billing/invoices?period=2026-07&limit=500")
     assert response.status_code == 200
-    assert response.content == FIXTURE.read_bytes()
+    expected = json.loads(FIXTURE.read_bytes())
+    actual = json.dumps(
+        response.json()["items"],
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode()
+    fixture_items = json.dumps(
+        expected["invoices"],
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode()
+    assert actual == fixture_items
+    assert response.json()["total"] == expected["count"]
+    assert response.json()["revenue_total"] == expected["revenue_total"]
 
 
 def test_billing_invoices_fixture_is_well_formed():

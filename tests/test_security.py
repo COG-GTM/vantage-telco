@@ -116,15 +116,15 @@ def test_wrong_scope_is_forbidden(token_for, scope, path):
 def test_billing_pii_policy(token_for):
     expected = invoice_service.list_invoices(period="2026-07")
     billing = TestClient(app).get(
-        "/billing/invoices?period=2026-07",
+        "/billing/invoices?period=2026-07&limit=500",
         headers=token_for([security.SCOPE_BILLING_OPS]),
-    ).json()["invoices"]
+    ).json()["items"]
     assert billing == expected
 
     noc = TestClient(app).get(
-        "/billing/invoices?period=2026-07",
+        "/billing/invoices?period=2026-07&limit=500",
         headers=token_for([security.SCOPE_NOC]),
-    ).json()["invoices"]
+    ).json()["items"]
     redacted = [
         security.redact_pii(invoice, security.Principal("test", frozenset()))
         for invoice in expected
