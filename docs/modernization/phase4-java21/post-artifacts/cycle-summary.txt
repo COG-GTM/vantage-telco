@@ -1,0 +1,8 @@
+BILLING CYCLE SUMMARY
+Period:            2026-07
+Invoices rendered: 4
+Amount billed:     $6750.82
+Unlinked records:  1
+--------------------------------------------------------
+UNLINKED USAGE (no billing account)
+  VANTAGE-BILL-99999  device=aa11bb22-cc33-4dd4-8ee5-ff6600112233  88123 MB

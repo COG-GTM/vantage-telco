@@ -1,70 +1,75 @@
 package net.vantage.report.pipeline;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import net.vantage.report.model.Invoice;
 import net.vantage.report.report.ReportRenderer;
 
 /**
- * Renders a cycle's invoices in parallel.
+ * Renders a cycle's invoices concurrently with virtual threads.
  *
- * <p>Uses a bounded platform-thread pool sized off the host CPU count: each
- * render is submitted as a {@link Callable} and the {@link Future}s are joined
- * in submission order so the output stays deterministic.
+ * <p>Each invoice is submitted to its own virtual thread, while results are
+ * joined in submission order so output stays deterministic. An optional
+ * concurrency bound limits the number of renders in progress.
  */
 public final class BatchRunner implements AutoCloseable {
 
     private static final long SHUTDOWN_TIMEOUT_SECONDS = 30L;
 
     private final ExecutorService executor;
-    private final ReportRenderer renderer;
+    private final InvoiceRenderer renderer;
+    private final Semaphore permits;
 
     public BatchRunner(ReportRenderer renderer) {
-        this(renderer, Math.max(2, Runtime.getRuntime().availableProcessors()));
+        this(renderer::renderInvoice, 0);
     }
 
-    public BatchRunner(ReportRenderer renderer, int poolSize) {
+    public BatchRunner(ReportRenderer renderer, int maxConcurrency) {
+        this(renderer::renderInvoice, maxConcurrency);
+    }
+
+    public BatchRunner(InvoiceRenderer renderer, int maxConcurrency) {
         this.renderer = renderer;
-        this.executor = Executors.newFixedThreadPool(poolSize, new ThreadFactory() {
-
-            private final AtomicInteger counter = new AtomicInteger();
-
-            @Override
-            public Thread newThread(Runnable runnable) {
-                Thread thread = new Thread(runnable, "vantage-report-" + counter.incrementAndGet());
-                thread.setDaemon(true);
-                return thread;
-            }
-        });
+        this.permits = maxConcurrency <= 0 ? null : new Semaphore(maxConcurrency);
+        this.executor = Executors.newThreadPerTaskExecutor(
+                Thread.ofVirtual().name("render-", 0).factory());
     }
 
     /** Renders every invoice, preserving input order. */
     public List<String> renderAll(List<Invoice> invoices) {
-        List<Future<String>> futures = new ArrayList<Future<String>>(invoices.size());
-        for (final Invoice invoice : invoices) {
-            futures.add(executor.submit(new Callable<String>() {
-                @Override
-                public String call() {
-                    return renderer.renderInvoice(invoice);
+        List<Future<String>> futures = new ArrayList<>(invoices.size());
+        for (var invoice : invoices) {
+            futures.add(executor.submit(() -> {
+                if (permits != null) {
+                    try {
+                        permits.acquire();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        throw new IllegalStateException("interrupted while waiting for render permit", e);
+                    }
+                }
+                try {
+                    return renderer.render(invoice);
+                } finally {
+                    if (permits != null) {
+                        permits.release();
+                    }
                 }
             }));
         }
 
-        List<String> rendered = new ArrayList<String>(futures.size());
-        for (Future<String> future : futures) {
+        List<String> rendered = new ArrayList<>(futures.size());
+        for (var future : futures) {
             rendered.add(join(future));
         }
-        return Collections.unmodifiableList(rendered);
+        return List.copyOf(rendered);
     }
 
     private static String join(Future<String> future) {
@@ -75,11 +80,11 @@ public final class BatchRunner implements AutoCloseable {
             throw new IllegalStateException("interrupted while rendering invoice", e);
         } catch (ExecutionException e) {
             Throwable cause = e.getCause();
-            if (cause instanceof RuntimeException) {
-                throw (RuntimeException) cause;
+            if (cause instanceof RuntimeException runtimeException) {
+                throw runtimeException;
             }
-            if (cause instanceof Error) {
-                throw (Error) cause;
+            if (cause instanceof Error error) {
+                throw error;
             }
             throw new IllegalStateException("invoice rendering failed", cause);
         }
