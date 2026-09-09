@@ -12,7 +12,7 @@ code. Artifacts live under `docs/modernization/<phase>/` and are named
 | 2 | `phase2-data-layer/` | Mongo client lifecycle, query push-down, invoice N+1 |
 | 3 | `phase3-api-templating/` | async handlers, pagination, Jinja2 templates, `/v1` |
 | 4 | `phase4-java21/` | Java 21 + virtual threads in `java/vantage-report` |
-| 5 | `phase5-deploy/` | Docker, secrets, SBOM, final validation + `summary.md` |
+| 5 | [`phase5-deploy/`](phase5-deploy/) | Docker, secrets, SBOM, final validation + [`summary.md`](summary.md) |
 
 ## Surfaces to capture
 
