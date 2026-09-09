@@ -175,7 +175,15 @@ def test_security_headers_on_success_and_unauthorized(anon):
         "x-frame-options",
         "referrer-policy",
     }
-    for response in (anon.get("/health"), anon.get("/resources")):
+    preflight = anon.options(
+        "/resources",
+        headers={
+            "Origin": "https://evil.example",
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+    assert preflight.status_code == 400
+    for response in (anon.get("/health"), anon.get("/resources"), preflight):
         assert names <= set(response.headers)
 
 

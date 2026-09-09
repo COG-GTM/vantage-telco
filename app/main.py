@@ -24,7 +24,6 @@ app = FastAPI(
 )
 
 app.add_middleware(RateLimitMiddleware)
-app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=cors_origins(),
@@ -32,6 +31,7 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
     allow_credentials=False,
 )
+app.add_middleware(SecurityHeadersMiddleware)
 
 app.include_router(inventory.router)
 app.include_router(network.router)
