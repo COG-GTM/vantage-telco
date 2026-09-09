@@ -1,0 +1,95 @@
+$ docker build --build-context m2seed=/home/ubuntu/.m2 --build-arg MAVEN_IMAGE=public.ecr.aws/docker/library/maven:3-eclipse-temurin-21 --build-arg JRE_IMAGE=public.ecr.aws/docker/library/eclipse-temurin:21-jre-alpine -t vantage-telco/report:local java/vantage-report
+Docker Hub and Maven Central returned HTTP 429 in this environment; base images pulled from the ECR Public mirror of the Docker official images, Maven run offline from the host ~/.m2 seed (CI uses the Dockerfile defaults).
+
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.55kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 0.3s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+#3 resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32 done
+#3 CACHED
+
+#4 [context m2seed] load .dockerignore
+#4 transferring m2seed: 2B done
+#4 DONE 0.0s
+
+#5 [internal] load metadata for public.ecr.aws/docker/library/maven:3-eclipse-temurin-21
+#5 DONE 0.1s
+
+#6 [internal] load metadata for public.ecr.aws/docker/library/eclipse-temurin:21-jre-alpine
+#6 DONE 0.2s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 2.96kB done
+#8 DONE 0.0s
+
+#9 [runtime 1/5] FROM public.ecr.aws/docker/library/eclipse-temurin:21-jre-alpine@sha256:974b08960c5d96694c780e65b2d5705268ab1e1ca1a0dd0caf4ba6c3fe34d699
+#9 resolve public.ecr.aws/docker/library/eclipse-temurin:21-jre-alpine@sha256:974b08960c5d96694c780e65b2d5705268ab1e1ca1a0dd0caf4ba6c3fe34d699 0.0s done
+#9 CACHED
+
+#10 [build 1/5] FROM public.ecr.aws/docker/library/maven:3-eclipse-temurin-21@sha256:8f6ac126f7810bb5549c4cd122d2bf0e9cda5bdeb0838aa928f09e779fd8bef8
+#10 resolve public.ecr.aws/docker/library/maven:3-eclipse-temurin-21@sha256:8f6ac126f7810bb5549c4cd122d2bf0e9cda5bdeb0838aa928f09e779fd8bef8 0.0s done
+#10 DONE 0.0s
+
+#11 [context m2seed] load from client
+#11 transferring m2seed: 2.22MB 0.4s done
+#11 DONE 0.4s
+
+#12 [build 2/5] WORKDIR /build
+#12 CACHED
+
+#13 [build 3/5] COPY pom.xml ./
+#13 CACHED
+
+#14 [build 4/5] COPY src ./src
+#14 CACHED
+
+#15 [build 5/5] RUN --mount=type=cache,target=/root/.m2     --mount=type=bind,from=m2seed,target=/m2seed     MVN_FLAGS="";     if [ -d /m2seed/repository ]; then mkdir -p /root/.m2/repository && cp -a /m2seed/repository/. /root/.m2/repository/ && MVN_FLAGS="-o -Daether.enhancedLocalRepository.split=false -Daether.enhancedLocalRepository.trackingFilename=_none_"; fi     && mvn -B -q $MVN_FLAGS -DskipTests package
+#15 CACHED
+
+#16 [runtime 2/5] RUN apk upgrade --no-cache     && addgroup -S -g 10001 vantage     && adduser -S -u 10001 -G vantage -h /srv/vantage -H vantage     && mkdir -p /out     && chown vantage:vantage /out
+#16 0.392 Preupgrading:
+#16 0.392 (1/2) Upgrading libapk (3.0.6-r0 -> 3.0.8-r0)
+#16 0.404 (2/2) Upgrading apk-tools (3.0.6-r0 -> 3.0.8-r0)
+#16 0.415 Executing busybox-1.37.0-r31.trigger
+#16 0.431 Continuing with the main upgrade transaction:
+#16 0.689 (1/4) Upgrading libcrypto3 (3.5.7-r0 -> 3.5.8-r0)
+#16 0.719 (2/4) Upgrading libssl3 (3.5.7-r0 -> 3.5.8-r0)
+#16 0.731 (3/4) Upgrading libexpat (2.8.3-r0 -> 2.8.4-r0)
+#16 0.741 (4/4) Upgrading openssl (3.5.7-r0 -> 3.5.8-r0)
+#16 0.759 Executing busybox-1.37.0-r31.trigger
+#16 0.761 Executing ca-certificates-20260611-r0.trigger
+#16 0.778 OK: 40.9 MiB in 73 packages
+#16 DONE 0.8s
+
+#17 [runtime 3/5] WORKDIR /srv/vantage
+#17 DONE 0.0s
+
+#18 [runtime 4/5] COPY --from=build /build/target/vantage-report-*.jar ./vantage-report.jar
+#18 DONE 0.0s
+
+#19 [runtime 5/5] COPY --chown=vantage:vantage --chmod=0755 docker-entrypoint.sh ./docker-entrypoint.sh
+#19 DONE 0.0s
+
+#20 exporting to image
+#20 exporting layers
+#20 exporting layers 0.2s done
+#20 exporting manifest sha256:9d822608b53e24bcf9ce6fd7d499b4d592aeee179c61ad9979775ad72f45b661 done
+#20 exporting config sha256:88b705fbc8a5578dc478e8387738f48a63620f4cab9a1324f5f0a77a92ecbd16 done
+#20 exporting attestation manifest sha256:a24cbf283cf8c189c73fdca25254e9251cf29c675292f4ad01bf9c06f05d69a6 done
+#20 exporting manifest list sha256:64d6ee5e732bae88f62762cc6ffac79202d8301b6058f13e9523a99b9ef9f282 done
+#20 naming to docker.io/vantage-telco/report:local done
+#20 unpacking to docker.io/vantage-telco/report:local 0.1s done
+#20 DONE 0.3s

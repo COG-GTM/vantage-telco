@@ -1,0 +1,220 @@
+$ make test PY=.venv/bin/python
+.venv/bin/python -m pytest -q
+........................................................................ [ 61%]
+.............................................                            [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/starlette/testclient.py:53
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+117 passed, 2 warnings in 1.12s
+exit code: 0
+
+----
+
+$ make lint PY=.venv/bin/python
+.venv/bin/python -m ruff check .
+All checks passed!
+.venv/bin/python -m ruff format --check .
+49 files already formatted
+exit code: 0
+
+----
+
+$ make typecheck PY=.venv/bin/python
+.venv/bin/python -m mypy
+Success: no issues found in 36 source files
+exit code: 0
+
+----
+
+$ make coverage PY=.venv/bin/python
+.venv/bin/python -m pytest -q --cov=app --cov-report=term-missing --cov-fail-under=85
+........................................................................ [ 61%]
+.............................................                            [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/starlette/testclient.py:53
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.13-final-0 _______________
+
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+app/__init__.py                   0      0   100%
+app/billing/__init__.py           0      0   100%
+app/billing/discounts.py          7      1    86%   19
+app/billing/invoices.py          71      2    97%   34, 122
+app/billing/latefee.py           20      2    90%   18, 25
+app/billing/lines.py             10      0   100%
+app/billing/promo.py             21      2    90%   18, 30
+app/billing/proration.py         15      0   100%
+app/billing/rating.py            12      0   100%
+app/billing/suspension.py        12      0   100%
+app/billing/tax.py               20      0   100%
+app/db.py                        71      4    94%   53-55, 58
+app/inventory/__init__.py         0      0   100%
+app/inventory/capacity.py        13      1    92%   23
+app/inventory/circuits.py        13      0   100%
+app/inventory/locations.py       28      0   100%
+app/inventory/models.py          27     27     0%   1-33
+app/inventory/repository.py      32      0   100%
+app/main.py                      32      0   100%
+app/network/__init__.py           0      0   100%
+app/network/addressing.py        48      7    85%   58-62, 102-103
+app/pagination.py                12      0   100%
+app/routers/__init__.py           0      0   100%
+app/routers/billing.py           21      1    95%   24
+app/routers/capacity.py          25      1    96%   55
+app/routers/dashboard.py         25      0   100%
+app/routers/inventory.py         24      0   100%
+app/routers/network.py           19      2    89%   33-34
+app/security.py                 154     19    88%   72, 114, 128, 261-275, 279
+app/settings.py                  14      0   100%
+app/templating.py                 6      0   100%
+app/versioning.py                11      0   100%
+-----------------------------------------------------------
+TOTAL                           763     69    91%
+Required test coverage of 85% reached. Total coverage: 90.96%
+117 passed, 2 warnings in 3.18s
+exit code: 0
+
+----
+
+$ make audit PY=.venv/bin/python
+.venv/bin/python -m pip_audit -r requirements.txt
+No known vulnerabilities found
+exit code: 0
+
+----
+
+$ export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64; export PATH="$JAVA_HOME/bin:$PATH"
+exit code: 0
+
+----
+
+$ java -version
+openjdk version "21.0.12" 2026-07-21
+OpenJDK Runtime Environment (build 21.0.12+8-1-22.04-Ubuntu)
+OpenJDK 64-Bit Server VM (build 21.0.12+8-1-22.04-Ubuntu, mixed mode, sharing)
+exit code: 0
+
+----
+
+$ (cd java/vantage-report && mvn -B verify)
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< net.vantage:vantage-report >---------------------
+[INFO] Building vantage-report 2.0.0
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ vantage-report ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ vantage-report ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ vantage-report ---
+[INFO] skip non existing resourceDirectory /home/ubuntu/repos/vantage-telco/java/vantage-report/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ vantage-report ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ vantage-report ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running net.vantage.report.pipeline.BatchRunnerTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.127 s -- in net.vantage.report.pipeline.BatchRunnerTest
+[INFO] Running net.vantage.report.report.ReportRendererTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in net.vantage.report.report.ReportRendererTest
+[INFO] Running net.vantage.report.rating.RatingEngineTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in net.vantage.report.rating.RatingEngineTest
+[INFO] Running net.vantage.report.io.CsvUsageReaderTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in net.vantage.report.io.CsvUsageReaderTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 28, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ vantage-report ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.793 s
+[INFO] Finished at: 2026-09-09T08:02:20Z
+[INFO] ------------------------------------------------------------------------
+exit code: 0
+
+----
+
+$ ls ../meridian-telco
+ls: cannot access '../meridian-telco': No such file or directory
+exit code: 2
+
+----
+
+make parity NOT RUN: ../meridian-telco is absent in this environment. Baseline-comparison tests standing in for it (all in `make test` above): tests/test_db.py::test_billing_invoices_match_phase0_baseline, tests/test_security.py::test_billing_ops_invoice_response_matches_baseline, tests/test_api.py::test_invoice_pagination_matches_phase0_baseline
+
+----
+
+$ .venv/bin/python -m pytest -q tests/test_db.py::test_billing_invoices_match_phase0_baseline tests/test_security.py::test_billing_ops_invoice_response_matches_baseline tests/test_api.py::test_invoice_pagination_matches_phase0_baseline
+...                                                                      [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/starlette/testclient.py:53
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+3 passed, 2 warnings in 0.29s
+exit code: 0
+
+----
+
+$ docker compose config -q
+exit code: 0
+
+----
+
+$ git status --short
+ M .gitignore
+ M README.md
+ M app/db.py
+ M app/security.py
+ M docs/modernization/README.md
+ M java/vantage-report/pom.xml
+?? .coverage
+?? .dockerignore
+?? .github/workflows/supply-chain.yml
+?? .trivyignore
+?? Dockerfile
+?? app/settings.py
+?? deploy/
+?? docker-compose.yml
+?? docs/modernization/phase5-deploy/
+?? docs/modernization/summary.md
+?? java/vantage-report/Dockerfile
+?? java/vantage-report/docker-entrypoint.sh
+?? tests/test_settings.py
+exit code: 0
+
+----
+

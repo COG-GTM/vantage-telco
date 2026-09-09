@@ -1,0 +1,145 @@
+name: supply-chain
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+  security-events: write
+
+env:
+  APP_IMAGE: vantage-telco/app:${{ github.sha }}
+  REPORT_IMAGE: vantage-telco/report:${{ github.sha }}
+
+jobs:
+  images:
+    name: build, SBOM and scan images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build Python app image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          load: true
+          tags: ${{ env.APP_IMAGE }}
+          cache-from: type=gha,scope=app
+          cache-to: type=gha,scope=app,mode=max
+
+      - name: Build Java report image
+        uses: docker/build-push-action@v6
+        with:
+          context: java/vantage-report
+          file: java/vantage-report/Dockerfile
+          load: true
+          tags: ${{ env.REPORT_IMAGE }}
+          cache-from: type=gha,scope=report
+          cache-to: type=gha,scope=report,mode=max
+
+      - name: SBOM — repository sources
+        uses: anchore/sbom-action@v0
+        with:
+          path: .
+          format: spdx-json
+          artifact-name: sbom-repo.spdx.json
+          output-file: sbom-repo.spdx.json
+          upload-artifact: true
+          upload-release-assets: false
+
+      - name: SBOM — Python app image
+        uses: anchore/sbom-action@v0
+        with:
+          image: ${{ env.APP_IMAGE }}
+          format: spdx-json
+          artifact-name: sbom-app-image.spdx.json
+          output-file: sbom-app-image.spdx.json
+          upload-artifact: true
+          upload-release-assets: false
+
+      - name: SBOM — Java report image
+        uses: anchore/sbom-action@v0
+        with:
+          image: ${{ env.REPORT_IMAGE }}
+          format: spdx-json
+          artifact-name: sbom-report-image.spdx.json
+          output-file: sbom-report-image.spdx.json
+          upload-artifact: true
+          upload-release-assets: false
+
+      - name: Trivy — Python app image (SARIF)
+        uses: aquasecurity/trivy-action@v0.35.0
+        with:
+          image-ref: ${{ env.APP_IMAGE }}
+          format: sarif
+          output: trivy-app.sarif
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH
+          trivyignores: .trivyignore
+          exit-code: "0"
+
+      - name: Trivy — Java report image (SARIF)
+        uses: aquasecurity/trivy-action@v0.35.0
+        with:
+          image-ref: ${{ env.REPORT_IMAGE }}
+          format: sarif
+          output: trivy-report.sarif
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH
+          trivyignores: .trivyignore
+          exit-code: "0"
+        env:
+          TRIVY_SKIP_DB_UPDATE: "true"
+
+      - name: Upload SARIF (app image)
+        uses: github/codeql-action/upload-sarif@v3
+        continue-on-error: true
+        with:
+          sarif_file: trivy-app.sarif
+          category: trivy-app-image
+
+      - name: Upload SARIF (report image)
+        uses: github/codeql-action/upload-sarif@v3
+        continue-on-error: true
+        with:
+          sarif_file: trivy-report.sarif
+          category: trivy-report-image
+
+      - name: Trivy — Python app image (gate)
+        uses: aquasecurity/trivy-action@v0.35.0
+        with:
+          image-ref: ${{ env.APP_IMAGE }}
+          format: table
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH
+          trivyignores: .trivyignore
+          exit-code: "1"
+        env:
+          TRIVY_SKIP_DB_UPDATE: "true"
+          TRIVY_SKIP_JAVA_DB_UPDATE: "true"
+
+      - name: Trivy — Java report image (gate)
+        uses: aquasecurity/trivy-action@v0.35.0
+        with:
+          image-ref: ${{ env.REPORT_IMAGE }}
+          format: table
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH
+          trivyignores: .trivyignore
+          exit-code: "1"
+        env:
+          TRIVY_SKIP_DB_UPDATE: "true"
+
+      - name: Upload Trivy SARIF as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-sarif
+          path: |
+            trivy-app.sarif
+            trivy-report.sarif
+          if-no-files-found: ignore

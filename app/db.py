@@ -1,6 +1,7 @@
 """Data access.
 
-Production runs against MongoDB (``MONGO_URI``). For local development and the
+Production runs against MongoDB (``MONGO_URI`` / ``MONGO_URI_FILE``, see
+:mod:`app.settings`). For local development and the
 test suite the same collections are served from the JSON documents under
 ``data/seed``, so nothing here needs a running database.
 """
@@ -8,11 +9,12 @@ test suite the same collections are served from the JSON documents under
 from __future__ import annotations
 
 import json
-import os
 from collections.abc import Iterable
 from functools import cache
 from pathlib import Path
 from typing import Any
+
+from app.settings import get_setting
 
 SEED_DIR = Path(__file__).resolve().parent.parent / "data" / "seed"
 
@@ -78,7 +80,7 @@ def get_collection(name: str):
         raise KeyError(f"unknown collection: {name}")
     if not mongo_enabled():
         return _load_seed(name)
-    return mongo_client()[os.environ.get("MONGO_DB", "vantage")][name]
+    return mongo_client()[mongo_db_name()][name]
 
 
 def mongo_client() -> Any:
@@ -87,8 +89,16 @@ def mongo_client() -> Any:
     if _client is None:
         from pymongo import MongoClient  # imported lazily: unused in seed mode
 
-        _client = MongoClient(os.environ["MONGO_URI"])
+        _client = MongoClient(mongo_uri())
     return _client
+
+
+def mongo_uri() -> str | None:
+    return get_setting("MONGO_URI")
+
+
+def mongo_db_name() -> str:
+    return get_setting("MONGO_DB") or "vantage"
 
 
 def close_client() -> None:
@@ -99,11 +109,14 @@ def close_client() -> None:
 
 
 def mongo_enabled() -> bool:
-    return bool(os.environ.get("MONGO_URI"))
+    return mongo_uri() is not None
 
 
 def find_documents(name: str, query: dict[str, Any]) -> list[dict[str, Any]]:
-    return list(get_collection(name).find(query))
+    collection = get_collection(name)
+    if mongo_enabled():
+        return list(collection.find(query, {"_id": False}))
+    return list(collection.find(query))
 
 
 def all_documents(name: str) -> list[dict[str, Any]]:

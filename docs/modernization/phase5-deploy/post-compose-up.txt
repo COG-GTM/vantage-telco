@@ -1,0 +1,161 @@
+$ docker compose up --build -d
+ Image vantage-telco/app:local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 516B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.31kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 0.1s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+#4 resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32 done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/python:3.12-slim
+#5 DONE 0.1s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 225B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 5.53kB done
+#7 DONE 0.0s
+
+#8 [build 1/4] FROM docker.io/library/python:3.12-slim@sha256:78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea
+#8 resolve docker.io/library/python:3.12-slim@sha256:78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea done
+#8 DONE 0.0s
+
+#9 [runtime 3/6] WORKDIR /srv/vantage
+#9 CACHED
+
+#10 [runtime 4/6] COPY --from=build /opt/venv /opt/venv
+#10 CACHED
+
+#11 [build 2/4] WORKDIR /build
+#11 CACHED
+
+#12 [build 3/4] COPY requirements.txt ./
+#12 CACHED
+
+#13 [build 4/4] RUN python -m venv /opt/venv     && /opt/venv/bin/pip install --no-cache-dir --upgrade pip     && /opt/venv/bin/pip install --no-cache-dir -r requirements.txt     && /opt/venv/bin/pip uninstall -y pip
+#13 CACHED
+
+#14 [runtime 5/6] COPY --chown=vantage:vantage app/ ./app/
+#14 CACHED
+
+#15 [runtime 2/6] RUN apt-get update     && apt-get upgrade -y --no-install-recommends     && apt-get install -y --no-install-recommends curl     && rm -rf /var/lib/apt/lists/*     && python -m pip uninstall -y pip     && groupadd --system --gid 10001 vantage     && useradd --system --uid 10001 --gid vantage --home-dir /srv/vantage --no-create-home vantage
+#15 CACHED
+
+#16 [runtime 6/6] COPY --chown=vantage:vantage data/seed/ ./data/seed/
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:8d1938edfb6c161b5cdf6127d604984a8bf4fb887aa6cb991ba1ebfdba1515bb done
+#17 exporting config sha256:6f106b3f9fb750a8d1f676df172e92cb91903dbf697a5e6080b90b492730dc44 done
+#17 exporting attestation manifest sha256:daac8c59391f2d7119abc12e46c16970cc3a673b148f87456d1cd3793d998984 done
+#17 exporting manifest list sha256:700b872d0dbff2c7205c752924e7265a833dffc7ea46c30839b50af90c080a25 done
+#17 naming to docker.io/vantage-telco/app:local done
+#17 unpacking to docker.io/vantage-telco/app:local done
+#17 DONE 0.0s
+
+#18 resolving provenance for metadata file
+#18 DONE 0.0s
+ Image vantage-telco/app:local Built 
+ Network vantage_default Creating 
+ Network vantage_default Creating 
+ Volume vantage_mongo-data Creating 
+ Volume vantage_mongo-data Creating 
+ Volume vantage_mongo-data Created 
+ Volume vantage_mongo-data Created 
+ Network vantage_default Created 
+ Network vantage_default Created 
+ Container vantage-mongo-1 Creating 
+ Container vantage-mongo-1 Created 
+ Container vantage-mongo-seed-1 Creating 
+ Container vantage-mongo-seed-1 Created 
+ Container vantage-app-1 Creating 
+ Container vantage-app-1 Created 
+ Container vantage-mongo-1 Starting 
+ Container vantage-mongo-1 Started 
+ Container vantage-mongo-1 Waiting 
+ Container vantage-mongo-1 Healthy 
+ Container vantage-mongo-seed-1 Starting 
+ Container vantage-mongo-seed-1 Started 
+ Container vantage-mongo-seed-1 Waiting 
+ Container vantage-mongo-1 Waiting 
+ Container vantage-mongo-1 Healthy 
+ Container vantage-mongo-seed-1 Exited 
+ Container vantage-app-1 Starting 
+ Container vantage-app-1 Started 
+
+$ docker compose ps
+NAME              IMAGE                     COMMAND                  SERVICE   CREATED         STATUS                                     PORTS
+vantage-app-1     vantage-telco/app:local   "uvicorn app.main:ap…"   app       6 seconds ago   Up Less than a second (health: starting)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+vantage-mongo-1   mongo:7                   "docker-entrypoint.s…"   mongo     6 seconds ago   Up 6 seconds (healthy)                     27017/tcp
+
+$ docker inspect --format '{{.State.Health.Status}}' vantage-app-1  # wait until healthy
+attempt=1 status=starting
+attempt=2 status=starting
+attempt=3 status=starting
+attempt=4 status=healthy
+
+$ docker compose logs --no-color mongo-seed app
+mongo-seed-1  | importing /seed/accounts.json -> vantage.accounts
+mongo-seed-1  | 2026-09-09T07:39:01.277+0000	connected to: mongodb://mongo/
+mongo-seed-1  | 2026-09-09T07:39:01.277+0000	dropping: `vantage.accounts`
+mongo-seed-1  | 2026-09-09T07:39:01.287+0000	200 document(s) imported successfully. 0 document(s) failed to import.
+mongo-seed-1  | importing /seed/circuits.json -> vantage.circuits
+app-1         | INFO:     Started server process [1]
+app-1         | INFO:     Waiting for application startup.
+app-1         | INFO:     Application startup complete.
+app-1         | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+app-1         | INFO:     127.0.0.1:38822 - "GET /health HTTP/1.1" 200 OK
+mongo-seed-1  | 2026-09-09T07:39:01.295+0000	connected to: mongodb://mongo/
+mongo-seed-1  | 2026-09-09T07:39:01.295+0000	dropping: `vantage.circuits`
+mongo-seed-1  | 2026-09-09T07:39:01.300+0000	60 document(s) imported successfully. 0 document(s) failed to import.
+mongo-seed-1  | importing /seed/devices.json -> vantage.devices
+mongo-seed-1  | 2026-09-09T07:39:01.306+0000	connected to: mongodb://mongo/
+mongo-seed-1  | 2026-09-09T07:39:01.306+0000	dropping: `vantage.devices`
+mongo-seed-1  | 2026-09-09T07:39:01.311+0000	74 document(s) imported successfully. 0 document(s) failed to import.
+mongo-seed-1  | importing /seed/locations.json -> vantage.locations
+mongo-seed-1  | 2026-09-09T07:39:01.318+0000	connected to: mongodb://mongo/
+mongo-seed-1  | 2026-09-09T07:39:01.318+0000	dropping: `vantage.locations`
+mongo-seed-1  | 2026-09-09T07:39:01.322+0000	22 document(s) imported successfully. 0 document(s) failed to import.
+mongo-seed-1  | importing /seed/sites.json -> vantage.sites
+mongo-seed-1  | 2026-09-09T07:39:01.328+0000	connected to: mongodb://mongo/
+mongo-seed-1  | 2026-09-09T07:39:01.329+0000	dropping: `vantage.sites`
+mongo-seed-1  | 2026-09-09T07:39:01.334+0000	97 document(s) imported successfully. 0 document(s) failed to import.
+mongo-seed-1  | importing /seed/usage.json -> vantage.usage
+mongo-seed-1  | 2026-09-09T07:39:01.341+0000	connected to: mongodb://mongo/
+mongo-seed-1  | 2026-09-09T07:39:01.341+0000	dropping: `vantage.usage`
+mongo-seed-1  | 2026-09-09T07:39:01.350+0000	402 document(s) imported successfully. 0 document(s) failed to import.
+mongo-seed-1  | seed complete
+
+$ docker compose exec -T mongo mongosh --quiet vantage --eval 'db.accounts.countDocuments()'
+200
+
+$ docker compose exec -T mongo mongosh --quiet vantage --eval 'db.circuits.countDocuments()'
+60
+
+$ docker compose exec -T mongo mongosh --quiet vantage --eval 'db.devices.countDocuments()'
+74
+
+$ docker compose exec -T mongo mongosh --quiet vantage --eval 'db.locations.countDocuments()'
+22
+
+$ docker compose exec -T mongo mongosh --quiet vantage --eval 'db.sites.countDocuments()'
+97
+
+$ docker compose exec -T mongo mongosh --quiet vantage --eval 'db.usage.countDocuments()'
+402
+
+$ docker compose ps
+NAME              IMAGE                     COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+vantage-app-1     vantage-telco/app:local   "uvicorn app.main:ap…"   app       15 seconds ago   Up 8 seconds (healthy)    0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+vantage-mongo-1   mongo:7                   "docker-entrypoint.s…"   mongo     15 seconds ago   Up 14 seconds (healthy)   27017/tcp

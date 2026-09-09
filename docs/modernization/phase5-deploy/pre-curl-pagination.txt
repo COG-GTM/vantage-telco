@@ -1,0 +1,82 @@
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/resources?limit=50&offset=0'
+HTTP 200
+  keys: ['count', 'resources', 'pagination']; count: 97; resources: 50; pagination: {'limit': 50, 'offset': 0, 'total': 97, 'has_more': True}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/resources?limit=50&offset=100'
+HTTP 200
+  keys: ['count', 'resources', 'pagination']; count: 97; resources: 0; pagination: {'limit': 50, 'offset': 100, 'total': 97, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/resources?limit=50&offset=150'
+HTTP 200
+  keys: ['count', 'resources', 'pagination']; count: 97; resources: 0; pagination: {'limit': 50, 'offset': 150, 'total': 97, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/resources?offset=100000'
+HTTP 200
+  keys: ['count', 'resources', 'pagination']; count: 97; resources: 0; pagination: {'limit': 50, 'offset': 100000, 'total': 97, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/circuits?limit=50&offset=0'
+HTTP 200
+  keys: ['count', 'active_count', 'active_capacity_mbps', 'circuits', 'pagination']; count: 60; circuits: 50; pagination: {'limit': 50, 'offset': 0, 'total': 60, 'has_more': True}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/circuits?limit=50&offset=100'
+HTTP 200
+  keys: ['count', 'active_count', 'active_capacity_mbps', 'circuits', 'pagination']; count: 60; circuits: 0; pagination: {'limit': 50, 'offset': 100, 'total': 60, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/circuits?limit=50&offset=150'
+HTTP 200
+  keys: ['count', 'active_count', 'active_capacity_mbps', 'circuits', 'pagination']; count: 60; circuits: 0; pagination: {'limit': 50, 'offset': 150, 'total': 60, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/circuits?offset=100000'
+HTTP 200
+  keys: ['count', 'active_count', 'active_capacity_mbps', 'circuits', 'pagination']; count: 60; circuits: 0; pagination: {'limit': 50, 'offset': 100000, 'total': 60, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/billing/invoices?period=2026-07&limit=50&offset=0'
+HTTP 200
+  keys: ['count', 'revenue_total', 'invoices', 'pagination']; count: 200; revenue_total: 1816527.27; invoices: 50; pagination: {'limit': 50, 'offset': 0, 'total': 200, 'has_more': True}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/billing/invoices?period=2026-07&limit=50&offset=100'
+HTTP 200
+  keys: ['count', 'revenue_total', 'invoices', 'pagination']; count: 200; revenue_total: 1816527.27; invoices: 50; pagination: {'limit': 50, 'offset': 100, 'total': 200, 'has_more': True}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/billing/invoices?period=2026-07&limit=50&offset=150'
+HTTP 200
+  keys: ['count', 'revenue_total', 'invoices', 'pagination']; count: 200; revenue_total: 1816527.27; invoices: 50; pagination: {'limit': 50, 'offset': 150, 'total': 200, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/billing/invoices?period=2026-07&offset=100000'
+HTTP 200
+  keys: ['count', 'revenue_total', 'invoices', 'pagination']; count: 200; revenue_total: 1816527.27; invoices: 0; pagination: {'limit': 50, 'offset': 100000, 'total': 200, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/network/devices?limit=50&offset=0'
+HTTP 200
+  keys: ['count', 'devices', 'pagination']; count: 74; devices: 50; pagination: {'limit': 50, 'offset': 0, 'total': 74, 'has_more': True}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/network/devices?limit=50&offset=100'
+HTTP 200
+  keys: ['count', 'devices', 'pagination']; count: 74; devices: 0; pagination: {'limit': 50, 'offset': 100, 'total': 74, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/network/devices?limit=50&offset=150'
+HTTP 200
+  keys: ['count', 'devices', 'pagination']; count: 74; devices: 0; pagination: {'limit': 50, 'offset': 150, 'total': 74, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/network/devices?offset=100000'
+HTTP 200
+  keys: ['count', 'devices', 'pagination']; count: 74; devices: 0; pagination: {'limit': 50, 'offset': 100000, 'total': 74, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/capacity/locations?limit=50&offset=0'
+HTTP 200
+  keys: ['rule', 'requested_mbps', 'count', 'serviceable_count', 'available_mbps', 'maintenance_buffer_mbps', 'locations', 'pagination']; count: 22; locations: 22; pagination: {'limit': 50, 'offset': 0, 'total': 22, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/capacity/locations?limit=50&offset=100'
+HTTP 200
+  keys: ['rule', 'requested_mbps', 'count', 'serviceable_count', 'available_mbps', 'maintenance_buffer_mbps', 'locations', 'pagination']; count: 22; locations: 0; pagination: {'limit': 50, 'offset': 100, 'total': 22, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/capacity/locations?limit=50&offset=150'
+HTTP 200
+  keys: ['rule', 'requested_mbps', 'count', 'serviceable_count', 'available_mbps', 'maintenance_buffer_mbps', 'locations', 'pagination']; count: 22; locations: 0; pagination: {'limit': 50, 'offset': 150, 'total': 22, 'has_more': False}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/capacity/locations?offset=100000'
+HTTP 200
+  keys: ['rule', 'requested_mbps', 'count', 'serviceable_count', 'available_mbps', 'maintenance_buffer_mbps', 'locations', 'pagination']; count: 22; locations: 0; pagination: {'limit': 50, 'offset': 100000, 'total': 22, 'has_more': False}
+
+OpenAPI /billing/invoices GET parameter names: ['account_id', 'period', 'limit', 'offset']
+OpenAPI info.version: 3.0.0

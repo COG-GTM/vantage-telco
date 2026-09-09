@@ -1,0 +1,27 @@
+Script started on 2026-09-09 07:39:20+00:00 [<not executed on terminal>]
+$ python3 tools/capture/capture.py --out docs/modernization/phase5-deploy --prefix post --token $TOKEN
+docs/modernization/phase5-deploy/post-api-checks.txt
+docs/modernization/phase5-deploy/post-billing-invoices.json
+docs/modernization/phase5-deploy/post-capacity.png
+docs/modernization/phase5-deploy/post-capture.txt.raw
+docs/modernization/phase5-deploy/post-compose-up.txt
+docs/modernization/phase5-deploy/post-curl-auth.txt
+docs/modernization/phase5-deploy/post-curl-health.txt
+docs/modernization/phase5-deploy/post-curl-pagination.txt
+docs/modernization/phase5-deploy/post-dashboard-billing.png
+docs/modernization/phase5-deploy/post-dashboard.png
+docs/modernization/phase5-deploy/post-docker-build.txt
+docs/modernization/phase5-deploy/post-health.txt
+docs/modernization/phase5-deploy/post-image-scan.txt
+docs/modernization/phase5-deploy/post-java-container-batch.txt
+docs/modernization/phase5-deploy/post-java-image-build.txt
+docs/modernization/phase5-deploy/post-java-output
+docs/modernization/phase5-deploy/post-recording.mp4
+docs/modernization/phase5-deploy/post-sbom.json
+docs/modernization/phase5-deploy/post-sbom.txt
+docs/modernization/phase5-deploy/post-swagger.png
+docs/modernization/phase5-deploy/post-xss-breakout.png
+docs/modernization/phase5-deploy/post-xss-dialogs.txt
+docs/modernization/phase5-deploy/post-xss.png
+
+Script done on 2026-09-09 07:39:57+00:00 [COMMAND_EXIT_CODE="0"]

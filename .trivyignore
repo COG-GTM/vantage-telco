@@ -1,0 +1,3 @@
+# Accepted findings for the container images (CRITICAL/HIGH, fixable only — see
+# .github/workflows/supply-chain.yml). Every entry needs a justification and an owner.
+# Format: <CVE-ID>   # <image> — <reason> — <owner/date>

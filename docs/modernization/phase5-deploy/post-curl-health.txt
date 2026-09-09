@@ -1,0 +1,45 @@
+$ curl -s -i -w '
+%{time_total}s
+' http://localhost:8000/health
+HTTP/1.1 200 OK
+date: Wed, 09 Sep 2026 07:40:24 GMT
+server: uvicorn
+content-length: 15
+content-type: application/json
+strict-transport-security: max-age=31536000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+
+{"status":"ok"}
+0.001562s
+
+$ docker compose up -d app
+ Container vantage-app-1 Running 
+ Container vantage-mongo-1 Running 
+ Container vantage-mongo-1 Waiting 
+ Container vantage-mongo-1 Healthy 
+ Container vantage-mongo-seed-1 Starting 
+ Container vantage-mongo-seed-1 Started 
+ Container vantage-mongo-1 Waiting 
+ Container vantage-mongo-seed-1 Waiting 
+ Container vantage-mongo-seed-1 Exited 
+ Container vantage-mongo-1 Healthy 
+docker compose up -d app exit code: 0
+
+$ curl -s -i -w '\n%{time_total}s\n' http://localhost:8000/health
+HTTP/1.1 200 OK
+date: Wed, 09 Sep 2026 07:58:26 GMT
+server: uvicorn
+content-length: 15
+content-type: application/json
+strict-transport-security: max-age=31536000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+
+{"status":"ok"}
+0.001607s
+curl exit code: 0

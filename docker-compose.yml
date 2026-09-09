@@ -1,0 +1,82 @@
+name: vantage
+
+# Secrets are read from files (see deploy/secrets/*.example and README "Secrets").
+# Copy each *.example to the same name without the suffix before `docker compose up`.
+secrets:
+  mongo_uri:
+    file: ./deploy/secrets/mongo_uri
+  mongo_db:
+    file: ./deploy/secrets/mongo_db
+  vantage_auth_dev_secret:
+    file: ./deploy/secrets/vantage_auth_dev_secret
+
+volumes:
+  mongo-data:
+  report-out:
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  # One-shot: imports data/seed/*.json into the `vantage` database. Every seed file maps
+  # to the collection of the same name (app/db.py::COLLECTIONS).
+  mongo-seed:
+    image: mongo:7
+    depends_on:
+      mongo:
+        condition: service_healthy
+    volumes:
+      - ./data/seed:/seed:ro
+    secrets:
+      - mongo_db
+    entrypoint: ["/bin/sh", "-ceu"]
+    command:
+      - |
+        DB="$$(cat /run/secrets/mongo_db)"
+        for f in /seed/*.json; do
+          coll="$$(basename "$$f" .json)"
+          echo "importing $$f -> $$DB.$$coll"
+          mongoimport --host mongo --db "$$DB" --collection "$$coll" --drop --jsonArray --maintainInsertionOrder --file "$$f"
+        done
+        echo "seed complete"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vantage-telco/app:local
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+      mongo-seed:
+        condition: service_completed_successfully
+    secrets:
+      - mongo_uri
+      - mongo_db
+      - vantage_auth_dev_secret
+    environment:
+      MONGO_URI_FILE: /run/secrets/mongo_uri
+      MONGO_DB_FILE: /run/secrets/mongo_db
+      VANTAGE_AUTH_DEV_SECRET_FILE: /run/secrets/vantage_auth_dev_secret
+
+  # Batch invoice renderer; only started with `docker compose --profile batch run report 2026-07`.
+  report:
+    build:
+      context: ./java/vantage-report
+      dockerfile: Dockerfile
+    image: vantage-telco/report:local
+    profiles: ["batch"]
+    volumes:
+      - report-out:/out

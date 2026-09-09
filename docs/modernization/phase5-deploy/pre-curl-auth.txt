@@ -1,0 +1,17 @@
+$ curl -i 'http://localhost:8000/v1/billing/invoices?period=2026-07'   # no Authorization header
+HTTP 401
+www-authenticate: Bearer
+strict-transport-security: max-age=31536000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'
+x-content-type-options: nosniff
+x-frame-options: DENY
+
+{"detail":"invalid authentication credentials"}
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/billing/invoices?period=2026-07'
+HTTP 200
+{"count":200,"revenue_total":1816527.27,"invoices":[{"account_id":"VANTAGE-BILL-88213","billing_ref":"TN-0001","legal_name":"Beacon Manufacturing Corp","tax_id":"47-2214880","service_address":"2518 Columbia Ave, Kamloops, BC V2C 1L2","province":"BC","plan_code":"ENT-5000","period":"2026-07","usage_mb":7472103,"included_gb":5000,"overage_mb":2352103,"plan_charge":4025.81,"line_discount":402.58,"rec...
+
+$ curl 'http://localhost:8000/v1/dashboard/billing?billing_ref=%3Cscript%3Ealert(1)%3C/script%3E' | grep -n billing_ref
+HTTP 200
+35: <label>Billing ref <input name="billing_ref" value="&lt;script&gt;alert(1)&lt;/script&gt;" placeholder="TN-0001"></label>

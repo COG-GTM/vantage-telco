@@ -14,8 +14,60 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 
-Point the app at a real database by exporting `MONGO_URI` (and optionally
-`MONGO_DB`, default `vantage`).
+Point the app at a real database by providing `MONGO_URI` (and optionally
+`MONGO_DB`, default `vantage`) — see [Secrets](#secrets) for how settings are
+resolved; plain environment variables are a local-development convenience only.
+
+## Running with Docker Compose
+
+The repository ships a multi-stage `Dockerfile` for the API (non-root, `python:3.12-slim`,
+`HEALTHCHECK` on `/health`), a `java/vantage-report/Dockerfile` for the batch renderer and a
+`docker-compose.yml` that brings up MongoDB, seeds it from `data/seed/` and starts the API:
+
+```bash
+for s in mongo_uri mongo_db vantage_auth_dev_secret; do cp deploy/secrets/$s.example deploy/secrets/$s; done
+docker compose up --build            # mongo → mongo-seed (one-shot mongoimport) → app on :8000
+docker compose --profile batch run --rm report 2026-07   # batch invoices into the report-out volume
+docker compose down -v               # also drops the mongo-data / report-out volumes
+```
+
+| Service | Image | Role |
+| --- | --- | --- |
+| `mongo` | `mongo:7` | database, named volume `mongo-data`, `mongosh` healthcheck |
+| `mongo-seed` | `mongo:7` | one-shot `mongoimport --jsonArray` of every `data/seed/<collection>.json` into `MONGO_DB` |
+| `app` | build `.` | FastAPI on `:8000`; starts after `mongo` is healthy and `mongo-seed` completed |
+| `report` | build `java/vantage-report` (profile `batch`) | renders `invoices-<period>.txt` into `/out` |
+
+The seeded stack serves the same figures as seed mode (200 invoices, revenue `$1,816,527.27`,
+22 locations). Edit the copied secret files before deploying anywhere real.
+
+## Secrets
+
+The app never requires secrets as raw environment variables in a deployment. Every setting is
+resolved by `app/settings.py::get_setting(name)` in this order:
+
+1. `<NAME>_FILE` — path to a file whose content is the value (Docker / Kubernetes secret mount).
+2. `<NAME>` — plain environment variable, kept for local development and the test suite.
+3. unset (`None`; the app then falls back to seed mode / `503 authentication not configured`).
+
+| Setting | File variable | Purpose |
+| --- | --- | --- |
+| `MONGO_URI` | `MONGO_URI_FILE` | Mongo connection string; unset → seed mode |
+| `MONGO_DB` | `MONGO_DB_FILE` | database name (default `vantage`) |
+| `VANTAGE_AUTH_DEV_SECRET` | `VANTAGE_AUTH_DEV_SECRET_FILE` | HMAC key for bearer tokens |
+
+`docker-compose.yml` declares the three values as top-level file-based `secrets:` read from
+`deploy/secrets/` (only the `*.example` files are committed; the real files are gitignored) and
+passes `MONGO_URI_FILE=/run/secrets/mongo_uri` etc. to the `app` service.
+
+To wire a vault, render the secret into the same mounted files instead of injecting env vars:
+
+- **HashiCorp Vault Agent** — a `template` stanza per secret writing to `/run/secrets/<name>`
+  in a shared volume the app container mounts.
+- **AWS Secrets Manager / cloud secret stores** — the Secrets Store CSI driver (Kubernetes) or an
+  init container running `aws secretsmanager get-secret-value` writes the file; Docker Swarm
+  `docker secret create` mounts it at `/run/secrets/<name>` directly.
+- **Kubernetes `Secret`** — mount as a volume at `/run/secrets` and set the `_FILE` variables.
 
 ## Security / authentication
 
@@ -24,7 +76,7 @@ Configure the security middleware with:
 
 | Variable | Purpose | Default |
 | --- | --- | --- |
-| `VANTAGE_AUTH_DEV_SECRET` | Secret required to mint and verify tokens | required |
+| `VANTAGE_AUTH_DEV_SECRET` | Secret required to mint and verify tokens (file-mounted via `VANTAGE_AUTH_DEV_SECRET_FILE` in deployments, see [Secrets](#secrets)) | required |
 | `VANTAGE_CORS_ORIGINS` | Comma-separated allowed browser origins | empty |
 | `VANTAGE_RATE_LIMIT_PER_MINUTE` | Requests per client IP per minute; `0` disables the limit | `120` |
 
@@ -61,7 +113,7 @@ return a 308 redirect to `/v1`. `GET /v1/version` returns the authenticated API 
 
 ### Mongo indexes
 
-The lifespan hook creates these indexes at startup when `MONGO_URI` is set:
+The lifespan hook creates these indexes at startup when `MONGO_URI` is configured:
 
 | Collection | Fields |
 | --- | --- |
@@ -158,6 +210,14 @@ HTML page.
 pytest
 ```
 
+## Supply chain
+
+`.github/workflows/supply-chain.yml` builds both images on every push/PR, produces SPDX SBOMs
+(`anchore/sbom-action`, uploaded as workflow artifacts for the repository and both images) and
+scans the images with Trivy (`aquasecurity/trivy-action`, `ignore-unfixed`, fails on
+CRITICAL/HIGH; SARIF is uploaded to the Security tab). Accepted findings must be listed with a
+justification in `.trivyignore`.
+
 `tests/` covers capacity, circuit roll-ups, rating and discount ordering,
 addressing/reference integrity, and the HTTP surface.
 
@@ -173,6 +233,14 @@ invoice as plain text plus a per-charge CSV.
 cd java/vantage-report
 mvn -B verify
 mvn -q exec:java -Dexec.mainClass=net.vantage.report.Main -Dexec.args="2026-07"
+```
+
+Or containerised (`java/vantage-report/Dockerfile`, Temurin 21 JRE, non-root); the entrypoint takes
+the same `<period> [usage.csv]` arguments and writes `/out/invoices-<period>.txt`:
+
+```bash
+docker build -t vantage-telco/report java/vantage-report
+docker run --rm -v "$PWD/out:/out" vantage-telco/report 2026-07
 ```
 
 Usage comes from the mediation CSV export

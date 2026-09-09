@@ -1,0 +1,22 @@
+
+$ curl -sS -H 'Authorization: Bearer $TOKEN' -o /tmp/vantage-post-api-_v1_resources.json -w 'HTTP %{http_code}\n' http://localhost:8000/v1/resources
+HTTP 200
+grep -c '"_id"' 0
+
+$ curl -sS -H 'Authorization: Bearer $TOKEN' -o /tmp/vantage-post-api-_v1_circuits.json -w 'HTTP %{http_code}\n' http://localhost:8000/v1/circuits
+HTTP 200
+grep -c '"_id"' 0
+
+$ curl -sS -H 'Authorization: Bearer $TOKEN' -o /tmp/vantage-post-api-_v1_network_devices.json -w 'HTTP %{http_code}\n' http://localhost:8000/v1/network/devices
+HTTP 200
+grep -c '"_id"' 0
+
+$ curl -sS -H 'Authorization: Bearer $TOKEN' -o /tmp/vantage-post-api-_v1_capacity_locations.json -w 'HTTP %{http_code}\n' http://localhost:8000/v1/capacity/locations
+HTTP 200
+grep -c '"_id"' 0
+
+$ curl -sS -H 'Authorization: Bearer $TOKEN' -o /tmp/vantage-post-api-_v1_billing_usage-summary.json -w 'HTTP %{http_code}\n' http://localhost:8000/v1/billing/usage-summary
+HTTP 200
+grep -c '"_id"' 0
+
+All endpoint checks passed.
