@@ -1,0 +1,13 @@
+VANTAGE NETWORK SERVICES
+Invoice for period 2026-07
+--------------------------------------------------------
+Account:  VANTAGE-BILL-88213
+Customer: Beacon Manufacturing Corp
+Plan:     ENTERPRISE-FLEX
+--------------------------------------------------------
+Monthly plan fee (ENTERPRISE-FLEX)    $2400.00
+Usage overage: 100115 MB at 0.012/MB  $1201.38
+Sales tax at 6.25% on 3601.38         $225.09
+Loyalty credit of 8.0% (post-tax)     -$306.12
+--------------------------------------------------------
+TOTAL DUE                             $3520.35

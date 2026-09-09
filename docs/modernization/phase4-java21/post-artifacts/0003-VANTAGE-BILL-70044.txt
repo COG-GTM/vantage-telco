@@ -1,0 +1,12 @@
+VANTAGE NETWORK SERVICES
+Invoice for period 2026-07
+--------------------------------------------------------
+Account:  VANTAGE-BILL-70044
+Customer: Harborline Transit Authority
+Plan:     METRO-BURST
+--------------------------------------------------------
+Monthly plan fee (METRO-BURST)        $310.00
+Sales tax at 6.25% on 310.00          $19.38
+Loyalty credit of 2.5% (post-tax)     -$8.23
+--------------------------------------------------------
+TOTAL DUE                             $321.15

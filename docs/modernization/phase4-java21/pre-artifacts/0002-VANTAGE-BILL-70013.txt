@@ -1,0 +1,13 @@
+VANTAGE NETWORK SERVICES
+Invoice for period 2026-07
+--------------------------------------------------------
+Account:  VANTAGE-BILL-70013
+Customer: Cedar Point Health Systems
+Plan:     BUSINESS-FLEX
+--------------------------------------------------------
+Monthly plan fee (BUSINESS-FLEX)      $650.00
+Usage overage: 24577 MB at 0.012/MB   $294.92
+Sales tax at 6.25% on 944.92          $59.06
+Loyalty credit of 4.0% (post-tax)     -$40.16
+--------------------------------------------------------
+TOTAL DUE                             $963.82
