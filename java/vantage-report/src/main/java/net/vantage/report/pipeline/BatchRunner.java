@@ -1,70 +1,52 @@
 package net.vantage.report.pipeline;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 
 import net.vantage.report.model.Invoice;
 import net.vantage.report.report.ReportRenderer;
 
 /**
- * Renders a cycle's invoices in parallel.
+ * Renders a cycle's invoices with a virtual thread-per-task executor.
  *
- * <p>Uses a bounded platform-thread pool sized off the host CPU count: each
- * render is submitted as a {@link Callable} and the {@link Future}s are joined
- * in submission order so the output stays deterministic.
+ * <p>Each render is submitted as a task and the {@link Future}s are joined in
+ * submission order so the output stays deterministic.
  */
 public final class BatchRunner implements AutoCloseable {
 
     private static final long SHUTDOWN_TIMEOUT_SECONDS = 30L;
 
     private final ExecutorService executor;
-    private final ReportRenderer renderer;
+    private final Function<Invoice, String> render;
 
     public BatchRunner(ReportRenderer renderer) {
-        this(renderer, Math.max(2, Runtime.getRuntime().availableProcessors()));
+        this(renderer::renderInvoice);
     }
 
-    public BatchRunner(ReportRenderer renderer, int poolSize) {
-        this.renderer = renderer;
-        this.executor = Executors.newFixedThreadPool(poolSize, new ThreadFactory() {
-
-            private final AtomicInteger counter = new AtomicInteger();
-
-            @Override
-            public Thread newThread(Runnable runnable) {
-                Thread thread = new Thread(runnable, "vantage-report-" + counter.incrementAndGet());
-                thread.setDaemon(true);
-                return thread;
-            }
-        });
+    BatchRunner(Function<Invoice, String> render) {
+        this.render = render;
+        this.executor = Executors.newThreadPerTaskExecutor(
+                Thread.ofVirtual().name("vantage-render-", 0).factory());
     }
 
     /** Renders every invoice, preserving input order. */
     public List<String> renderAll(List<Invoice> invoices) {
-        List<Future<String>> futures = new ArrayList<Future<String>>(invoices.size());
-        for (final Invoice invoice : invoices) {
-            futures.add(executor.submit(new Callable<String>() {
-                @Override
-                public String call() {
-                    return renderer.renderInvoice(invoice);
-                }
-            }));
+        List<Future<String>> futures = new ArrayList<>(invoices.size());
+        for (Invoice invoice : invoices) {
+            futures.add(executor.submit(() -> render.apply(invoice)));
         }
 
-        List<String> rendered = new ArrayList<String>(futures.size());
+        List<String> rendered = new ArrayList<>(futures.size());
         for (Future<String> future : futures) {
             rendered.add(join(future));
         }
-        return Collections.unmodifiableList(rendered);
+        return List.copyOf(rendered);
     }
 
     private static String join(Future<String> future) {
@@ -96,5 +78,9 @@ public final class BatchRunner implements AutoCloseable {
             executor.shutdownNow();
             Thread.currentThread().interrupt();
         }
+    }
+
+    public boolean isShutdown() {
+        return executor.isShutdown();
     }
 }
