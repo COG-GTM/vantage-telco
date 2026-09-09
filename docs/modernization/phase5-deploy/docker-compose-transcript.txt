@@ -1,0 +1,496 @@
+
+$ docker compose build
+ Image vantage-telco-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 516B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 900B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.11-slim
+#3 DONE 0.8s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 159B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 467.61kB 0.0s done
+#5 DONE 0.0s
+
+#6 [builder 1/4] FROM docker.io/library/python:3.11-slim@sha256:9534e5a8e315485d4061ed659af0fd78a284c015f9b73661b41d6bab25604534
+#6 resolve docker.io/library/python:3.11-slim@sha256:9534e5a8e315485d4061ed659af0fd78a284c015f9b73661b41d6bab25604534 0.0s done
+#6 sha256:db840d086b65cf73e0feea3bd0cf11063818114e466846ae3f2b2fb1a8c2b143 10.49MB / 14.45MB 0.2s
+#6 sha256:db840d086b65cf73e0feea3bd0cf11063818114e466846ae3f2b2fb1a8c2b143 14.45MB / 14.45MB 0.2s done
+#6 sha256:3678bb828654fcc3752f7a5eb63c5accfa00c97047252f25405285550d74a3fd 4.27MB / 4.27MB 0.2s done
+#6 sha256:f9efa1b83d065a7c5a3041582875b75d63c4ab3d4413514de8e413b51f90e91a 249B / 249B 0.2s done
+#6 extracting sha256:3678bb828654fcc3752f7a5eb63c5accfa00c97047252f25405285550d74a3fd 0.1s done
+#6 DONE 0.3s
+
+#6 [builder 1/4] FROM docker.io/library/python:3.11-slim@sha256:9534e5a8e315485d4061ed659af0fd78a284c015f9b73661b41d6bab25604534
+#6 extracting sha256:db840d086b65cf73e0feea3bd0cf11063818114e466846ae3f2b2fb1a8c2b143
+#6 extracting sha256:db840d086b65cf73e0feea3bd0cf11063818114e466846ae3f2b2fb1a8c2b143 0.4s done
+#6 DONE 0.8s
+
+#6 [builder 1/4] FROM docker.io/library/python:3.11-slim@sha256:9534e5a8e315485d4061ed659af0fd78a284c015f9b73661b41d6bab25604534
+#6 extracting sha256:f9efa1b83d065a7c5a3041582875b75d63c4ab3d4413514de8e413b51f90e91a done
+#6 DONE 0.8s
+
+#7 [builder 2/4] WORKDIR /build
+#7 DONE 0.1s
+
+#8 [stage-1 2/6] RUN addgroup --system --gid 10001 vantage     && adduser --system --uid 10001 --gid 10001 vantage
+#8 ...
+
+#9 [builder 3/4] COPY requirements.txt .
+#9 DONE 0.0s
+
+#8 [stage-1 2/6] RUN addgroup --system --gid 10001 vantage     && adduser --system --uid 10001 --gid 10001 vantage
+#8 0.269 useradd warning: vantage's uid 10001 is greater than SYS_UID_MAX 999
+#8 DONE 0.3s
+
+#10 [stage-1 3/6] WORKDIR /srv/vantage
+#10 DONE 0.0s
+
+#11 [builder 4/4] RUN python -m venv /opt/venv     && /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
+#11 3.889 Collecting fastapi==0.141.1 (from -r requirements.txt (line 1))
+#11 3.928   Downloading fastapi-0.141.1-py3-none-any.whl.metadata (27 kB)
+#11 3.971 Collecting uvicorn==0.52.4 (from -r requirements.txt (line 2))
+#11 3.981   Downloading uvicorn-0.52.4-py3-none-any.whl.metadata (6.6 kB)
+#11 4.311 Collecting pymongo==4.17.0 (from -r requirements.txt (line 3))
+#11 4.323   Downloading pymongo-4.17.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (10 kB)
+#11 4.477 Collecting pydantic==2.13.5 (from -r requirements.txt (line 4))
+#11 4.487   Downloading pydantic-2.13.5-py3-none-any.whl.metadata (110 kB)
+#11 4.499      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 110.2/110.2 kB 11.2 MB/s eta 0:00:00
+#11 4.527 Collecting PyJWT==2.13.0 (from PyJWT[crypto]==2.13.0->-r requirements.txt (line 5))
+#11 4.537   Downloading pyjwt-2.13.0-py3-none-any.whl.metadata (3.4 kB)
+#11 4.789 Collecting cryptography==50.0.1 (from -r requirements.txt (line 6))
+#11 4.799   Downloading cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.3 kB)
+#11 4.821 Collecting jinja2==3.1.6 (from -r requirements.txt (line 7))
+#11 4.831   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+#11 4.893 Collecting starlette>=0.46.0 (from fastapi==0.141.1->-r requirements.txt (line 1))
+#11 4.903   Downloading starlette-1.6.0-py3-none-any.whl.metadata (6.4 kB)
+#11 4.963 Collecting typing-extensions>=4.8.0 (from fastapi==0.141.1->-r requirements.txt (line 1))
+#11 4.973   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#11 4.991 Collecting typing-inspection>=0.4.2 (from fastapi==0.141.1->-r requirements.txt (line 1))
+#11 5.000   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+#11 5.016 Collecting annotated-doc>=0.0.2 (from fastapi==0.141.1->-r requirements.txt (line 1))
+#11 5.025   Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+#11 5.062 Collecting click>=7.0 (from uvicorn==0.52.4->-r requirements.txt (line 2))
+#11 5.073   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+#11 5.091 Collecting h11>=0.8 (from uvicorn==0.52.4->-r requirements.txt (line 2))
+#11 5.101   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#11 5.137 Collecting dnspython<3.0.0,>=2.6.1 (from pymongo==4.17.0->-r requirements.txt (line 3))
+#11 5.148   Downloading dnspython-2.8.0-py3-none-any.whl.metadata (5.7 kB)
+#11 5.169 Collecting annotated-types>=0.6.0 (from pydantic==2.13.5->-r requirements.txt (line 4))
+#11 5.178   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#11 5.912 Collecting pydantic-core==2.46.5 (from pydantic==2.13.5->-r requirements.txt (line 4))
+#11 5.922   Downloading pydantic_core-2.46.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+#11 6.083 Collecting cffi>=2.0.0 (from cryptography==50.0.1->-r requirements.txt (line 6))
+#11 6.093   Downloading cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+#11 6.153 Collecting MarkupSafe>=2.0 (from jinja2==3.1.6->-r requirements.txt (line 7))
+#11 6.164   Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+#11 6.202 Collecting pycparser (from cffi>=2.0.0->cryptography==50.0.1->-r requirements.txt (line 6))
+#11 6.212   Downloading pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+#11 6.267 Collecting anyio<5,>=3.6.2 (from starlette>=0.46.0->fastapi==0.141.1->-r requirements.txt (line 1))
+#11 6.278   Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+#11 6.314 Collecting idna>=2.8 (from anyio<5,>=3.6.2->starlette>=0.46.0->fastapi==0.141.1->-r requirements.txt (line 1))
+#11 6.324   Downloading idna-3.19-py3-none-any.whl.metadata (9.2 kB)
+#11 6.348 Downloading fastapi-0.141.1-py3-none-any.whl (131 kB)
+#11 6.351    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 132.0/132.0 kB 113.6 MB/s eta 0:00:00
+#11 6.363 Downloading uvicorn-0.52.4-py3-none-any.whl (79 kB)
+#11 6.365    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.9/79.9 kB 427.4 MB/s eta 0:00:00
+#11 6.377 Downloading pymongo-4.17.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.5 MB)
+#11 6.405    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 59.9 MB/s eta 0:00:00
+#11 6.415 Downloading pydantic-2.13.5-py3-none-any.whl (472 kB)
+#11 6.419    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 472.6/472.6 kB 173.1 MB/s eta 0:00:00
+#11 6.429 Downloading pyjwt-2.13.0-py3-none-any.whl (31 kB)
+#11 6.439 Downloading cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+#11 6.475    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 138.1 MB/s eta 0:00:00
+#11 6.485 Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+#11 6.487    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.9/134.9 kB 451.7 MB/s eta 0:00:00
+#11 6.496 Downloading pydantic_core-2.46.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#11 6.506    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 268.3 MB/s eta 0:00:00
+#11 6.515 Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+#11 6.527 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#11 6.537 Downloading cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (217 kB)
+#11 6.539    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 217.8/217.8 kB 505.4 MB/s eta 0:00:00
+#11 6.549 Downloading click-8.5.0-py3-none-any.whl (125 kB)
+#11 6.551    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 125.3/125.3 kB 450.4 MB/s eta 0:00:00
+#11 6.561 Downloading dnspython-2.8.0-py3-none-any.whl (331 kB)
+#11 6.563    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 331.1/331.1 kB 540.4 MB/s eta 0:00:00
+#11 6.573 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#11 6.582 Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+#11 6.592 Downloading starlette-1.6.0-py3-none-any.whl (75 kB)
+#11 6.593    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 76.0/76.0 kB 357.2 MB/s eta 0:00:00
+#11 6.603 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#11 6.605    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 384.5 MB/s eta 0:00:00
+#11 6.614 Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+#11 6.624 Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+#11 6.626    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 132.1/132.1 kB 475.3 MB/s eta 0:00:00
+#11 6.635 Downloading pycparser-3.0-py3-none-any.whl (48 kB)
+#11 6.637    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.2/48.2 kB 378.0 MB/s eta 0:00:00
+#11 6.647 Downloading idna-3.19-py3-none-any.whl (68 kB)
+#11 6.649    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 68.5/68.5 kB 405.3 MB/s eta 0:00:00
+#11 6.781 Installing collected packages: typing-extensions, PyJWT, pycparser, MarkupSafe, idna, h11, dnspython, click, annotated-types, annotated-doc, uvicorn, typing-inspection, pymongo, pydantic-core, jinja2, cffi, anyio, starlette, pydantic, cryptography, fastapi
+#11 8.290 Successfully installed MarkupSafe-3.0.3 PyJWT-2.13.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 cffi-2.1.1 click-8.5.0 cryptography-50.0.1 dnspython-2.8.0 fastapi-0.141.1 h11-0.16.0 idna-3.19 jinja2-3.1.6 pycparser-3.0 pydantic-2.13.5 pydantic-core-2.46.5 pymongo-4.17.0 starlette-1.6.0 typing-extensions-4.16.0 typing-inspection-0.4.4 uvicorn-0.52.4
+#11 8.379 
+#11 8.379 [notice] A new release of pip is available: 24.0 -> 26.2.1
+#11 8.379 [notice] To update, run: python -m pip install --upgrade pip
+#11 DONE 8.8s
+
+#12 [stage-1 4/6] COPY --from=builder /opt/venv /opt/venv
+#12 DONE 0.4s
+
+#13 [stage-1 5/6] COPY --chown=vantage:vantage app/ /srv/vantage/app/
+#13 DONE 0.0s
+
+#14 [stage-1 6/6] COPY --chown=vantage:vantage data/seed/ /srv/vantage/data/seed/
+#14 DONE 0.0s
+
+#15 exporting to image
+#15 exporting layers
+#15 exporting layers 2.4s done
+#15 exporting manifest sha256:79e1c27a6beecbf9ca28789dd911371dbfb8157110d311360f37ca9b1b0a2744 done
+#15 exporting config sha256:cdc860618fcb22c2b82b98ca2ac72c9f435a1395ac1286d0457a55f8e586862a done
+#15 exporting attestation manifest sha256:8e7edfd8277abab7526ef7789588c092daf29e04b43a89a41dafa92d703c42e3 done
+#15 exporting manifest list sha256:e3c626d578a042947a70b84df1d64033498c3a59351e154e7acbb2a10e5c84d4 done
+#15 naming to docker.io/library/vantage-telco-app:latest done
+#15 unpacking to docker.io/library/vantage-telco-app:latest
+#15 unpacking to docker.io/library/vantage-telco-app:latest 0.7s done
+#15 DONE 3.1s
+
+#16 resolving provenance for metadata file
+#16 DONE 0.0s
+ Image vantage-telco-app Built 
+[exit 0]
+
+$ docker compose up -d
+ Image mongo:7 Pulling 
+ d544298cabd5 Pulling fs layer 0B
+ 81367f8e2b43 Pulling fs layer 0B
+ 58d10ed043df Pulling fs layer 0B
+ c92332b2dccb Pulling fs layer 0B
+ 06f29520dfec Pulling fs layer 0B
+ e86bd9a86236 Pulling fs layer 0B
+ cd6b692c8640 Pulling fs layer 0B
+ ec6d65751a7e Pulling fs layer 0B
+ d544298cabd5 Downloading 4.194MB
+ d544298cabd5 Download complete 0B
+ 81367f8e2b43 Download complete 0B
+ 58d10ed043df Download complete 0B
+ d544298cabd5 Extracting 1B
+ c92332b2dccb Download complete 0B
+ 06f29520dfec Downloading 13.63MB
+ e86bd9a86236 Download complete 0B
+ cd6b692c8640 Downloading 1.049MB
+ d544298cabd5 Extracting 1B
+ 06f29520dfec Downloading 46.14MB
+ cd6b692c8640 Download complete 0B
+ ec6d65751a7e Download complete 0B
+ d544298cabd5 Extracting 1B
+ 06f29520dfec Downloading 80.74MB
+ d544298cabd5 Extracting 1B
+ 06f29520dfec Downloading 115.3MB
+ d544298cabd5 Extracting 1B
+ 06f29520dfec Downloading 149.9MB
+ d544298cabd5 Extracting 1B
+ 06f29520dfec Downloading 185.1MB
+ d544298cabd5 Extracting 1B
+ 06f29520dfec Downloading 217.1MB
+ d544298cabd5 Extracting 1B
+ d6e2a2003a96 Download complete 0B
+ 1a5f00ff5969 Download complete 0B
+ 06f29520dfec Downloading 249.6MB
+ d544298cabd5 Extracting 1B
+ 06f29520dfec Downloading 263.8MB
+ d544298cabd5 Extracting 1B
+ 06f29520dfec Download complete 0B
+ d544298cabd5 Extracting 1B
+ d544298cabd5 Extracting 2B
+ d544298cabd5 Extracting 2B
+ d544298cabd5 Extracting 2B
+ d544298cabd5 Extracting 2B
+ d544298cabd5 Pull complete 0B
+ 58d10ed043df Pull complete 0B
+ c92332b2dccb Pull complete 0B
+ e86bd9a86236 Pull complete 0B
+ cd6b692c8640 Pull complete 0B
+ ec6d65751a7e Pull complete 0B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 1B
+ 06f29520dfec Extracting 2B
+ 06f29520dfec Extracting 2B
+ 06f29520dfec Extracting 2B
+ 06f29520dfec Extracting 2B
+ 06f29520dfec Extracting 2B
+ 06f29520dfec Extracting 2B
+ 06f29520dfec Extracting 2B
+ 06f29520dfec Extracting 2B
+ 06f29520dfec Extracting 2B
+ 06f29520dfec Extracting 2B
+ 06f29520dfec Extracting 3B
+ 06f29520dfec Extracting 3B
+ 06f29520dfec Extracting 3B
+ 06f29520dfec Extracting 3B
+ 06f29520dfec Extracting 3B
+ 06f29520dfec Extracting 3B
+ 06f29520dfec Extracting 3B
+ 06f29520dfec Extracting 3B
+ 06f29520dfec Extracting 3B
+ 06f29520dfec Extracting 3B
+ 06f29520dfec Extracting 4B
+ 06f29520dfec Extracting 4B
+ 06f29520dfec Extracting 4B
+ 06f29520dfec Extracting 4B
+ 06f29520dfec Extracting 4B
+ 06f29520dfec Extracting 4B
+ 06f29520dfec Extracting 4B
+ 06f29520dfec Extracting 4B
+ 06f29520dfec Extracting 4B
+ 06f29520dfec Extracting 4B
+ 06f29520dfec Extracting 5B
+ 06f29520dfec Extracting 5B
+ 06f29520dfec Extracting 5B
+ 06f29520dfec Extracting 5B
+ 06f29520dfec Extracting 5B
+ 06f29520dfec Extracting 5B
+ 06f29520dfec Extracting 5B
+ 06f29520dfec Extracting 5B
+ 81367f8e2b43 Pull complete 0B
+ 06f29520dfec Pull complete 0B
+ Image mongo:7 Pulled 
+ Network vantage-telco_default Creating 
+ Volume vantage-telco_mongo-data Creating 
+ Network vantage-telco_default Creating 
+ Volume vantage-telco_mongo-data Creating 
+ Volume vantage-telco_mongo-data Created 
+ Volume vantage-telco_mongo-data Created 
+ Network vantage-telco_default Created 
+ Network vantage-telco_default Created 
+ Container vantage-telco-mongo-1 Creating 
+ Container vantage-telco-mongo-1 Created 
+ Container vantage-telco-app-1 Creating 
+ Container vantage-telco-app-1 Created 
+ Container vantage-telco-mongo-1 Starting 
+ Container vantage-telco-mongo-1 Started 
+ Container vantage-telco-mongo-1 Waiting 
+ Container vantage-telco-mongo-1 Healthy 
+ Container vantage-telco-app-1 Starting 
+ Container vantage-telco-app-1 Started 
+[exit 0]
+
+$ docker compose ps
+NAME                    IMAGE               COMMAND                  SERVICE   CREATED          STATUS                                     PORTS
+vantage-telco-app-1     vantage-telco-app   "uvicorn app.main:ap…"   app       11 seconds ago   Up Less than a second (health: starting)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+vantage-telco-mongo-1   mongo:7             "docker-entrypoint.s…"   mongo     12 seconds ago   Up 10 seconds (healthy)                    27017/tcp
+health poll 1: starting
+health poll 2: starting
+health poll 3: starting
+health poll 4: healthy
+
+$ curl -i localhost:8000/health
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    15  100    15    0     0   6366      0 --:--:-- --:--:-- --:--:--  7500
+HTTP/1.1 200 OK
+date: Wed, 09 Sep 2026 05:20:43 GMT
+server: uvicorn
+content-length: 15
+content-type: application/json
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 120
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+
+{"status":"ok"}[exit 0]
+
+$ curl -i -H "Authorization: Bearer <minted-token>" localhost:8000/v1/resources
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    26  100    26    0     0   8640      0 --:--:-- --:--:-- --:--:-- 13000
+HTTP/1.1 401 Unauthorized
+date: Wed, 09 Sep 2026 05:20:43 GMT
+server: uvicorn
+www-authenticate: Bearer scope="inventory:read noc"
+content-length: 26
+content-type: application/json
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 119
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+
+{"detail":"invalid token"}
+$ docker compose run --rm report 2026-07 | head -40
+ Image vantage-telco-report Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 568B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 441B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/maven:3.9-eclipse-temurin-21
+#3 DONE 0.8s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#4 DONE 0.8s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 48B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 61.55kB done
+#6 DONE 0.0s
+
+#7 [stage-1 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:7a65df4b22d2de92d4e04056e884f3b9122d70b21e2847fd66084278bd0ce037
+#7 resolve docker.io/library/eclipse-temurin:21-jre@sha256:7a65df4b22d2de92d4e04056e884f3b9122d70b21e2847fd66084278bd0ce037 0.0s done
+#7 sha256:f6795b7189ec73f2774735d97a688bf9205d69cf49ceeb539654ddd7d70efe53 2.46kB / 2.46kB 0.1s done
+#7 sha256:74d4de9c947ffb50bb6447a5c09e24df5e1685b1137f82406f33e6f44bba79d6 160B / 160B 0.2s done
+#7 sha256:369da5fd35f25c0fb072631703d8d88a171650f488410bd5e789af82b6b64b2d 0B / 53.10MB 0.2s
+#7 sha256:85685ec585baa5d5d2bc7a9b75a44b2a9633d8bafa3cf68a74e00f17cfd247be 0B / 20.13MB 0.2s
+#7 sha256:369da5fd35f25c0fb072631703d8d88a171650f488410bd5e789af82b6b64b2d 33.55MB / 53.10MB 0.3s
+#7 sha256:85685ec585baa5d5d2bc7a9b75a44b2a9633d8bafa3cf68a74e00f17cfd247be 20.13MB / 20.13MB 0.4s done
+#7 sha256:06e9d71331fb2b620a4f6c8064e0f84b284bb69a42c7c57b1c962bd4a4cdee76 0B / 41.57MB 0.2s
+#7 sha256:f3db1cd940786339b09d8a60e47c66fea9502d788e6fab5bec91a4a77d4ced1c 393B / 393B 0.1s done
+#7 sha256:369da5fd35f25c0fb072631703d8d88a171650f488410bd5e789af82b6b64b2d 53.10MB / 53.10MB 0.4s done
+#7 sha256:06e9d71331fb2b620a4f6c8064e0f84b284bb69a42c7c57b1c962bd4a4cdee76 41.57MB / 41.57MB 0.3s done
+#7 extracting sha256:06e9d71331fb2b620a4f6c8064e0f84b284bb69a42c7c57b1c962bd4a4cdee76
+#7 extracting sha256:06e9d71331fb2b620a4f6c8064e0f84b284bb69a42c7c57b1c962bd4a4cdee76 1.2s done
+#7 DONE 1.7s
+
+#8 [build 1/6] FROM docker.io/library/maven:3.9-eclipse-temurin-21@sha256:8f6ac126f7810bb5549c4cd122d2bf0e9cda5bdeb0838aa928f09e779fd8bef8
+
+$ docker compose down -v
+ Container vantage-telco-app-1 Stopping 
+ Container vantage-telco-app-1 Stopped 
+ Container vantage-telco-app-1 Removing 
+ Container vantage-telco-app-1 Removed 
+ Container vantage-telco-mongo-1 Stopping 
+ Container vantage-telco-mongo-1 Stopped 
+ Container vantage-telco-mongo-1 Removing 
+ Container vantage-telco-mongo-1 Removed 
+ Volume vantage-telco_mongo-data Removing 
+ Network vantage-telco_default Removing 
+ Volume vantage-telco_mongo-data Removed 
+ Network vantage-telco_default Removed 
+[exit 0]
+
+$ docker compose up -d
+ Volume vantage-telco_mongo-data Creating 
+ Volume vantage-telco_mongo-data Creating 
+ Network vantage-telco_default Creating 
+ Network vantage-telco_default Creating 
+ Volume vantage-telco_mongo-data Created 
+ Volume vantage-telco_mongo-data Created 
+ Network vantage-telco_default Created 
+ Network vantage-telco_default Created 
+ Container vantage-telco-mongo-1 Creating 
+ Container vantage-telco-mongo-1 Created 
+ Container vantage-telco-app-1 Creating 
+ Container vantage-telco-app-1 Created 
+ Container vantage-telco-mongo-1 Starting 
+ Container vantage-telco-mongo-1 Started 
+ Container vantage-telco-mongo-1 Waiting 
+ Container vantage-telco-mongo-1 Healthy 
+ Container vantage-telco-app-1 Starting 
+ Container vantage-telco-app-1 Started 
+[exit 0]
+health poll 1: starting
+health poll 2: starting
+health poll 3: starting
+health poll 4: healthy
+
+$ curl -i -H "Authorization: Bearer <minted-token matching compose settings>" localhost:8000/v1/resources
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    44  100    44    0     0  10020      0 --:--:-- --:--:-- --:--:-- 11000
+HTTP/1.1 200 OK
+date: Wed, 09 Sep 2026 05:21:14 GMT
+server: uvicorn
+content-length: 44
+content-type: application/json
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 119
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+
+{"items":[],"total":0,"limit":50,"offset":0}
+$ docker compose run --rm report 2026-07 | head -40
+ Image vantage-telco-report Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 568B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 441B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/maven:3.9-eclipse-temurin-21
+#3 DONE 0.1s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#4 DONE 0.2s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 48B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 3.01kB done
+#6 DONE 0.0s
+
+#7 [stage-1 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:7a65df4b22d2de92d4e04056e884f3b9122d70b21e2847fd66084278bd0ce037
+#7 resolve docker.io/library/eclipse-temurin:21-jre@sha256:7a65df4b22d2de92d4e04056e884f3b9122d70b21e2847fd66084278bd0ce037 done
+#7 extracting sha256:f3db1cd940786339b09d8a60e47c66fea9502d788e6fab5bec91a4a77d4ced1c done
+#7 extracting sha256:85685ec585baa5d5d2bc7a9b75a44b2a9633d8bafa3cf68a74e00f17cfd247be
+#7 extracting sha256:85685ec585baa5d5d2bc7a9b75a44b2a9633d8bafa3cf68a74e00f17cfd247be 0.5s done
+#7 DONE 0.5s
+
+#8 [build 1/6] FROM docker.io/library/maven:3.9-eclipse-temurin-21@sha256:8f6ac126f7810bb5549c4cd122d2bf0e9cda5bdeb0838aa928f09e779fd8bef8
+#8 resolve docker.io/library/maven:3.9-eclipse-temurin-21@sha256:8f6ac126f7810bb5549c4cd122d2bf0e9cda5bdeb0838aa928f09e779fd8bef8 done
+#8 extracting sha256:2b31ee5335cc859ac582c9a4043918fba00087e7d800909381874b459878f52c
+#8 extracting sha256:2b31ee5335cc859ac582c9a4043918fba00087e7d800909381874b459878f52c 0.6s done
+#8 extracting sha256:887642163ab8a5862b92cfba1d05411fc8810a79d6de0edfdbada79d635e2b8f
+#8 ...
+
+#7 [stage-1 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:7a65df4b22d2de92d4e04056e884f3b9122d70b21e2847fd66084278bd0ce037
+#7 extracting sha256:369da5fd35f25c0fb072631703d8d88a171650f488410bd5e789af82b6b64b2d 1.2s done
+#7 DONE 1.7s
+
+$ docker compose down -v
+ Container vantage-telco-app-1 Stopping 
+ Container vantage-telco-app-1 Stopped 
+ Container vantage-telco-app-1 Removing 
+ Container vantage-telco-app-1 Removed 
+ Container vantage-telco-mongo-1 Stopping 
+ Container vantage-telco-mongo-1 Stopped 
+ Container vantage-telco-mongo-1 Removing 
+ Container vantage-telco-mongo-1 Removed 
+ Volume vantage-telco_mongo-data Removing 
+ Network vantage-telco_default Removing 
+ Volume vantage-telco_mongo-data Removed 
+ Network vantage-telco_default Removed 
+[exit 0]

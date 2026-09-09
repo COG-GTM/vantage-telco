@@ -1,0 +1,256 @@
+
+$ env PY=.venv/bin/python make test
+.venv/bin/python -m pytest -q
+........................................................................ [ 54%]
+............................................................             [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/starlette/testclient.py:53
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+.venv/lib/python3.12/site-packages/jwt/api_jwt.py:147: 1 warning
+tests/test_addressing.py: 5 warnings
+tests/test_api.py: 25 warnings
+tests/test_billing.py: 6 warnings
+tests/test_billing_rules.py: 15 warnings
+tests/test_capacity.py: 5 warnings
+tests/test_circuits.py: 3 warnings
+tests/test_config.py: 6 warnings
+tests/test_db.py: 18 warnings
+tests/test_locations.py: 7 warnings
+tests/test_pagination.py: 1 warning
+tests/test_security.py: 41 warnings
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/jwt/api_jwt.py:147: InsecureKeyLengthWarning: The HMAC key is 24 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+.venv/lib/python3.12/site-packages/jwt/api_jwt.py:147
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/jwt/api_jwt.py:147: InsecureKeyLengthWarning: The HMAC key is 16 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+tests/test_api.py: 22 warnings
+tests/test_db.py: 1 warning
+tests/test_locations.py: 3 warnings
+tests/test_security.py: 19 warnings
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/jwt/api_jwt.py:368: InsecureKeyLengthWarning: The HMAC key is 24 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    decoded = self.decode_complete(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+132 passed, 181 warnings in 1.33s
+
+$ env PY=.venv/bin/python make lint
+.venv/bin/python -m ruff check .
+All checks passed!
+
+$ env PY=.venv/bin/python make typecheck
+.venv/bin/python -m mypy
+Success: no issues found in 34 source files
+
+$ env PY=.venv/bin/python make coverage
+.venv/bin/python -m pytest -q --cov=app --cov-report=term-missing --cov-fail-under=85
+........................................................................ [ 54%]
+............................................................             [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/starlette/testclient.py:53
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+.venv/lib/python3.12/site-packages/jwt/api_jwt.py:147: 1 warning
+tests/test_addressing.py: 5 warnings
+tests/test_api.py: 25 warnings
+tests/test_billing.py: 6 warnings
+tests/test_billing_rules.py: 15 warnings
+tests/test_capacity.py: 5 warnings
+tests/test_circuits.py: 3 warnings
+tests/test_config.py: 6 warnings
+tests/test_db.py: 18 warnings
+tests/test_locations.py: 7 warnings
+tests/test_pagination.py: 1 warning
+tests/test_security.py: 41 warnings
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/jwt/api_jwt.py:147: InsecureKeyLengthWarning: The HMAC key is 24 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+.venv/lib/python3.12/site-packages/jwt/api_jwt.py:147
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/jwt/api_jwt.py:147: InsecureKeyLengthWarning: The HMAC key is 16 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+tests/test_api.py: 22 warnings
+tests/test_db.py: 1 warning
+tests/test_locations.py: 3 warnings
+tests/test_security.py: 19 warnings
+  /home/ubuntu/repos/vantage-telco/.venv/lib/python3.12/site-packages/jwt/api_jwt.py:368: InsecureKeyLengthWarning: The HMAC key is 24 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    decoded = self.decode_complete(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.13-final-0 _______________
+
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+app/__init__.py                   0      0   100%
+app/billing/__init__.py           0      0   100%
+app/billing/discounts.py          7      1    86%   19
+app/billing/invoices.py          65      1    98%   124
+app/billing/latefee.py           20      2    90%   18, 25
+app/billing/lines.py             10      0   100%
+app/billing/promo.py             21      2    90%   18, 30
+app/billing/proration.py         15      0   100%
+app/billing/rating.py            12      0   100%
+app/billing/suspension.py        12      0   100%
+app/billing/tax.py               20      0   100%
+app/config.py                     8      0   100%
+app/db.py                        72      4    94%   55-57, 60
+app/inventory/__init__.py         0      0   100%
+app/inventory/capacity.py        13      1    92%   23
+app/inventory/circuits.py        13      0   100%
+app/inventory/locations.py       28      0   100%
+app/inventory/models.py          27     27     0%   1-33
+app/inventory/repository.py      24      0   100%
+app/main.py                      31      0   100%
+app/middleware.py                61      5    92%   64-66, 72, 87
+app/network/__init__.py           0      0   100%
+app/network/addressing.py        48      2    96%   101-102
+app/pagination.py                16      0   100%
+app/routers/__init__.py           0      0   100%
+app/routers/billing.py           17      1    94%   33
+app/routers/capacity.py          22      1    95%   45
+app/routers/dashboard.py         22      0   100%
+app/routers/inventory.py         21      0   100%
+app/routers/network.py           17      0   100%
+app/security.py                 126      6    95%   102-105, 161, 164, 213, 236
+app/templating.py                 7      0   100%
+-----------------------------------------------------------
+TOTAL                           755     53    93%
+Required test coverage of 85% reached. Total coverage: 92.98%
+132 passed, 181 warnings in 4.54s
+
+$ env PY=.venv/bin/python make audit
+.venv/bin/python -m pip_audit -r requirements.txt -r requirements-dev.txt
+No known vulnerabilities found
+
+$ env JAVA_HOME=/home/ubuntu/tools/jdk-21 PATH=/home/ubuntu/tools/jdk-21/bin:/usr/bin:/bin /usr/bin/mvn -B verify -f java/vantage-report/pom.xml
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< net.vantage:vantage-report >---------------------
+[INFO] Building vantage-report 2.0.0
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ vantage-report ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ vantage-report ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ vantage-report ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/ubuntu/repos/vantage-telco/java/vantage-report/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ vantage-report ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ vantage-report ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running net.vantage.report.pipeline.BatchRunnerTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.191 s -- in net.vantage.report.pipeline.BatchRunnerTest
+[INFO] Running net.vantage.report.report.ReportRendererTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in net.vantage.report.report.ReportRendererTest
+[INFO] Running net.vantage.report.rating.RatingEngineTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in net.vantage.report.rating.RatingEngineTest
+[INFO] Running net.vantage.report.io.CsvUsageReaderTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in net.vantage.report.io.CsvUsageReaderTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 29, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.1:jar (default-jar) @ vantage-report ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.333 s
+[INFO] Finished at: 2026-09-09T05:22:12Z
+[INFO] ------------------------------------------------------------------------
+
+$ env JAVA_HOME=/home/ubuntu/tools/jdk-21 PATH=/home/ubuntu/tools/jdk-21/bin:/usr/bin:/bin /home/ubuntu/tools/jdk-21/bin/java -jar java/vantage-report/target/vantage-report-2.0.0.jar 2026-07
+VANTAGE NETWORK SERVICES
+Invoice for period 2026-07
+--------------------------------------------------------
+Account:  VANTAGE-BILL-70000
+Customer: Northgate Logistics LLC
+Plan:     BUSINESS-FLEX
+--------------------------------------------------------
+Monthly plan fee (BUSINESS-FLEX)      $650.00
+Usage overage: 98422 MB at 0.012/MB   $1181.06
+Sales tax at 6.25% on 1831.06         $114.44
+--------------------------------------------------------
+TOTAL DUE                             $1945.50
+
+VANTAGE NETWORK SERVICES
+Invoice for period 2026-07
+--------------------------------------------------------
+Account:  VANTAGE-BILL-70013
+Customer: Cedar Point Health Systems
+Plan:     BUSINESS-FLEX
+--------------------------------------------------------
+Monthly plan fee (BUSINESS-FLEX)      $650.00
+Usage overage: 24577 MB at 0.012/MB   $294.92
+Sales tax at 6.25% on 944.92          $59.06
+Loyalty credit of 4.0% (post-tax)     -$40.16
+--------------------------------------------------------
+TOTAL DUE                             $963.82
+
+VANTAGE NETWORK SERVICES
+Invoice for period 2026-07
+--------------------------------------------------------
+Account:  VANTAGE-BILL-70044
+Customer: Harborline Transit Authority
+Plan:     METRO-BURST
+--------------------------------------------------------
+Monthly plan fee (METRO-BURST)        $310.00
+Sales tax at 6.25% on 310.00          $19.38
+Loyalty credit of 2.5% (post-tax)     -$8.23
+--------------------------------------------------------
+TOTAL DUE                             $321.15
+
+VANTAGE NETWORK SERVICES
+Invoice for period 2026-07
+--------------------------------------------------------
+Account:  VANTAGE-BILL-88213
+Customer: Beacon Manufacturing Corp
+Plan:     ENTERPRISE-FLEX
+--------------------------------------------------------
+Monthly plan fee (ENTERPRISE-FLEX)    $2400.00
+Usage overage: 100115 MB at 0.012/MB  $1201.38
+Sales tax at 6.25% on 3601.38         $225.09
+Loyalty credit of 8.0% (post-tax)     -$306.12
+--------------------------------------------------------
+TOTAL DUE                             $3520.35
+
+BILLING CYCLE SUMMARY
+Period:            2026-07
+Invoices rendered: 4
+Amount billed:     $6750.82
+Unlinked records:  1
+--------------------------------------------------------
+UNLINKED USAGE (no billing account)
+  VANTAGE-BILL-99999  device=aa11bb22-cc33-4dd4-8ee5-ff6600112233  88123 MB
+
+
+$ ls ../meridian-telco
+ls: cannot access '../meridian-telco': No such file or directory
+Parity skipped: ../meridian-telco is absent.
+
+FINAL ALL GATES PASSED

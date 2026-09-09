@@ -15,7 +15,32 @@ uvicorn app.main:app --reload --port 8000
 ```
 
 Point the app at a real database by exporting `MONGO_URI` (and optionally
-`MONGO_DB`, default `vantage`).
+`MONGO_DB`, default `vantage`). Production settings should come from a secret
+store rather than a plaintext environment file; see
+[`docs/modernization/secrets.md`](docs/modernization/secrets.md) for Vault,
+AWS, Kubernetes, and mounted-secret-file examples.
+
+## Running with Docker
+
+Copy `.env.example` to `.env`, set the local development secret to `dev` when
+you need authenticated requests, and start the application and MongoDB:
+
+```bash
+cp .env.example .env
+docker compose up -d
+curl http://localhost:8000/health
+```
+
+The report batch image is available under the `batch` profile:
+
+```bash
+docker compose run --rm report 2026-07
+docker compose down -v
+```
+
+Do not commit `.env`; production deployments should use the secret-store
+patterns described above. The application also accepts `<NAME>_FILE` variables
+for secrets mounted into the container.
 
 ## Authentication
 
@@ -145,7 +170,7 @@ addressing/reference integrity, and the HTTP surface.
 ## `java/vantage-report`
 
 The archived invoice artifacts the NOC keeps per cycle are rendered by a
-separate Maven module in `java/vantage-report`, built and run on Java 11. It
+separate Maven module in `java/vantage-report`, built and run on Java 21 (LTS). It
 re-implements the rating rules in `app/billing` (exact-MB overage, tax on the
 pre-discount subtotal, loyalty credit applied post-tax) and renders each
 invoice as plain text plus a per-charge CSV.
@@ -159,7 +184,9 @@ mvn -q exec:java -Dexec.mainClass=net.vantage.report.Main -Dexec.args="2026-07"
 Usage comes from the mediation CSV export
 (`account_id,device_uuid,period,usage_mb`); with no path argument the bundled
 `usage-sample.csv` is used. Invoices are rendered concurrently by
-`pipeline/BatchRunner` over a fixed platform-thread pool.
+`pipeline/BatchRunner`, one virtual thread per invoice
+(`Executors.newThreadPerTaskExecutor` with `Thread.ofVirtual()`), joined in
+submission order so output is deterministic.
 
 ## Seed data
 

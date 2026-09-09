@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
@@ -8,6 +7,7 @@ from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import db
+from app.config import setting
 from app.middleware import RateLimitMiddleware, SecurityHeadersMiddleware
 from app.routers import billing, capacity, dashboard, inventory, network
 
@@ -15,7 +15,7 @@ from app.routers import billing, capacity, dashboard, inventory, network
 def cors_origins() -> list[str]:
     return [
         origin.strip()
-        for origin in os.environ.get("VANTAGE_CORS_ORIGINS", "").split(",")
+        for origin in (setting("VANTAGE_CORS_ORIGINS", "") or "").split(",")
         if origin.strip()
     ]
 

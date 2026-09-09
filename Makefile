@@ -4,7 +4,7 @@ PERIOD ?= 2026-07
 MERIDIAN_DIR ?= ../meridian-telco
 COV_MIN ?= 85
 
-.PHONY: install test run fixtures parity demo lint typecheck audit coverage
+.PHONY: install test run fixtures parity demo lint typecheck audit coverage sbom
 
 install:
 	$(PY) -m pip install -r requirements.txt -r requirements-dev.txt
@@ -23,6 +23,11 @@ audit:
 
 coverage:
 	$(PY) -m pytest -q --cov=app --cov-report=term-missing --cov-fail-under=$(COV_MIN)
+
+sbom:
+	command -v syft >/dev/null || (echo "syft not installed: see docs/modernization/secrets.md#sbom" && exit 1)
+	syft dir:. -o cyclonedx-json > sbom-python.cdx.json
+	syft dir:java/vantage-report -o cyclonedx-json > sbom-java.cdx.json
 
 run:
 	$(PY) -m uvicorn app.main:app --port $(PORT)
