@@ -16,6 +16,7 @@ from app.billing.invoices import (
 )
 from app.inventory.repository import enrich_site, list_sites
 from app.main import app
+from app.security import SCOPE_BILLING_OPS
 
 
 @pytest.fixture(autouse=True)
@@ -126,12 +127,13 @@ def test_lifespan_closes_client(monkeypatch: pytest.MonkeyPatch):
     assert db._client is None
 
 
-def test_billing_invoices_match_phase0_baseline():
+def test_billing_invoices_match_phase0_baseline(token_for):
     baseline_path = Path("docs/modernization/phase0-baseline/pre-billing-invoices.json")
     with baseline_path.open() as handle:
         baseline = json.load(handle)
 
-    with TestClient(app) as client:
+    token = token_for([SCOPE_BILLING_OPS])
+    with TestClient(app, headers={"Authorization": f"Bearer {token}"}) as client:
         result = client.get("/billing/invoices?period=2026-07").json()
 
     assert dumps(result, sort_keys=True) == dumps(baseline, sort_keys=True)
