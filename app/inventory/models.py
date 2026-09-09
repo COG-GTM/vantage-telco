@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from pydantic import BaseModel
 
 LIFECYCLE_STATES = ("ACTIVE", "MAINTENANCE", "RETIRED", "PLANNED", "RESERVED")
@@ -14,7 +12,7 @@ class Resource(BaseModel):
     lifecycle_state: str
     latitude: float
     longitude: float
-    tower_registration: Optional[str] = None
+    tower_registration: str | None = None
     total_capacity_mbps: int = 0
     allocated_mbps: int = 0
     maintenance_buffer_mbps: int = 0

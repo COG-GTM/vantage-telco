@@ -9,9 +9,10 @@ from __future__ import annotations
 
 import json
 import os
-from functools import lru_cache
+from collections.abc import Iterable
+from functools import cache
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any
 
 SEED_DIR = Path(__file__).resolve().parent.parent / "data" / "seed"
 
@@ -28,28 +29,28 @@ COLLECTIONS = {
 class SeedCollection:
     """Read-only stand-in for a Mongo collection backed by a seed file."""
 
-    def __init__(self, documents: List[Dict[str, Any]]) -> None:
+    def __init__(self, documents: list[dict[str, Any]]) -> None:
         self._documents = documents
 
-    def find(self, query: Optional[Dict[str, Any]] = None) -> Iterable[Dict[str, Any]]:
+    def find(self, query: dict[str, Any] | None = None) -> Iterable[dict[str, Any]]:
         for doc in self._documents:
             if _matches(doc, query or {}):
                 yield dict(doc)
 
-    def find_one(self, query: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+    def find_one(self, query: dict[str, Any] | None = None) -> dict[str, Any] | None:
         for doc in self.find(query):
             return doc
         return None
 
-    def count_documents(self, query: Optional[Dict[str, Any]] = None) -> int:
+    def count_documents(self, query: dict[str, Any] | None = None) -> int:
         return sum(1 for _ in self.find(query))
 
 
-def _matches(doc: Dict[str, Any], query: Dict[str, Any]) -> bool:
+def _matches(doc: dict[str, Any], query: dict[str, Any]) -> bool:
     return all(doc.get(key) == value for key, value in query.items())
 
 
-@lru_cache(maxsize=None)
+@cache
 def _load_seed(name: str) -> SeedCollection:
     with (SEED_DIR / COLLECTIONS[name]).open() as handle:
         return SeedCollection(json.load(handle))
@@ -64,9 +65,9 @@ def get_collection(name: str):
         return _load_seed(name)
     from pymongo import MongoClient  # imported lazily: unused in seed mode
 
-    client = MongoClient(uri)
+    client: Any = MongoClient(uri)
     return client[os.environ.get("MONGO_DB", "vantage")][name]
 
 
-def all_documents(name: str) -> List[Dict[str, Any]]:
+def all_documents(name: str) -> list[dict[str, Any]]:
     return list(get_collection(name).find({}))

@@ -24,7 +24,7 @@ import subprocess
 import sys
 from decimal import Decimal
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
@@ -34,7 +34,9 @@ from app.billing import invoices as vantage_invoices  # noqa: E402
 CENT = Decimal("0.01")
 
 
-def meridian_invoices(meridian_dir: Path, period: str, build: bool = True) -> Dict[str, Dict[str, Any]]:
+def meridian_invoices(
+    meridian_dir: Path, period: str, build: bool = True
+) -> dict[str, dict[str, Any]]:
     binary = meridian_dir / "bin" / "billing-run"
     if build:
         subprocess.run(["make", "-s", "-C", str(meridian_dir)], check=True)
@@ -57,27 +59,40 @@ def meridian_invoices(meridian_dir: Path, period: str, build: bool = True) -> Di
     return out
 
 
-def vantage_invoices_by_ref(period: str) -> Dict[str, Dict[str, Any]]:
+def vantage_invoices_by_ref(period: str) -> dict[str, dict[str, Any]]:
     return {i["billing_ref"]: i for i in vantage_invoices.list_invoices(period=period)}
 
 
-def _rule_hints(legacy: Dict[str, Any], modern: Dict[str, Any]) -> List[str]:
+def _rule_hints(legacy: dict[str, Any], modern: dict[str, Any]) -> list[str]:
     hints = []
-    if abs(Decimal(str(legacy["overage_charges"])) - Decimal(str(modern["overage_charges"]))) > CENT:
+    if (
+        abs(Decimal(str(legacy["overage_charges"])) - Decimal(str(modern["overage_charges"])))
+        > CENT
+    ):
         hints.append("overage")
-    plan_charges_agree = abs(Decimal(str(legacy["plan_charge"])) - Decimal(str(modern["plan_charge"]))) <= CENT
+    plan_charges_agree = (
+        abs(Decimal(str(legacy["plan_charge"])) - Decimal(str(modern["plan_charge"])))
+        <= CENT
+    )
     if not plan_charges_agree:
         hints.append("proration")
     if abs(Decimal(str(legacy["promo_credit"])) - Decimal(str(modern["promo_credit"]))) > CENT:
         hints.append("promo-expiry")
-    if abs(Decimal(str(legacy["suspension_credit"])) - Decimal(str(modern["suspension_credit"]))) > CENT:
+    if (
+        abs(Decimal(str(legacy["suspension_credit"])) - Decimal(str(modern["suspension_credit"])))
+        > CENT
+    ):
         hints.append("suspension")
     if abs(Decimal(str(legacy["provincial_tax"])) - Decimal(str(modern["provincial_tax"]))) > CENT:
         hints.append("tax-base")
     if abs(Decimal(str(legacy["late_fee"])) - Decimal(str(modern["late_fee"]))) > CENT:
         hints.append("late-fee")
     # Only a real multi-line divergence if the charge it is taken from agreed.
-    if plan_charges_agree and abs(Decimal(str(legacy["line_discount"])) - Decimal(str(modern["line_discount"]))) > CENT:
+    if (
+        plan_charges_agree
+        and abs(Decimal(str(legacy["line_discount"])) - Decimal(str(modern["line_discount"])))
+        > CENT
+    ):
         hints.append("multi-line")
     if not hints:
         hints.append("rounding")
@@ -92,8 +107,8 @@ def compare(period: str, meridian_dir: Path, build: bool = True, limit: int = 25
 
     rows = []
     variance = Decimal("0")
-    by_rule: Dict[str, Decimal] = {}
-    by_province: Dict[str, Decimal] = {}
+    by_rule: dict[str, Decimal] = {}
+    by_province: dict[str, Decimal] = {}
 
     for ref in refs:
         left = legacy[ref]
@@ -107,25 +122,52 @@ def compare(period: str, meridian_dir: Path, build: bool = True, limit: int = 25
             by_rule[hint] = by_rule.get(hint, Decimal("0")) + abs(delta)
         province = left["province"]
         by_province[province] = by_province.get(province, Decimal("0")) + abs(delta)
-        rows.append((ref, left["cust_nm"][:26], province, left["total"], right["invoice_total"], delta, ",".join(hints)))
+        rows.append(
+            (
+                ref,
+                left["cust_nm"][:26],
+                province,
+                left["total"],
+                right["invoice_total"],
+                delta,
+                ",".join(hints),
+            )
+        )
 
     print(f"invoice parity  period={period}  accounts={len(refs)}  differing={len(rows)}")
     if missing:
         print(f"accounts present in only one system: {', '.join(missing[:10])}")
     print()
-    print(f"{'REF':<9} {'CUSTOMER':<26} {'PRV':<4} {'MERIDIAN':>12} {'VANTAGE':>12} {'DELTA':>11}  RULES")
+    print(
+        f"{'REF':<9} {'CUSTOMER':<26} {'PRV':<4} {'MERIDIAN':>12} "
+        f"{'VANTAGE':>12} {'DELTA':>11}  RULES"
+    )
     print("-" * 104)
     for row in rows[:limit]:
-        ref, name, province, left_total, right_total, delta, hints = row
-        print(f"{ref:<9} {name:<26} {province:<4} {left_total:>12.2f} {right_total:>12.2f} {delta:>11.2f}  {hints}")
+        ref, name, province, left_total, right_total, delta, hint_text = row
+        print(
+            f"{ref:<9} {name:<26} {province:<4} {left_total:>12.2f} "
+            f"{right_total:>12.2f} {delta:>11.2f}  {hint_text}"
+        )
     if len(rows) > limit:
         print(f"... {len(rows) - limit} more differing accounts")
     print("-" * 104)
     print(f"absolute variance: ${variance:,.2f} across {len(rows)} accounts")
     if by_rule:
-        print("by rule:      " + "  ".join(f"{rule}=${amount:,.2f}" for rule, amount in sorted(by_rule.items())))
+        print(
+            "by rule:      "
+            + "  ".join(
+                f"{rule}=${amount:,.2f}" for rule, amount in sorted(by_rule.items())
+            )
+        )
     if by_province:
-        print("by province:  " + "  ".join(f"{prov}=${amount:,.2f}" for prov, amount in sorted(by_province.items())))
+        print(
+            "by province:  "
+            + "  ".join(
+                f"{prov}=${amount:,.2f}"
+                for prov, amount in sorted(by_province.items())
+            )
+        )
 
     if rows:
         print("\nPARITY FAILED")
@@ -141,7 +183,11 @@ def main() -> int:
         "--meridian-dir",
         default=os.environ.get("MERIDIAN_DIR", str(REPO_ROOT.parent / "meridian-telco")),
     )
-    parser.add_argument("--no-build", action="store_true", help="use the meridian binaries as they are")
+    parser.add_argument(
+        "--no-build",
+        action="store_true",
+        help="use the meridian binaries as they are",
+    )
     parser.add_argument("--limit", type=int, default=25)
     args = parser.parse_args()
 
