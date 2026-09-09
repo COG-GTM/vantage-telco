@@ -21,6 +21,8 @@ from fastapi.security import (
 )
 from starlette.middleware.base import BaseHTTPMiddleware
 
+from app.settings import get_setting
+
 SCOPE_SALES_ENGINEERING = "sales-engineering"
 SCOPE_NOC = "noc"
 SCOPE_BILLING_OPS = "billing-ops"
@@ -36,7 +38,7 @@ REDACTED = "[redacted]"
 
 
 def _secret(secret: str | None = None) -> str:
-    value = secret if secret is not None else os.environ.get("VANTAGE_AUTH_DEV_SECRET")
+    value = secret if secret is not None else get_setting("VANTAGE_AUTH_DEV_SECRET")
     if not value:
         raise HTTPException(status_code=503, detail="authentication not configured")
     return value
@@ -261,7 +263,7 @@ def _cli() -> int:
     parser.add_argument("--sub", default="dev-user")
     parser.add_argument("--ttl", type=int, default=3600)
     args = parser.parse_args()
-    secret = os.environ.get("VANTAGE_AUTH_DEV_SECRET")
+    secret = get_setting("VANTAGE_AUTH_DEV_SECRET")
     if not secret:
         print("VANTAGE_AUTH_DEV_SECRET is required", file=sys.stderr)
         return 2

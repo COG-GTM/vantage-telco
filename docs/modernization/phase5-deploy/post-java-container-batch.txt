@@ -1,0 +1,18 @@
+$ docker compose --profile batch run --rm report 2026-07
+ Container vantage-report-run-dfd8aa84589e Creating 
+ Container vantage-report-run-dfd8aa84589e Created 
+wrote /out/invoices-2026-07.txt (63 lines)
+batch exit code: 0
+
+$ docker compose --profile batch run --rm --entrypoint id report
+ Container vantage-report-run-d23229aed12d Creating 
+ Container vantage-report-run-d23229aed12d Created 
+uid=10001(vantage) gid=10001(vantage) groups=10001(vantage)
+id exit code: 0
+
+$ docker run --rm -v vantage_report-out:/out alpine:latest cat /out/invoices-2026-07.txt > docs/modernization/phase5-deploy/post-java-output/invoices-2026-07.txt
+copy exit code: 0
+
+$ diff -u docs/modernization/phase4-java/post-output/invoices-2026-07.txt docs/modernization/phase5-deploy/post-java-output/invoices-2026-07.txt
+diff result: identical (empty diff)
+diff exit code: 0

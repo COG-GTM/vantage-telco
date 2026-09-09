@@ -1,0 +1,14 @@
+$ curl -s -i -w '\n%{time_total}s\n' http://localhost:8000/health
+HTTP/1.1 200 OK
+date: Wed, 09 Sep 2026 07:21:45 GMT
+server: uvicorn
+content-length: 15
+content-type: application/json
+strict-transport-security: max-age=31536000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+
+{"status":"ok"}
+0.001438s

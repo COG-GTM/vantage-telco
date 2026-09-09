@@ -1,0 +1,16 @@
+.git
+.venv
+.github
+.pytest_cache
+.mypy_cache
+.ruff_cache
+__pycache__
+**/__pycache__
+docs/
+java/*/target
+tests
+tools
+deploy/secrets/*
+!deploy/secrets/*.example
+docker-compose.yml
+*.md

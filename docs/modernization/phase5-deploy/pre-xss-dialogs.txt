@@ -1,0 +1,1 @@
+alert() dialogs fired while loading XSS payload pages: []
