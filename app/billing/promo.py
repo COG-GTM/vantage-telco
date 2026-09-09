@@ -9,12 +9,11 @@ from __future__ import annotations
 
 from datetime import date, timedelta
 from decimal import Decimal
-from typing import Optional
 
 PROMO_VALID_DAYS = 30
 
 
-def _parse(value: Optional[str]) -> Optional[date]:
+def _parse(value: str | None) -> date | None:
     if not value:
         return None
     return date.fromisoformat(value)
@@ -25,14 +24,14 @@ def period_start(period: str) -> date:
     return date(year, month, 1)
 
 
-def promo_is_live(issued_on: Optional[str], period: str) -> bool:
+def promo_is_live(issued_on: str | None, period: str) -> bool:
     issued = _parse(issued_on)
     if issued is None:
         return False
     return issued + timedelta(days=PROMO_VALID_DAYS) >= period_start(period)
 
 
-def promo_credit(amount: Decimal, issued_on: Optional[str], period: str) -> Decimal:
+def promo_credit(amount: Decimal, issued_on: str | None, period: str) -> Decimal:
     amount = Decimal(amount)
     if amount <= 0 or not promo_is_live(issued_on, period):
         return Decimal("0")

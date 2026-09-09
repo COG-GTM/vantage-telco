@@ -20,7 +20,7 @@ import json
 import random
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -28,6 +28,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 def _write(path: Path, text: str) -> None:
     """Write with LF endings: the meridian parsers keep the trailing CR."""
     path.write_text(text, newline="\n")
+
 
 ACCOUNT_COUNT = 200
 PERIODS = ["2026-06", "2026-07"]
@@ -47,27 +48,79 @@ LEGACY_ACCOUNTS = [
 ]
 
 NAME_HEADS = [
-    "Cascade", "Fraser", "Kootenay", "Athabasca", "Bow River", "Chinook", "Prairie Rose",
-    "Rideau", "Humber", "Georgian Bay", "Trillium", "Laurentide", "Saguenay", "Richelieu",
-    "Gaspesie", "Selkirk", "Okanagan", "Bonaventure", "Peace River", "Nechako", "Algonquin",
-    "Lakeshore", "Saint-Laurent", "Beauport", "Sherbrooke", "Wapiti", "Redwater", "Coquitlam",
+    "Cascade",
+    "Fraser",
+    "Kootenay",
+    "Athabasca",
+    "Bow River",
+    "Chinook",
+    "Prairie Rose",
+    "Rideau",
+    "Humber",
+    "Georgian Bay",
+    "Trillium",
+    "Laurentide",
+    "Saguenay",
+    "Richelieu",
+    "Gaspesie",
+    "Selkirk",
+    "Okanagan",
+    "Bonaventure",
+    "Peace River",
+    "Nechako",
+    "Algonquin",
+    "Lakeshore",
+    "Saint-Laurent",
+    "Beauport",
+    "Sherbrooke",
+    "Wapiti",
+    "Redwater",
+    "Coquitlam",
 ]
 NAME_TAILS = [
-    "Logistics", "Health Network", "Retail Group", "Manufacturing", "Energy Services",
-    "Credit Union", "Media Networks", "School Board", "Biotech", "Transit Authority",
-    "Food Distribution", "Engineering", "Mining", "Hospitality Group", "Analytics",
+    "Logistics",
+    "Health Network",
+    "Retail Group",
+    "Manufacturing",
+    "Energy Services",
+    "Credit Union",
+    "Media Networks",
+    "School Board",
+    "Biotech",
+    "Transit Authority",
+    "Food Distribution",
+    "Engineering",
+    "Mining",
+    "Hospitality Group",
+    "Analytics",
 ]
 SUFFIXES = ["Inc.", "Ltd.", "Corp.", "ULC"]
 
 STREETS = {
-    "BC": [("Burrard St", "Vancouver", "V6C 2G8"), ("Douglas St", "Victoria", "V8W 2B7"),
-           ("Columbia Ave", "Kamloops", "V2C 1L2"), ("Lougheed Hwy", "Burnaby", "V5C 4Y2")],
-    "AB": [("Stephen Ave", "Calgary", "T2P 1J9"), ("Jasper Ave", "Edmonton", "T5J 1W8"),
-           ("Gaetz Ave", "Red Deer", "T4N 4E1"), ("Mayor Magrath Dr", "Lethbridge", "T1K 2R1")],
-    "ON": [("Bay St", "Toronto", "M5J 2T3"), ("Elgin St", "Ottawa", "K2P 1L4"),
-           ("King St W", "Kitchener", "N2G 1B3"), ("Ouellette Ave", "Windsor", "N9A 1C4")],
-    "QC": [("Rue Sainte-Catherine", "Montreal", "H3B 1A7"), ("Boulevard Charest", "Quebec City", "G1K 3H8"),
-           ("Rue King Ouest", "Sherbrooke", "J1H 1P9"), ("Boulevard Talbot", "Saguenay", "G7H 4B3")],
+    "BC": [
+        ("Burrard St", "Vancouver", "V6C 2G8"),
+        ("Douglas St", "Victoria", "V8W 2B7"),
+        ("Columbia Ave", "Kamloops", "V2C 1L2"),
+        ("Lougheed Hwy", "Burnaby", "V5C 4Y2"),
+    ],
+    "AB": [
+        ("Stephen Ave", "Calgary", "T2P 1J9"),
+        ("Jasper Ave", "Edmonton", "T5J 1W8"),
+        ("Gaetz Ave", "Red Deer", "T4N 4E1"),
+        ("Mayor Magrath Dr", "Lethbridge", "T1K 2R1"),
+    ],
+    "ON": [
+        ("Bay St", "Toronto", "M5J 2T3"),
+        ("Elgin St", "Ottawa", "K2P 1L4"),
+        ("King St W", "Kitchener", "N2G 1B3"),
+        ("Ouellette Ave", "Windsor", "N9A 1C4"),
+    ],
+    "QC": [
+        ("Rue Sainte-Catherine", "Montreal", "H3B 1A7"),
+        ("Boulevard Charest", "Quebec City", "G1K 3H8"),
+        ("Rue King Ouest", "Sherbrooke", "J1H 1P9"),
+        ("Boulevard Talbot", "Saguenay", "G7H 4B3"),
+    ],
 }
 
 PLANS = [
@@ -79,14 +132,12 @@ PLANS = [
 ]
 
 
-def _account(rng: random.Random, index: int) -> Dict[str, Any]:
+def _account(rng: random.Random, index: int) -> dict[str, Any]:
     billing_ref = f"TN-{index + 1:04d}"
     if index < len(LEGACY_ACCOUNTS):
         legal_name, tax_id, meridian_id, vantage_id = LEGACY_ACCOUNTS[index]
     else:
-        legal_name = (
-            f"{rng.choice(NAME_HEADS)} {rng.choice(NAME_TAILS)} {rng.choice(SUFFIXES)}"
-        )
+        legal_name = f"{rng.choice(NAME_HEADS)} {rng.choice(NAME_TAILS)} {rng.choice(SUFFIXES)}"
         tax_id = f"{rng.randint(10, 99)}-{rng.randint(1000000, 9999999)}"
         meridian_id = f"MER-{11049 + (index - len(LEGACY_ACCOUNTS)) * 7:06d}"
         vantage_id = f"VANTAGE-BILL-{70091 + (index - len(LEGACY_ACCOUNTS)) * 13:05d}"
@@ -149,7 +200,7 @@ def _account(rng: random.Random, index: int) -> Dict[str, Any]:
     }
 
 
-def _usage(rng: random.Random, accounts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def _usage(rng: random.Random, accounts: list[dict[str, Any]]) -> list[dict[str, Any]]:
     records = []
     for index, account in enumerate(accounts):
         included_mb = account["included_gb"] * 1024
@@ -172,13 +223,13 @@ def _usage(rng: random.Random, accounts: List[Dict[str, Any]]) -> List[Dict[str,
     return records
 
 
-def build_fixtures() -> Dict[str, Any]:
+def build_fixtures() -> dict[str, Any]:
     rng = random.Random(20260818)
     accounts = [_account(rng, index) for index in range(ACCOUNT_COUNT)]
     return {"accounts": accounts, "usage": _usage(rng, accounts)}
 
 
-def write_vantage(fixtures: Dict[str, Any], root: Path) -> None:
+def write_vantage(fixtures: dict[str, Any], root: Path) -> None:
     seed_dir = root / "data" / "seed"
     accounts = [
         {
@@ -258,7 +309,7 @@ REC_FIELDS = [
 ]
 
 
-def write_meridian(fixtures: Dict[str, Any], root: Path) -> None:
+def write_meridian(fixtures: dict[str, Any], root: Path) -> None:
     accounts_dir = root / "billing" / "accounts"
     accounts_dir.mkdir(parents=True, exist_ok=True)
     for stale in accounts_dir.glob("*.rec"):
@@ -279,9 +330,7 @@ def write_meridian(fixtures: Dict[str, Any], root: Path) -> None:
         writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(["ACCT_ID", "PERIOD", "USAGE_MB"])
         for record in fixtures["usage"]:
-            writer.writerow(
-                [by_ref[record["billing_ref"]], record["period"], record["usage_mb"]]
-            )
+            writer.writerow([by_ref[record["billing_ref"]], record["period"], record["usage_mb"]])
 
 
 def main() -> None:
@@ -296,7 +345,10 @@ def main() -> None:
 
     fixtures = build_fixtures()
     write_vantage(fixtures, REPO_ROOT)
-    print(f"vantage-telco: {len(fixtures['accounts'])} accounts, {len(fixtures['usage'])} usage records")
+    print(
+        f"vantage-telco: {len(fixtures['accounts'])} accounts, "
+        f"{len(fixtures['usage'])} usage records"
+    )
 
     if args.vantage_only:
         return

@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from fastapi import APIRouter, HTTPException, Query
 
 from app.inventory import circuits as circuit_rules
@@ -12,8 +10,8 @@ router = APIRouter(tags=["inventory"])
 
 @router.get("/resources")
 def get_resources(
-    market_id: Optional[str] = Query(default=None),
-    lifecycle_state: Optional[str] = Query(default=None),
+    market_id: str | None = Query(default=None),
+    lifecycle_state: str | None = Query(default=None),
 ):
     sites = list_sites(market_id=market_id, lifecycle_state=lifecycle_state)
     return {"count": len(sites), "resources": sites}
@@ -28,7 +26,7 @@ def get_resource(device_uuid: str):
 
 
 @router.get("/circuits")
-def get_circuits(circuit_id: Optional[str] = Query(default=None)):
+def get_circuits(circuit_id: str | None = Query(default=None)):
     found = list_circuits(circuit_id=circuit_id)
     return {
         "count": len(found),

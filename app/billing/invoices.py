@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from decimal import Decimal
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from app.billing.discounts import loyalty_discount
 from app.billing.latefee import late_fee
@@ -14,11 +14,11 @@ from app.billing.tax import federal_tax, provincial_tax, rates_for_province
 from app.db import all_documents
 
 
-def accounts() -> List[Dict[str, Any]]:
+def accounts() -> list[dict[str, Any]]:
     return all_documents("accounts")
 
 
-def usage_records(account_id: Optional[str] = None, period: Optional[str] = None) -> List[Dict[str, Any]]:
+def usage_records(account_id: str | None = None, period: str | None = None) -> list[dict[str, Any]]:
     records = all_documents("usage")
     if account_id:
         records = [r for r in records if r.get("account_id") == account_id]
@@ -27,14 +27,14 @@ def usage_records(account_id: Optional[str] = None, period: Optional[str] = None
     return records
 
 
-def find_account(account_id: str) -> Optional[Dict[str, Any]]:
+def find_account(account_id: str) -> dict[str, Any] | None:
     for account in accounts():
         if account["account_id"] == account_id:
             return account
     return None
 
 
-def build_invoice(account: Dict[str, Any], usage: Dict[str, Any]) -> Dict[str, Any]:
+def build_invoice(account: dict[str, Any], usage: dict[str, Any]) -> dict[str, Any]:
     """Assemble one invoice.
 
     Charges are carried at full precision and rounded once, at the total: the
@@ -65,7 +65,9 @@ def build_invoice(account: Dict[str, Any], usage: Dict[str, Any]) -> Dict[str, A
         account.get("promo_issued_on"),
         period,
     )
-    fee = late_fee(Decimal(str(account.get("prior_balance", 0) or 0)), account.get("prior_due_date"), period)
+    fee = late_fee(
+        Decimal(str(account.get("prior_balance", 0) or 0)), account.get("prior_due_date"), period
+    )
 
     subtotal = max(recurring + overage_charges + fee - credit - promo, Decimal("0"))
     rates = rates_for_province(account.get("province", ""))
@@ -104,7 +106,7 @@ def build_invoice(account: Dict[str, Any], usage: Dict[str, Any]) -> Dict[str, A
     }
 
 
-def list_invoices(account_id: Optional[str] = None, period: Optional[str] = None) -> List[Dict[str, Any]]:
+def list_invoices(account_id: str | None = None, period: str | None = None) -> list[dict[str, Any]]:
     invoices = []
     for usage in usage_records(account_id=account_id, period=period):
         if not usage.get("account_id"):
@@ -117,7 +119,7 @@ def list_invoices(account_id: Optional[str] = None, period: Optional[str] = None
     return invoices
 
 
-def unlinked_usage(period: Optional[str] = None) -> List[Dict[str, Any]]:
+def unlinked_usage(period: str | None = None) -> list[dict[str, Any]]:
     """Mediated usage carrying no billing account. Never invoiced today."""
     records = [r for r in all_documents("usage") if not r.get("account_id")]
     if period:
@@ -125,16 +127,18 @@ def unlinked_usage(period: Optional[str] = None) -> List[Dict[str, Any]]:
     return records
 
 
-def billed_usage_mb(period: Optional[str] = None) -> int:
+def billed_usage_mb(period: str | None = None) -> int:
     return sum(int(i["usage_mb"]) for i in list_invoices(period=period))
 
 
-def mediated_usage_mb(period: Optional[str] = None) -> int:
+def mediated_usage_mb(period: str | None = None) -> int:
     records = all_documents("usage")
     if period:
         records = [r for r in records if r.get("period") == period]
     return sum(int(r["usage_mb"]) for r in records)
 
 
-def revenue_total(period: Optional[str] = None) -> Decimal:
-    return sum((Decimal(str(i["invoice_total"])) for i in list_invoices(period=period)), Decimal("0"))
+def revenue_total(period: str | None = None) -> Decimal:
+    return sum(
+        (Decimal(str(i["invoice_total"])) for i in list_invoices(period=period)), Decimal("0")
+    )
