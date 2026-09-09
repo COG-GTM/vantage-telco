@@ -1,0 +1,9 @@
+$ curl -sI 'http://localhost:8000/dashboard/billing?period=2026-07'
+HTTP/1.1 308 Permanent Redirect
+date: Wed, 09 Sep 2026 07:13:07 GMT
+server: uvicorn
+content-length: 0
+location: /v1/dashboard/billing?period=2026-07
+
+$ curl -s -H 'Authorization: Bearer $TOKEN' http://localhost:8000/v1/version
+{"version":"3.0.0"}
