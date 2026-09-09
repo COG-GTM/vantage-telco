@@ -10,6 +10,7 @@ app = FastAPI(
     title="Vantage Network Services",
     version="2.4.0",
     description="Inventory, management addressing and billing for the Vantage network.",
+    redoc_url=None,
 )
 
 app.add_middleware(

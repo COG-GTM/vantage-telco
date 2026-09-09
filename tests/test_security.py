@@ -35,6 +35,15 @@ def test_protected_routes_require_authentication(app_client, path):
     assert response.headers["WWW-Authenticate"] == "Bearer"
 
 
+@pytest.mark.parametrize("path", ["/health", "/docs", "/openapi.json", "/docs/oauth2-redirect"])
+def test_public_routes_do_not_require_authentication(app_client, path):
+    assert app_client.get(path).status_code == 200
+
+
+def test_redoc_is_disabled(app_client):
+    assert app_client.get("/redoc").status_code == 404
+
+
 @pytest.mark.parametrize("path", OPS_ROUTES)
 def test_sales_scope_cannot_access_ops_routes(sales_client, path):
     assert sales_client.get(path).status_code == 403
