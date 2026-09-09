@@ -1,0 +1,69 @@
+$ curl -s -i -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/v1/billing/invoices?period=2026-07&limit=2&offset=1'
+HTTP 200
+content-length: 1330
+content-type: application/json
+
+{
+  "items": [
+    {
+      "account_id": "VANTAGE-BILL-70000",
+      "billing_ref": "TN-0002",
+      "legal_name": "Northgate Logistics LLC",
+      "tax_id": "26-8841902",
+      "service_address": "871 Jasper Ave, Edmonton, AB T5J 1W8",
+      "province": "AB",
+      "plan_code": "ENT-2500",
+      "period": "2026-07",
+      "usage_mb": 4049593,
+      "included_gb": 2500,
+      "overage_mb": 1489593,
+      "plan_charge": 2400.0,
+      "line_discount": 0.0,
+      "recurring": 2400.0,
+      "overage_charges": 17875.12,
+      "suspension_credit": 0.0,
+      "promo_credit": 200.0,
+      "late_fee": 0.0,
+      "subtotal": 20075.12,
+      "loyalty_discount_pct": 4.0,
+      "loyalty_discount": 803.0,
+      "federal_tax_label": "GST",
+      "federal_tax": 1003.76,
+      "provincial_tax_label": "",
+      "provincial_tax": 0.0,
+      "invoice_total": 20275.87
+    },
+    {
+      "account_id": "VANTAGE-BILL-70013",
+      "billing_ref": "TN-0003",
+      "legal_name": "Cedar Point Health Systems",
+      "tax_id": "31-5528117",
+      "service_address": "931 Ouellette Ave, Windsor, ON N9A 1C4",
+      "province": "ON",
+      "plan_code": "ENT-1000",
+      "period": "2026-07",
+      "usage_mb": 1024485,
+      "included_gb": 1000,
+      "overage_mb": 485,
+      "plan_charge": 1150.0,
+      "line_discount": 0.0,
+      "recurring": 1150.0,
+      "overage_charges": 5.82,
+      "suspension_credit": 0.0,
+      "promo_credit": 0.0,
+      "late_fee": 0.0,
+      "subtotal": 1155.82,
+      "loyalty_discount_pct": 3.0,
+      "loyalty_discount": 34.67,
+      "federal_tax_label": "HST",
+      "federal_tax": 150.26,
+      "provincial_tax_label": "",
+      "provincial_tax": 0.0,
+      "invoice_total": 1271.4
+    }
+  ],
+  "total": 200,
+  "limit": 2,
+  "offset": 1,
+  "revenue_total": 1816527.27
+}
