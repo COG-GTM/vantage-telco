@@ -1,0 +1,54 @@
+Script started on 2026-09-09 06:38:43+00:00 [TERM="xterm" TTY="/dev/pts/0" COLUMNS="160" LINES="50"]
+== phase4 post: java -version ==
+openjdk version "21.0.12" 2026-07-21
+OpenJDK Runtime Environment (build 21.0.12+8-1-22.04-Ubuntu)
+OpenJDK 64-Bit Server VM (build 21.0.12+8-1-22.04-Ubuntu, mixed mode, sharing)
+== mvn -version ==
+[1mApache Maven 3.6.3[m
+Maven home: /usr/share/maven
+Java version: 21.0.12, vendor: Ubuntu, runtime: /usr/lib/jvm/java-21-openjdk-amd64
+== mvn -B -q verify ==
+== mvn exec:java 2026-07 ==
+Loyalty credit of 4.0% (post-tax)     -$40.16
+--------------------------------------------------------
+TOTAL DUE                             $963.82
+
+VANTAGE NETWORK SERVICES
+Invoice for period 2026-07
+--------------------------------------------------------
+Account:  VANTAGE-BILL-70044
+Customer: Harborline Transit Authority
+Plan:     METRO-BURST
+--------------------------------------------------------
+Monthly plan fee (METRO-BURST)        $310.00
+Sales tax at 6.25% on 310.00          $19.38
+Loyalty credit of 2.5% (post-tax)     -$8.23
+--------------------------------------------------------
+TOTAL DUE                             $321.15
+
+VANTAGE NETWORK SERVICES
+Invoice for period 2026-07
+--------------------------------------------------------
+Account:  VANTAGE-BILL-88213
+Customer: Beacon Manufacturing Corp
+Plan:     ENTERPRISE-FLEX
+--------------------------------------------------------
+Monthly plan fee (ENTERPRISE-FLEX)    $2400.00
+Usage overage: 100115 MB at 0.012/MB  $1201.38
+Sales tax at 6.25% on 3601.38         $225.09
+Loyalty credit of 8.0% (post-tax)     -$306.12
+--------------------------------------------------------
+TOTAL DUE                             $3520.35
+
+BILLING CYCLE SUMMARY
+Period:            2026-07
+Invoices rendered: 4
+Amount billed:     $6750.82
+Unlinked records:  1
+--------------------------------------------------------
+UNLINKED USAGE (no billing account)
+  VANTAGE-BILL-99999  device=aa11bb22-cc33-4dd4-8ee5-ff6600112233  88123 MB
+
+== done (post) ==
+
+Script done on 2026-09-09 06:38:50+00:00 [COMMAND_EXIT_CODE="0"]
