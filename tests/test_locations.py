@@ -1,9 +1,4 @@
-from fastapi.testclient import TestClient
-
 from app.inventory.locations import get_location, list_locations
-from app.main import app
-
-client = TestClient(app)
 
 
 def test_availability_withholds_the_maintenance_buffer():
@@ -27,19 +22,19 @@ def test_search_and_market_filters():
     assert all(l["market_id"] == "BOS-12" for l in list_locations(market_id="BOS-12"))
 
 
-def test_capacity_locations_endpoint():
-    body = client.get("/capacity/locations", params={"requested_mbps": 400}).json()
+def test_capacity_locations_endpoint(sales_client):
+    body = sales_client.get("/capacity/locations", params={"requested_mbps": 400}).json()
     assert body["rule"] == "available = total_capacity - allocated - maintenance_buffer"
     assert body["locations"][0]["location_code"] == "RIV-01"
     assert body["locations"][0]["can_support"] is False
 
 
-def test_unknown_location_is_404():
-    assert client.get("/capacity/locations/NOPE-99").status_code == 404
+def test_unknown_location_is_404(sales_client):
+    assert sales_client.get("/capacity/locations/NOPE-99").status_code == 404
 
 
-def test_capacity_page_renders_the_buffer_column():
-    response = client.get("/capacity")
+def test_capacity_page_renders_the_buffer_column(sales_client):
+    response = sales_client.get("/capacity")
     assert response.status_code == 200
     assert "Maint. buffer" in response.text
     assert "RIV-01" in response.text

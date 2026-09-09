@@ -1,11 +1,14 @@
 from __future__ import annotations
 
-from fastapi import APIRouter
+import html
+
+from fastapi import APIRouter, Depends
 from fastapi.responses import HTMLResponse
 
 from app.billing import invoices as invoice_service
 from app.inventory import circuits as circuit_rules
 from app.inventory.repository import list_circuits, list_sites
+from app.security import Principal, ops_principal, redact_invoices
 
 router = APIRouter(tags=["dashboard"])
 
@@ -27,29 +30,38 @@ h2 { font-size: 15px; margin: 22px 0 10px; }
 
 
 def _tax_cell(invoice: dict) -> str:
-    parts = [f"{invoice['federal_tax_label']} ${invoice['federal_tax']:.2f}"]
+    parts = [f"{html.escape(str(invoice['federal_tax_label']))} ${invoice['federal_tax']:.2f}"]
     if invoice["provincial_tax_label"]:
-        parts.append(f"{invoice['provincial_tax_label']} ${invoice['provincial_tax']:.2f}")
+        parts.append(
+            f"{html.escape(str(invoice['provincial_tax_label']))} ${invoice['provincial_tax']:.2f}"
+        )
     return " + ".join(parts)
 
 
 @router.get("/dashboard", response_class=HTMLResponse)
-def dashboard(period: str = "2026-07"):
+def dashboard(
+    period: str = "2026-07",
+    principal: Principal = Depends(ops_principal),  # noqa: B008
+):
+    e = html.escape
     sites = list_sites()
     circuits = list_circuits()
-    invoices = invoice_service.list_invoices(period=period)
+    invoices = redact_invoices(invoice_service.list_invoices(period=period), principal)
     unlinked = invoice_service.unlinked_usage(period=period)
     revenue = invoice_service.revenue_total(period=period)
 
     site_rows = "".join(
-        f"<tr><td>{s['name']}</td><td>{s['market_id']}</td><td>{s['lifecycle_state']}</td>"
-        f"<td>{s.get('tower_registration', '')}</td><td class='num'>{s['total_capacity_mbps']}</td>"
+        f"<tr><td>{e(str(s['name']))}</td><td>{e(str(s['market_id']))}</td>"
+        f"<td>{e(str(s['lifecycle_state']))}</td>"
+        f"<td>{e(str(s.get('tower_registration', '')))}</td>"
+        f"<td class='num'>{s['total_capacity_mbps']}</td>"
         f"<td class='num'>{s['allocated_mbps']}</td><td class='num'>{s['maintenance_buffer_mbps']}</td>"
         f"<td class='num'>{s['available_mbps']}</td></tr>"
         for s in sites
     )
     invoice_rows = "".join(
-        f"<tr><td>{i['account_id']}</td><td>{i['legal_name']}</td><td>{i['province']}</td>"
+        f"<tr><td>{e(str(i['account_id']))}</td><td>{e(str(i['legal_name']))}</td>"
+        f"<td>{e(str(i['province']))}</td>"
         f"<td class='num'>{i['usage_mb']}</td><td class='num'>{i['overage_mb']}</td>"
         f"<td class='num'>${i['recurring']:.2f}</td><td class='num'>${i['overage_charges']:.2f}</td>"
         f"<td class='num'>${i['subtotal']:.2f}</td><td class='num'>-${i['loyalty_discount']:.2f}</td>"
@@ -57,10 +69,12 @@ def dashboard(period: str = "2026-07"):
         for i in invoices
     )
     unlinked_rows = "".join(
-        f"<tr><td>{u['usage_id']}</td><td>{u['device_uuid']}</td><td>{u['period']}</td>"
+        f"<tr><td>{e(str(u['usage_id']))}</td><td>{e(str(u['device_uuid']))}</td>"
+        f"<td>{e(str(u['period']))}</td>"
         f"<td class='num'>{u['usage_mb']}</td><td>no billing account</td></tr>"
         for u in unlinked
     )
+    escaped_period = e(period)
 
     return f"""<!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>Vantage Net</title><style>{STYLE}</style></head>
@@ -71,10 +85,10 @@ def dashboard(period: str = "2026-07"):
     <div class="tile"><div class="n">{len(sites)}</div><div class="l">Resources</div></div>
     <div class="tile"><div class="n">{sum(1 for s in sites if s["lifecycle_state"] == "ACTIVE")}</div><div class="l">Active</div></div>
     <div class="tile"><div class="n">{circuit_rules.active_count(circuits)}</div><div class="l">Active circuits</div></div>
-    <div class="tile"><div class="n">${revenue:,.2f}</div><div class="l">Billed revenue {period}</div></div>
-    <div class="tile"><div class="n">{sum(int(u["usage_mb"]) for u in unlinked):,}</div><div class="l">Unbilled MB {period}</div></div>
+    <div class="tile"><div class="n">${revenue:,.2f}</div><div class="l">Billed revenue {escaped_period}</div></div>
+    <div class="tile"><div class="n">{sum(int(u["usage_mb"]) for u in unlinked):,}</div><div class="l">Unbilled MB {escaped_period}</div></div>
   </div>
-  <h2>Invoices &middot; {period}</h2>
+  <h2>Invoices &middot; {escaped_period}</h2>
   <table><thead><tr><th>Account</th><th>Customer</th><th>Province</th><th>Usage MB</th><th>Overage MB</th>
   <th>Recurring</th><th>Overage</th><th>Subtotal</th><th>Loyalty</th><th>Tax</th><th>Total</th></tr></thead>
   <tbody>{invoice_rows}</tbody></table>
@@ -88,16 +102,28 @@ def dashboard(period: str = "2026-07"):
 
 
 @router.get("/dashboard/billing", response_class=HTMLResponse)
-def billing_dashboard(period: str = "2026-07", account_id: str = "", billing_ref: str = ""):
+def billing_dashboard(
+    period: str = "2026-07",
+    account_id: str = "",
+    billing_ref: str = "",
+    principal: Principal = Depends(ops_principal),  # noqa: B008
+):
     """Invoice register on its own, filterable down to a single account."""
     invoices = invoice_service.list_invoices(period=period, account_id=account_id or None)
     if billing_ref:
         invoices = [i for i in invoices if i["billing_ref"] == billing_ref]
+    invoices = redact_invoices(invoices, principal)
     revenue = sum(i["invoice_total"] for i in invoices)
+    e = html.escape
+    escaped_period = e(period)
+    escaped_account_id = e(account_id)
+    escaped_billing_ref = e(billing_ref)
 
     rows = "".join(
-        f"<tr><td>{i['account_id']}</td><td>{i['billing_ref']}</td><td>{i['legal_name']}</td>"
-        f"<td>{i['province']}</td><td class='num'>{i['usage_mb']}</td><td class='num'>{i['overage_mb']}</td>"
+        f"<tr><td>{e(str(i['account_id']))}</td><td>{e(str(i['billing_ref']))}</td>"
+        f"<td>{e(str(i['legal_name']))}</td>"
+        f"<td>{e(str(i['province']))}</td><td class='num'>{i['usage_mb']}</td>"
+        f"<td class='num'>{i['overage_mb']}</td>"
         f"<td class='num'>${i['recurring']:.2f}</td><td class='num'>${i['overage_charges']:.2f}</td>"
         f"<td class='num'>-${i['promo_credit']:.2f}</td><td class='num'>-${i['suspension_credit']:.2f}</td>"
         f"<td class='num'>${i['late_fee']:.2f}</td><td class='num'>${i['subtotal']:.2f}</td>"
@@ -112,13 +138,13 @@ def billing_dashboard(period: str = "2026-07", account_id: str = "", billing_ref
 <header><h1>Vantage Net &middot; Invoice Register</h1></header>
 <main>
   <form method="get" action="/dashboard/billing">
-    <label>Period <input name="period" value="{period}"></label>
-    <label>Account <input name="account_id" value="{account_id}" placeholder="VANTAGE-BILL-..."></label>
-    <label>Billing ref <input name="billing_ref" value="{billing_ref}" placeholder="TN-0001"></label>
+    <label>Period <input name="period" value="{escaped_period}"></label>
+    <label>Account <input name="account_id" value="{escaped_account_id}" placeholder="VANTAGE-BILL-..."></label>
+    <label>Billing ref <input name="billing_ref" value="{escaped_billing_ref}" placeholder="TN-0001"></label>
     <button type="submit">Show</button>
   </form>
   <div class="tiles">
-    <div class="tile"><div class="n">{len(invoices)}</div><div class="l">Invoices {period}</div></div>
+    <div class="tile"><div class="n">{len(invoices)}</div><div class="l">Invoices {escaped_period}</div></div>
     <div class="tile"><div class="n">${revenue:,.2f}</div><div class="l">Billed revenue</div></div>
   </div>
   <table><thead><tr><th>Account</th><th>Ref</th><th>Customer</th><th>Province</th><th>Usage MB</th>

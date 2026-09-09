@@ -17,6 +17,40 @@ uvicorn app.main:app --reload --port 8000
 Point the app at a real database by exporting `MONGO_URI` (and optionally
 `MONGO_DB`, default `vantage`).
 
+## Security / authentication
+
+Protected endpoints use bearer tokens signed with `VANTAGE_AUTH_DEV_SECRET`.
+Configure the security middleware with:
+
+| Variable | Purpose | Default |
+| --- | --- | --- |
+| `VANTAGE_AUTH_DEV_SECRET` | Secret required to mint and verify tokens | required |
+| `VANTAGE_CORS_ORIGINS` | Comma-separated allowed browser origins | empty |
+| `VANTAGE_RATE_LIMIT_PER_MINUTE` | Requests per client IP per minute; `0` disables the limit | `120` |
+
+Tokens carry one or more of these scopes:
+
+| Scope | Routes | PII |
+| --- | --- | --- |
+| `sales-engineering` | `/capacity`, `/capacity/locations` | not applicable |
+| `noc` | Inventory, network, dashboard, and billing routes | Invoice PII is redacted |
+| `billing-ops` | Inventory, network, dashboard, and billing routes | Invoice PII is visible |
+
+Mint a development token with:
+
+```bash
+VANTAGE_AUTH_DEV_SECRET=... .venv/bin/python -m app.security --scopes noc billing-ops
+```
+
+Use it in a request:
+
+```bash
+TOKEN="$(VANTAGE_AUTH_DEV_SECRET=... .venv/bin/python -m app.security --scopes noc)"
+curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/resources
+```
+
+Swagger UI at `/docs` includes an **Authorize** button for the bearer token.
+
 ## Modules
 
 ### `app/inventory`

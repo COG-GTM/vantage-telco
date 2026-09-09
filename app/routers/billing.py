@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 from app.billing import invoices as invoice_service
+from app.security import Principal, ops_principal, redact_invoices
 
 router = APIRouter(prefix="/billing", tags=["billing"])
 
@@ -11,6 +12,7 @@ router = APIRouter(prefix="/billing", tags=["billing"])
 def get_invoices(
     account_id: str | None = Query(default=None),
     period: str | None = Query(default=None),
+    principal: Principal = Depends(ops_principal),  # noqa: B008
 ):
     found = invoice_service.list_invoices(account_id=account_id, period=period)
     if account_id and not found:
@@ -18,12 +20,15 @@ def get_invoices(
     return {
         "count": len(found),
         "revenue_total": float(invoice_service.revenue_total(period=period)),
-        "invoices": found,
+        "invoices": redact_invoices(found, principal),
     }
 
 
 @router.get("/usage-summary")
-def get_usage_summary(period: str | None = Query(default=None)):
+def get_usage_summary(
+    period: str | None = Query(default=None),
+    principal: Principal = Depends(ops_principal),  # noqa: B008
+):
     mediated = invoice_service.mediated_usage_mb(period=period)
     billed = invoice_service.billed_usage_mb(period=period)
     return {
