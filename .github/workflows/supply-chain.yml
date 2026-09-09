@@ -72,7 +72,7 @@ jobs:
           upload-release-assets: false
 
       - name: Trivy — Python app image (SARIF)
-        uses: aquasecurity/trivy-action@v0.31.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           image-ref: ${{ env.APP_IMAGE }}
           format: sarif
@@ -83,7 +83,7 @@ jobs:
           exit-code: "0"
 
       - name: Trivy — Java report image (SARIF)
-        uses: aquasecurity/trivy-action@v0.31.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           image-ref: ${{ env.REPORT_IMAGE }}
           format: sarif
@@ -111,7 +111,7 @@ jobs:
           category: trivy-report-image
 
       - name: Trivy — Python app image (gate)
-        uses: aquasecurity/trivy-action@v0.31.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           image-ref: ${{ env.APP_IMAGE }}
           format: table
@@ -124,7 +124,7 @@ jobs:
           TRIVY_SKIP_JAVA_DB_UPDATE: "true"
 
       - name: Trivy — Java report image (gate)
-        uses: aquasecurity/trivy-action@v0.31.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           image-ref: ${{ env.REPORT_IMAGE }}
           format: table
