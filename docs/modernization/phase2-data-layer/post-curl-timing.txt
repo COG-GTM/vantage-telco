@@ -1,0 +1,6 @@
+time_total=0.035601
+time_total=0.019466
+time_total=0.018886
+time_total=0.018945
+time_total=0.019191
+time_total=0.019143
