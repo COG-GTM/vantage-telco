@@ -11,12 +11,13 @@ lifetime of the process so pymongo's connection pool is shared across requests.
 from __future__ import annotations
 
 import json
-import os
 import threading
 from collections.abc import Iterable
 from functools import cache
 from pathlib import Path
 from typing import Any
+
+from app.config import setting
 
 SEED_DIR = Path(__file__).resolve().parent.parent / "data" / "seed"
 
@@ -75,7 +76,7 @@ _client_lock = threading.Lock()
 
 
 def mongo_uri() -> str | None:
-    return os.environ.get("MONGO_URI") or None
+    return setting("MONGO_URI") or None
 
 
 def get_client() -> Any:
@@ -111,7 +112,7 @@ def get_collection(name: str):
         raise KeyError(f"unknown collection: {name}")
     if mongo_uri() is None:
         return _load_seed(name)
-    return get_client()[os.environ.get("MONGO_DB", "vantage")][name]
+    return get_client()[setting("MONGO_DB", "vantage")][name]
 
 
 def ensure_indexes() -> dict[str, list[str]]:

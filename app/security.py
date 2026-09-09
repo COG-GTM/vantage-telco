@@ -17,7 +17,6 @@ Mint a local development token::
 from __future__ import annotations
 
 import argparse
-import os
 import time
 from dataclasses import dataclass, field
 from functools import lru_cache
@@ -26,6 +25,8 @@ import jwt
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import OAuth2AuthorizationCodeBearer, SecurityScopes
 from jwt import PyJWKClient
+
+from app.config import setting
 
 SCOPE_INVENTORY_READ = "inventory:read"
 SCOPE_NETWORK_READ = "network:read"
@@ -70,18 +71,25 @@ class AuthSettings:
 
     @classmethod
     def from_env(cls) -> AuthSettings:
-        issuer = os.environ.get("VANTAGE_OIDC_ISSUER", "https://idp.vantage.local/")
+        issuer = _setting_with_default("VANTAGE_OIDC_ISSUER", "https://idp.vantage.local/")
         return cls(
             issuer=issuer,
-            audience=os.environ.get("VANTAGE_OIDC_AUDIENCE", "vantage-net"),
-            jwks_url=os.environ.get("VANTAGE_OIDC_JWKS_URL") or None,
-            dev_secret=os.environ.get("VANTAGE_AUTH_DEV_SECRET") or None,
-            authorization_url=os.environ.get(
+            audience=_setting_with_default("VANTAGE_OIDC_AUDIENCE", "vantage-net"),
+            jwks_url=setting("VANTAGE_OIDC_JWKS_URL") or None,
+            dev_secret=setting("VANTAGE_AUTH_DEV_SECRET") or None,
+            authorization_url=_setting_with_default(
                 "VANTAGE_OIDC_AUTHORIZATION_URL", issuer.rstrip("/") + "/authorize"
             ),
-            token_url=os.environ.get("VANTAGE_OIDC_TOKEN_URL", issuer.rstrip("/") + "/token"),
-            leeway_seconds=int(os.environ.get("VANTAGE_AUTH_LEEWAY_SECONDS", "30")),
+            token_url=_setting_with_default(
+                "VANTAGE_OIDC_TOKEN_URL", issuer.rstrip("/") + "/token"
+            ),
+            leeway_seconds=int(setting("VANTAGE_AUTH_LEEWAY_SECONDS", "30") or "30"),
         )
+
+
+def _setting_with_default(name: str, default: str) -> str:
+    value = setting(name)
+    return default if value is None else value
 
 
 @lru_cache(maxsize=1)
