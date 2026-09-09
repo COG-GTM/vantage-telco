@@ -16,7 +16,7 @@ Every phase PR is based on the branch before it, so merge bottom-up:
 3. [#30](https://github.com/COG-GTM/vantage-telco/pull/30) Phase 3 API/templating (based on the Phase 1+2 integration branch)
 4. [#27](https://github.com/COG-GTM/vantage-telco/pull/27) Phase 4 Java 21 (based on Phase 0; merged with Phase 3 on
    `devin/1788938278-phase34-integration`, commit `feature: merge phase 3 and phase 4 for phase 5 base`)
-5. [#PHASE5_PR](PHASE5_PR_URL) Phase 5 deploy + supply chain (based on the Phase 3+4 integration branch)
+5. [#31](https://github.com/COG-GTM/vantage-telco/pull/31) Phase 5 deploy + supply chain (based on the Phase 3+4 integration branch)
 
 Merging `#26 → #29 → #28 → #30 → #27 → Phase 5` in that order (or merging the Phase 5 PR after its
 integration base) yields the same tree as the Phase 5 branch.
@@ -151,7 +151,7 @@ is served from MongoDB and is identical in raw order).
 ## Phase 5 — Deploy and supply chain
 
 - **Goal:** containerise both applications, file-based secrets, SBOM + vulnerability gates.
-- **PR:** [#PHASE5_PR](PHASE5_PR_URL) · **Branch:** `devin/1788938421-phase5-deploy` (base `devin/1788938278-phase34-integration`)
+- **PR:** [#31](https://github.com/COG-GTM/vantage-telco/pull/31) · **Branch:** `devin/1788938421-phase5-deploy` (base `devin/1788938278-phase34-integration`)
 - **Key changes**
   - `Dockerfile` (python:3.12-slim, multi-stage, non-root, pip removed from the runtime, `HEALTHCHECK /health`) and `java/vantage-report/Dockerfile` (Maven 21 build → Temurin 21 JRE Alpine, non-root, `/out` volume).
   - `docker-compose.yml`: `mongo:7` + one-shot `mongo-seed` (`mongoimport --jsonArray` of `data/seed/*.json`) + `app` + `report` (profile `batch`); top-level file `secrets:`.
