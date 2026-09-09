@@ -1,0 +1,29 @@
+{% from "_macros.html" import tax_cell %}
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Vantage Net &middot; Billing</title>{% include "_dashboard_style.html" %}</head>
+<body>
+<header><h1>Vantage Net &middot; Invoice Register</h1></header>
+<main>
+  <form method="get" action="{{ request.url.path }}">
+    <label>Period <input name="period" value="{{ period }}"></label>
+    <label>Account <input name="account_id" value="{{ account_id }}" placeholder="VANTAGE-BILL-..."></label>
+    <label>Billing ref <input name="billing_ref" value="{{ billing_ref }}" placeholder="TN-0001"></label>
+    <button type="submit">Show</button>
+  </form>
+  <div class="tiles">
+    <div class="tile"><div class="n">{{ invoices|length }}</div><div class="l">Invoices {{ period }}</div></div>
+    <div class="tile"><div class="n">${{ revenue|money_grouped }}</div><div class="l">Billed revenue</div></div>
+  </div>
+  <table><thead><tr><th>Account</th><th>Ref</th><th>Customer</th><th>Province</th><th>Usage MB</th>
+  <th>Overage MB</th><th>Recurring</th><th>Overage</th><th>Promo</th><th>Suspension</th><th>Late fee</th>
+  <th>Subtotal</th><th>Loyalty</th><th>Tax</th><th>Total</th></tr></thead>
+  <tbody>{% for i in invoices %}
+  <tr><td>{{ i.account_id }}</td><td>{{ i.billing_ref }}</td><td>{{ i.legal_name }}</td>
+  <td>{{ i.province }}</td><td class="num">{{ i.usage_mb }}</td><td class="num">{{ i.overage_mb }}</td>
+  <td class="num">${{ i.recurring|money }}</td><td class="num">${{ i.overage_charges|money }}</td>
+  <td class="num">-${{ i.promo_credit|money }}</td><td class="num">-${{ i.suspension_credit|money }}</td>
+  <td class="num">${{ i.late_fee|money }}</td><td class="num">${{ i.subtotal|money }}</td>
+  <td class="num">-${{ i.loyalty_discount|money }}</td><td class="num">{{ tax_cell(i) }}</td>
+  <td class="num">${{ i.invoice_total|money }}</td></tr>
+  {% endfor %}</tbody></table>
+</main></body></html>

@@ -1,0 +1,3 @@
+{% macro tax_cell(invoice) -%}
+{{ invoice.federal_tax_label }} ${{ invoice.federal_tax|money }}{% if invoice.provincial_tax_label %} + {{ invoice.provincial_tax_label }} ${{ invoice.provincial_tax|money }}{% endif %}
+{%- endmacro %}
