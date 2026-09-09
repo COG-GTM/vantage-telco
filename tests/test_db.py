@@ -214,8 +214,7 @@ def test_accounts_by_id_matches_linear_find_account():
 # --- N+1 refactor: /billing/invoices output must be byte-for-byte unchanged ---
 
 
-def test_billing_invoices_json_byte_for_byte_matches_fixture():
-    client = TestClient(app)
+def test_billing_invoices_json_byte_for_byte_matches_fixture(client):
     response = client.get("/billing/invoices?period=2026-07")
     assert response.status_code == 200
     assert response.content == FIXTURE.read_bytes()
