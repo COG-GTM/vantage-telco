@@ -3,12 +3,16 @@
 Production runs against MongoDB (``MONGO_URI``). For local development and the
 test suite the same collections are served from the JSON documents under
 ``data/seed``, so nothing here needs a running database.
+
+In Mongo mode a single ``MongoClient`` is created lazily and reused for the
+lifetime of the process so pymongo's connection pool is shared across requests.
 """
 
 from __future__ import annotations
 
 import json
 import os
+import threading
 from collections.abc import Iterable
 from functools import cache
 from pathlib import Path
@@ -23,6 +27,15 @@ COLLECTIONS = {
     "usage": "usage.json",
     "devices": "devices.json",
     "locations": "locations.json",
+}
+
+# Indexes required for the query push-down in Mongo mode: collection -> fields.
+INDEXES: dict[str, tuple[str, ...]] = {
+    "accounts": ("account_id", "billing_ref"),
+    "usage": ("account_id", "period"),
+    "sites": ("device_uuid", "market_id"),
+    "devices": ("device_uuid",),
+    "locations": ("market_id",),
 }
 
 
@@ -56,18 +69,75 @@ def _load_seed(name: str) -> SeedCollection:
         return SeedCollection(json.load(handle))
 
 
+_client: Any = None
+_client_uri: str | None = None
+_client_lock = threading.Lock()
+
+
+def mongo_uri() -> str | None:
+    return os.environ.get("MONGO_URI") or None
+
+
+def get_client() -> Any:
+    """Return the process-wide ``MongoClient``, creating it on first use."""
+    global _client, _client_uri
+    uri = mongo_uri()
+    if uri is None:
+        raise RuntimeError("MONGO_URI is not set; running in seed-file mode")
+    with _client_lock:
+        if _client is None or _client_uri != uri:
+            if _client is not None:
+                _client.close()
+            from pymongo import MongoClient  # imported lazily: unused in seed mode
+
+            _client = MongoClient(uri)
+            _client_uri = uri
+        return _client
+
+
+def close_client() -> None:
+    """Close the shared client (FastAPI shutdown). Safe to call in seed mode."""
+    global _client, _client_uri
+    with _client_lock:
+        if _client is not None:
+            _client.close()
+        _client = None
+        _client_uri = None
+
+
 def get_collection(name: str):
     """Return the named collection, from Mongo when configured, else the seed."""
     if name not in COLLECTIONS:
         raise KeyError(f"unknown collection: {name}")
-    uri = os.environ.get("MONGO_URI")
-    if not uri:
+    if mongo_uri() is None:
         return _load_seed(name)
-    from pymongo import MongoClient  # imported lazily: unused in seed mode
+    return get_client()[os.environ.get("MONGO_DB", "vantage")][name]
 
-    client: Any = MongoClient(uri)
-    return client[os.environ.get("MONGO_DB", "vantage")][name]
+
+def ensure_indexes() -> dict[str, list[str]]:
+    """Create the indexes in ``INDEXES`` when in Mongo mode; no-op in seed mode.
+
+    Returns the index names created per collection (empty in seed mode).
+    """
+    if mongo_uri() is None:
+        return {}
+    created: dict[str, list[str]] = {}
+    for name, fields in INDEXES.items():
+        collection = get_collection(name)
+        created[name] = [collection.create_index(field) for field in fields]
+    return created
+
+
+def find_documents(name: str, query: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    """Return documents matching ``query``, filtered by the datastore.
+
+    ``None`` values are dropped so optional filters can be passed straight
+    through: ``find_documents("usage", {"account_id": None, "period": p})``
+    only constrains ``period``.
+    """
+    filters = {key: value for key, value in (query or {}).items() if value is not None}
+    return list(get_collection(name).find(filters))
 
 
 def all_documents(name: str) -> list[dict[str, Any]]:
-    return list(get_collection(name).find({}))
+    return find_documents(name, {})

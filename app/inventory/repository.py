@@ -2,25 +2,23 @@ from __future__ import annotations
 
 from typing import Any
 
-from app.db import all_documents
+from app.db import find_documents
 from app.inventory.capacity import available_capacity, site_capacity
 
 
 def list_sites(
     market_id: str | None = None, lifecycle_state: str | None = None
 ) -> list[dict[str, Any]]:
-    sites = all_documents("sites")
-    if market_id:
-        sites = [s for s in sites if s["market_id"] == market_id]
-    if lifecycle_state:
-        sites = [s for s in sites if s["lifecycle_state"] == lifecycle_state]
+    sites = find_documents(
+        "sites",
+        {"market_id": market_id or None, "lifecycle_state": lifecycle_state or None},
+    )
     return [enrich_site(s) for s in sites]
 
 
 def get_site(device_uuid: str) -> dict[str, Any] | None:
-    for site in all_documents("sites"):
-        if site["device_uuid"] == device_uuid:
-            return enrich_site(site)
+    for site in find_documents("sites", {"device_uuid": device_uuid}):
+        return enrich_site(site)
     return None
 
 
@@ -33,9 +31,7 @@ def enrich_site(site: dict[str, Any]) -> dict[str, Any]:
 
 
 def list_circuits(circuit_id: str | None = None) -> list[dict[str, Any]]:
-    circuits = all_documents("circuits")
-    if circuit_id:
-        circuits = [c for c in circuits if c["circuit_id"] == circuit_id]
+    circuits = find_documents("circuits", {"circuit_id": circuit_id or None})
     return [enrich_circuit(c) for c in circuits]
 
 
