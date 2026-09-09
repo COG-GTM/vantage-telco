@@ -2,14 +2,27 @@ PY ?= python3
 PORT ?= 8000
 PERIOD ?= 2026-07
 MERIDIAN_DIR ?= ../meridian-telco
+COV_MIN ?= 85
 
-.PHONY: install test run fixtures parity demo
+.PHONY: install test run fixtures parity demo lint typecheck audit coverage
 
 install:
-	$(PY) -m pip install -r requirements.txt
+	$(PY) -m pip install -r requirements.txt -r requirements-dev.txt
 
 test:
 	$(PY) -m pytest -q
+
+lint:
+	$(PY) -m ruff check .
+
+typecheck:
+	$(PY) -m mypy
+
+audit:
+	$(PY) -m pip_audit -r requirements.txt -r requirements-dev.txt
+
+coverage:
+	$(PY) -m pytest -q --cov=app --cov-report=term-missing --cov-fail-under=$(COV_MIN)
 
 run:
 	$(PY) -m uvicorn app.main:app --port $(PORT)

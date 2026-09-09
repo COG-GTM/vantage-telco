@@ -23,8 +23,13 @@ def test_requested_bandwidth_drives_the_verdict():
 
 
 def test_search_and_market_filters():
-    assert [l["location_code"] for l in list_locations(search="riverside")] == ["RIV-01"]
-    assert all(l["market_id"] == "BOS-12" for l in list_locations(market_id="BOS-12"))
+    assert [location["location_code"] for location in list_locations(search="riverside")] == [
+        "RIV-01"
+    ]
+    assert all(
+        location["market_id"] == "BOS-12"
+        for location in list_locations(market_id="BOS-12")
+    )
 
 
 def test_capacity_locations_endpoint():

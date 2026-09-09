@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import HTMLResponse
 
@@ -18,17 +16,19 @@ router = APIRouter(tags=["capacity"])
 @router.get("/capacity/locations")
 def get_locations(
     requested_mbps: int = Query(default=0, ge=0),
-    market_id: Optional[str] = Query(default=None),
-    search: Optional[str] = Query(default=None),
+    market_id: str | None = Query(default=None),
+    search: str | None = Query(default=None),
 ):
     locations = list_locations(requested_mbps=requested_mbps, market_id=market_id, search=search)
     return {
         "rule": AVAILABILITY_RULE,
         "requested_mbps": requested_mbps,
         "count": len(locations),
-        "serviceable_count": sum(1 for l in locations if l["can_support"]),
-        "available_mbps": sum(l["available_mbps"] for l in locations),
-        "maintenance_buffer_mbps": sum(l["maintenance_buffer_mbps"] for l in locations),
+        "serviceable_count": sum(1 for location in locations if location["can_support"]),
+        "available_mbps": sum(location["available_mbps"] for location in locations),
+        "maintenance_buffer_mbps": sum(
+            location["maintenance_buffer_mbps"] for location in locations
+        ),
         "locations": locations,
     }
 
@@ -44,7 +44,7 @@ def get_single_location(location_code: str, requested_mbps: int = Query(default=
 @router.get("/capacity", response_class=HTMLResponse)
 def capacity_check(requested_mbps: int = Query(default=350, ge=0)):
     locations = list_locations(requested_mbps=requested_mbps)
-    markets = sorted({l["market_id"] for l in locations})
+    markets = sorted({location["market_id"] for location in locations})
     market_options = "".join(f'<option value="{m}">{m}</option>' for m in markets)
     payload = "".join(
         _row(location, index) for index, location in enumerate(locations)
@@ -55,8 +55,8 @@ def capacity_check(requested_mbps: int = Query(default=350, ge=0)):
         market_options=market_options,
         rows=payload,
         location_count=len(locations),
-        serviceable=sum(1 for l in locations if l["can_support"]),
-        available=f"{sum(l['available_mbps'] for l in locations):,}",
+        serviceable=sum(1 for location in locations if location["can_support"]),
+        available=f"{sum(location['available_mbps'] for location in locations):,}",
         buffer_total=f"{buffer_total_mbps():,}",
     )
 

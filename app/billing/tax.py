@@ -13,7 +13,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Dict
 
 
 @dataclass(frozen=True)
@@ -24,7 +23,7 @@ class TaxRates:
     provincial_label: str
 
 
-PROVINCE_RATES: Dict[str, TaxRates] = {
+PROVINCE_RATES: dict[str, TaxRates] = {
     "BC": TaxRates(Decimal("5"), Decimal("7"), "GST", "PST"),
     "AB": TaxRates(Decimal("5"), Decimal("0"), "GST", ""),
     "ON": TaxRates(Decimal("13"), Decimal("0"), "HST", ""),

@@ -8,7 +8,7 @@ because capacity reserved for maintenance windows is not sellable.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from app.db import all_documents
 from app.inventory.capacity import available_capacity, utilization_pct
@@ -16,7 +16,7 @@ from app.inventory.capacity import available_capacity, utilization_pct
 AVAILABILITY_RULE = "available = total_capacity - allocated - maintenance_buffer"
 
 
-def enrich_location(location: Dict[str, Any], requested_mbps: int = 0) -> Dict[str, Any]:
+def enrich_location(location: dict[str, Any], requested_mbps: int = 0) -> dict[str, Any]:
     total = int(location["total_capacity_mbps"])
     allocated = int(location["allocated_mbps"])
     buffer_mbps = int(location["maintenance_buffer_mbps"])
@@ -33,22 +33,28 @@ def enrich_location(location: Dict[str, Any], requested_mbps: int = 0) -> Dict[s
 
 def list_locations(
     requested_mbps: int = 0,
-    market_id: Optional[str] = None,
-    search: Optional[str] = None,
-) -> List[Dict[str, Any]]:
+    market_id: str | None = None,
+    search: str | None = None,
+) -> list[dict[str, Any]]:
     locations = all_documents("locations")
     if market_id:
-        locations = [l for l in locations if l["market_id"] == market_id]
+        locations = [location for location in locations if location["market_id"] == market_id]
     if search:
         needle = search.lower()
         locations = [
-            l for l in locations
-            if needle in f"{l['customer_name']} {l['location_name']} {l['location_code']}".lower()
+            location
+            for location in locations
+            if needle
+            in (
+                f"{location['customer_name']} "
+                f"{location['location_name']} "
+                f"{location['location_code']}"
+            ).lower()
         ]
-    return [enrich_location(l, requested_mbps) for l in locations]
+    return [enrich_location(location, requested_mbps) for location in locations]
 
 
-def get_location(location_code: str, requested_mbps: int = 0) -> Optional[Dict[str, Any]]:
+def get_location(location_code: str, requested_mbps: int = 0) -> dict[str, Any] | None:
     for location in all_documents("locations"):
         if location["location_code"] == location_code:
             return enrich_location(location, requested_mbps)
@@ -56,4 +62,6 @@ def get_location(location_code: str, requested_mbps: int = 0) -> Optional[Dict[s
 
 
 def buffer_total_mbps() -> int:
-    return sum(int(l["maintenance_buffer_mbps"]) for l in all_documents("locations"))
+    return sum(
+        int(location["maintenance_buffer_mbps"]) for location in all_documents("locations")
+    )
