@@ -32,9 +32,9 @@ Tokens carry one or more of these scopes:
 
 | Scope | Routes | PII |
 | --- | --- | --- |
-| `sales-engineering` | `/capacity`, `/capacity/locations` | not applicable |
-| `noc` | Inventory, network, dashboard, and billing routes | Invoice PII is redacted |
-| `billing-ops` | Inventory, network, dashboard, and billing routes | Invoice PII is visible |
+| `sales-engineering` | `/v1/capacity`, `/v1/capacity/locations` | not applicable |
+| `noc` | `/v1` inventory, network, dashboard, and billing routes | Invoice PII is redacted |
+| `billing-ops` | `/v1` inventory, network, dashboard, and billing routes | Invoice PII is visible |
 
 Mint a development token with:
 
@@ -46,10 +46,18 @@ Use it in a request:
 
 ```bash
 TOKEN="$(VANTAGE_AUTH_DEV_SECRET=... .venv/bin/python -m app.security --scopes noc)"
-curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/resources
+curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/v1/resources
 ```
 
 Swagger UI at `/docs` includes an **Authorize** button for the bearer token.
+
+## API versioning & pagination
+
+The current API is served under `/v1`. List endpoints use `limit` and `offset` query
+parameters, defaulting to 50 items and allowing up to 500 per page. Responses retain their
+existing full-result metrics and add a `pagination` object containing `limit`, `offset`, `total`,
+and `has_more`. `/health` and `/docs` remain unversioned, while legacy API and dashboard paths
+return a 308 redirect to `/v1`. `GET /v1/version` returns the authenticated API version.
 
 ### Mongo indexes
 
@@ -79,7 +87,7 @@ metro codes), with a five-state `lifecycle_state`: `ACTIVE`, `MAINTENANCE`,
 - `circuits.py` — standby and failover circuits are excluded from active counts
   and active capacity.
 
-Endpoints: `GET /resources`, `GET /resources/{device_uuid}`, `GET /circuits`.
+Endpoints: `GET /v1/resources`, `GET /v1/resources/{device_uuid}`, `GET /v1/circuits`.
 
 ### `app/network`
 
@@ -98,8 +106,8 @@ Generated artifacts under `app/network/configs` reference those addresses:
 `addressing.py` can list every config file referencing a given address and
 detect references to addresses no device owns.
 
-Endpoints: `GET /network/addressing`, `GET /network/devices`,
-`GET /network/references?address=...`.
+Endpoints: `GET /v1/network/addressing`, `GET /v1/network/devices`,
+`GET /v1/network/references?address=...`.
 
 Devices flagged `external_bgp` are customer-facing and must not be renumbered.
 
@@ -121,13 +129,13 @@ Devices flagged `external_bgp` are customer-facing and must not be renumbered.
 Charges are carried as `Decimal` at full precision and rounded once, at the
 invoice total. Provinces billed: BC, AB, ON, QC.
 
-Endpoints: `GET /billing/invoices`, `GET /billing/usage-summary`. The invoice
-register page is `GET /dashboard/billing` (filter by `period`, `account_id` or
+Endpoints: `GET /v1/billing/invoices`, `GET /v1/billing/usage-summary`. The invoice
+register page is `GET /v1/dashboard/billing` (filter by `period`, `account_id` or
 `billing_ref`); it shows the province and the tax lines per invoice.
 
 ## Capacity check (sales engineering)
 
-`GET /capacity` is the sales-facing page: enter the bandwidth being quoted and
+`GET /v1/capacity` is the sales-facing page: enter the bandwidth being quoted and
 it shows, per customer location, what is actually sellable. Availability comes
 from `app/inventory/capacity.py`, so the maintenance buffer is withheld:
 
@@ -136,8 +144,8 @@ available = total_capacity - allocated - maintenance_buffer
 ```
 
 Serviceable locations live in `data/seed/locations.json`. The same figures are
-available as JSON from `GET /capacity/locations?requested_mbps=...` and
-`GET /capacity/locations/{location_code}`.
+available as JSON from `GET /v1/capacity/locations?requested_mbps=...` and
+`GET /v1/capacity/locations/{location_code}`.
 
 ## Dashboard
 
@@ -206,5 +214,5 @@ make demo MERIDIAN_DIR=../meridian-telco
 ```
 
 Brings up both invoice registers side by side: vantage on
-<http://localhost:8000/dashboard/billing> and meridian on
+<http://localhost:8000/v1/dashboard/billing> and meridian on
 <http://localhost:8083/billing.html> (its invoice API on :8082).

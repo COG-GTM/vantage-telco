@@ -23,7 +23,7 @@ from pathlib import Path
 from playwright.sync_api import Page, sync_playwright
 
 BASE = "http://localhost:8000"
-XSS_PATH = "/dashboard/billing?billing_ref=%3Cscript%3Ealert(1)%3C/script%3E"
+XSS_PATH = "/v1/dashboard/billing?billing_ref=%3Cscript%3Ealert(1)%3C/script%3E"
 
 
 def _scroll(page: Page) -> None:
@@ -67,7 +67,7 @@ def main() -> None:
     p = args.prefix
 
     # --- shell evidence -------------------------------------------------------
-    status, body, _ = _curl(f"{BASE}/billing/invoices?period=2026-07", args.token)
+    status, body, _ = _curl(f"{BASE}/v1/billing/invoices?period=2026-07", args.token)
     if status == 200:
         (out / f"{p}-billing-invoices.json").write_text(
             json.dumps(json.loads(body), indent=4) + "\n"
@@ -76,7 +76,7 @@ def main() -> None:
     (out / f"{p}-health.txt").write_text(f"{body_h}\nHTTP {status_h}\n")
 
     lines = []
-    invoices_url = f"{BASE}/billing/invoices?period=2026-07"
+    invoices_url = f"{BASE}/v1/billing/invoices?period=2026-07"
     s, b, h = _curl(invoices_url, None)
     lines.append(f"$ curl -i '{invoices_url}'   # no Authorization header\nHTTP {s}")
     for k in (
@@ -104,11 +104,11 @@ def main() -> None:
     if args.token:
         pagination_lines = []
         pagination_cases = (
-            ("/resources", "resources"),
-            ("/circuits", "circuits"),
-            ("/billing/invoices?period=2026-07", "invoices"),
-            ("/network/devices", "devices"),
-            ("/capacity/locations", "locations"),
+            ("/v1/resources", "resources"),
+            ("/v1/circuits", "circuits"),
+            ("/v1/billing/invoices?period=2026-07", "invoices"),
+            ("/v1/network/devices", "devices"),
+            ("/v1/capacity/locations", "locations"),
         )
         pagination_params = (
             "limit=50&offset=0",
@@ -154,7 +154,7 @@ def main() -> None:
         status_o, body_o, _ = _curl(f"{BASE}/openapi.json", args.token)
         try:
             openapi = json.loads(body_o)
-            invoice_get = openapi["paths"]["/billing/invoices"]["get"]
+            invoice_get = openapi["paths"]["/v1/billing/invoices"]["get"]
             parameter_names = [parameter["name"] for parameter in invoice_get.get("parameters", [])]
             version = openapi["info"]["version"]
             pagination_lines.extend(
@@ -181,9 +181,9 @@ def main() -> None:
             extra_http_headers=headers,
         )
         page = ctx.new_page()
-        _visit(page, "/dashboard", out / f"{p}-dashboard.png")
-        _visit(page, "/dashboard/billing", out / f"{p}-dashboard-billing.png")
-        _visit(page, "/dashboard/billing?period=2026-07", None)
+        _visit(page, "/v1/dashboard", out / f"{p}-dashboard.png")
+        _visit(page, "/v1/dashboard/billing", out / f"{p}-dashboard-billing.png")
+        _visit(page, "/v1/dashboard/billing?period=2026-07", None)
         dialogs: list[str] = []
 
         def handle_dialog(dialog) -> None:
@@ -218,7 +218,9 @@ def main() -> None:
                 page.wait_for_timeout(400)
                 page.click("button.btn-done")
                 page.wait_for_timeout(400)
-            operation = page.locator("#operations-billing-get_invoices_billing_invoices_get")
+            operation = page.locator("#operations-billing-get_invoices_v1_billing_invoices_get")
+            if not operation.count():
+                operation = page.locator("#operations-billing-get_invoices_billing_invoices_get")
             if not operation.count():
                 operation = page.locator("[id^='operations-billing-get_invoices']").first
             operation.click()

@@ -10,7 +10,7 @@ code. Artifacts live under `docs/modernization/<phase>/` and are named `pre.*` /
 | `phase0-baseline/`     | Current state before any change         |
 | `phase1-security/`     | Auth, PII redaction, XSS, headers       |
 | `phase2-data-layer/`   | Mongo client lifecycle, query pushdown  |
-| `phase3-api/`          | Async routes, pagination, Jinja2, `/v1` |
+| `phase3-api-templating/` | Async routes, pagination, Jinja2, `/v1` |
 | `phase4-java/`         | Java LTS upgrade, virtual threads       |
 | `phase5-deploy/`       | Docker, secrets, SBOM, final summary    |
 
@@ -29,24 +29,28 @@ deterministic dataset all recordings should use. Period `2026-07` is the referen
 
 Record one continuous screen recording visiting, in order:
 
-1. `http://localhost:8000/dashboard`
-2. `http://localhost:8000/dashboard/billing` and `…/dashboard/billing?period=2026-07`
-3. `http://localhost:8000/capacity` — search a location (e.g. `RIV-01`) and change the requested
+1. `http://localhost:8000/v1/dashboard`
+2. `http://localhost:8000/v1/dashboard/billing` and `…/v1/dashboard/billing?period=2026-07`
+3. `http://localhost:8000/v1/capacity` — search a location (e.g. `RIV-01`) and change the requested
    Mbps so the serviceability verdict flips
-4. `http://localhost:8000/docs` — expand and execute `GET /billing/invoices?period=2026-07`
+4. `http://localhost:8000/docs` — expand and execute `GET /v1/billing/invoices?period=2026-07`
 
 Scroll each page to its end so the full content is visible. Also capture API evidence from the
 shell:
 
 ```bash
-curl -s 'http://localhost:8000/billing/invoices?period=2026-07' | python3 -m json.tool > <phase>/pre-billing-invoices.json
+curl -s 'http://localhost:8000/v1/billing/invoices?period=2026-07' | python3 -m json.tool > <phase>/pre-billing-invoices.json
 curl -s -w '\n%{time_total}s\n' http://localhost:8000/health > <phase>/pre-health.txt
 ```
 
 Phases that change auth (Phase 1) additionally record an unauthenticated request being rejected
-and the `?billing_ref=<script>` payload on `/dashboard/billing`; Phase 2 records `curl` output +
+and the `?billing_ref=<script>` payload on `/v1/dashboard/billing`; Phase 2 records `curl` output +
 timing proving byte-identical invoices; Phase 4 records the `mvn exec:java` batch run for
 `2026-07`.
+
+Legacy paths under `/resources`, `/circuits`, `/billing`, `/network`, `/capacity`, and
+`/dashboard` return a 308 redirect to the equivalent `/v1` path. `/health` and `/docs` remain
+unversioned.
 
 ## 3. Where to save
 
