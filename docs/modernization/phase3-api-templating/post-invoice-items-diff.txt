@@ -1,0 +1,7 @@
+# pre:  GET /billing/invoices?period=2026-07            -> body['invoices']  (merged Phase1+Phase2 base, commit 7e8626b)
+# post: GET /v1/billing/invoices?period=2026-07&limit=500 -> body['items']     (commit 1431c60)
+# pre items: 200  post items: 200
+$ diff pre-invoice-items.json post-invoice-items.json
+(no differences - 200 invoice items byte-identical)
+sha256 pre : 0f41dc313c8045b36bc68fc77d3706b331b69b6741fad3b7b9932c7a42feffaf
+sha256 post: 0f41dc313c8045b36bc68fc77d3706b331b69b6741fad3b7b9932c7a42feffaf

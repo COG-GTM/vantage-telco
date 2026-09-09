@@ -4,6 +4,7 @@ from fastapi import APIRouter, HTTPException, Query, Security
 
 from app import security
 from app.billing import invoices as invoice_service
+from app.pagination import PageDep
 
 router = APIRouter(
     prefix="/billing",
@@ -18,7 +19,8 @@ router = APIRouter(
 
 
 @router.get("/invoices")
-def get_invoices(
+async def get_invoices(
+    page: PageDep,
     account_id: str | None = Query(default=None),
     period: str | None = Query(default=None),
     principal: security.Principal = Security(  # noqa: B008
@@ -29,15 +31,14 @@ def get_invoices(
     found = invoice_service.list_invoices(account_id=account_id, period=period)
     if account_id and not found:
         raise HTTPException(status_code=404, detail="no invoices for account")
-    return {
-        "count": len(found),
-        "revenue_total": float(invoice_service.revenue_total(period=period)),
-        "invoices": [security.redact_pii(invoice, principal) for invoice in found],
-    }
+    return page.envelope(
+        [security.redact_pii(invoice, principal) for invoice in found],
+        revenue_total=float(invoice_service.revenue_total(period=period)),
+    )
 
 
 @router.get("/usage-summary")
-def get_usage_summary(period: str | None = Query(default=None)):
+async def get_usage_summary(period: str | None = Query(default=None)):
     mediated = invoice_service.mediated_usage_mb(period=period)
     billed = invoice_service.billed_usage_mb(period=period)
     return {

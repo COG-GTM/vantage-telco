@@ -1,0 +1,38 @@
+{% from "_macros.html" import tax_cell %}
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Vantage Net</title>{% include "_dashboard_style.html" %}</head>
+<body>
+<header><h1>Vantage Net &middot; Inventory &amp; Billing</h1></header>
+<main>
+  <div class="tiles">
+    <div class="tile"><div class="n">{{ sites|length }}</div><div class="l">Resources</div></div>
+    <div class="tile"><div class="n">{{ sites|selectattr("lifecycle_state", "equalto", "ACTIVE")|list|length }}</div><div class="l">Active</div></div>
+    <div class="tile"><div class="n">{{ active_circuits }}</div><div class="l">Active circuits</div></div>
+    <div class="tile"><div class="n">${{ revenue|money_grouped }}</div><div class="l">Billed revenue {{ period }}</div></div>
+    <div class="tile"><div class="n">{{ unlinked|sum(attribute="usage_mb")|int|grouped }}</div><div class="l">Unbilled MB {{ period }}</div></div>
+  </div>
+  <h2>Invoices &middot; {{ period }}</h2>
+  <table><thead><tr><th>Account</th><th>Customer</th><th>Province</th><th>Usage MB</th><th>Overage MB</th>
+  <th>Recurring</th><th>Overage</th><th>Subtotal</th><th>Loyalty</th><th>Tax</th><th>Total</th></tr></thead>
+  <tbody>{% for i in invoices %}
+  <tr><td>{{ i.account_id }}</td><td>{{ i.legal_name }}</td><td>{{ i.province }}</td>
+  <td class="num">{{ i.usage_mb }}</td><td class="num">{{ i.overage_mb }}</td>
+  <td class="num">${{ i.recurring|money }}</td><td class="num">${{ i.overage_charges|money }}</td>
+  <td class="num">${{ i.subtotal|money }}</td><td class="num">-${{ i.loyalty_discount|money }}</td>
+  <td class="num">{{ tax_cell(i) }}</td><td class="num">${{ i.invoice_total|money }}</td></tr>
+  {% endfor %}</tbody></table>
+  <h2>Mediated usage with no invoice</h2>
+  <table><thead><tr><th>Usage ID</th><th>Device</th><th>Period</th><th>Usage MB</th><th>Reason</th></tr></thead>
+  <tbody>{% for u in unlinked %}
+  <tr><td>{{ u.usage_id }}</td><td>{{ u.device_uuid }}</td><td>{{ u.period }}</td>
+  <td class="num">{{ u.usage_mb }}</td><td>no billing account</td></tr>
+  {% endfor %}</tbody></table>
+  <h2>Resources</h2>
+  <table><thead><tr><th>Name</th><th>Market</th><th>Lifecycle</th><th>Tower reg</th><th>Total</th><th>Allocated</th><th>Buffer</th><th>Available</th></tr></thead>
+  <tbody>{% for s in sites %}
+  <tr><td>{{ s.name }}</td><td>{{ s.market_id }}</td><td>{{ s.lifecycle_state }}</td>
+  <td>{{ s.tower_registration|default("", true) }}</td><td class="num">{{ s.total_capacity_mbps }}</td>
+  <td class="num">{{ s.allocated_mbps }}</td><td class="num">{{ s.maintenance_buffer_mbps }}</td>
+  <td class="num">{{ s.available_mbps }}</td></tr>
+  {% endfor %}</tbody></table>
+</main></body></html>

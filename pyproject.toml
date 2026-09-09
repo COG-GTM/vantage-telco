@@ -10,6 +10,7 @@ dependencies = [
     "pydantic==2.13.5",
     "PyJWT[crypto]==2.13.0",
     "cryptography==50.0.1",
+    "jinja2==3.1.6",
 ]
 
 [project.optional-dependencies]
@@ -32,10 +33,6 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
-
-[tool.ruff.lint.per-file-ignores]
-"app/routers/capacity.py" = ["E501"]
-"app/routers/dashboard.py" = ["E501"]
 
 [tool.mypy]
 python_version = "3.10"
