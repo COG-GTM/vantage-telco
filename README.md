@@ -15,7 +15,32 @@ uvicorn app.main:app --reload --port 8000
 ```
 
 Point the app at a real database by exporting `MONGO_URI` (and optionally
-`MONGO_DB`, default `vantage`).
+`MONGO_DB`, default `vantage`). Production settings should come from a secret
+store rather than a plaintext environment file; see
+[`docs/modernization/secrets.md`](docs/modernization/secrets.md) for Vault,
+AWS, Kubernetes, and mounted-secret-file examples.
+
+## Running with Docker
+
+Copy `.env.example` to `.env`, set the local development secret to `dev` when
+you need authenticated requests, and start the application and MongoDB:
+
+```bash
+cp .env.example .env
+docker compose up -d
+curl http://localhost:8000/health
+```
+
+The report batch image is available under the `batch` profile:
+
+```bash
+docker compose run --rm report 2026-07
+docker compose down -v
+```
+
+Do not commit `.env`; production deployments should use the secret-store
+patterns described above. The application also accepts `<NAME>_FILE` variables
+for secrets mounted into the container.
 
 ## Authentication
 
