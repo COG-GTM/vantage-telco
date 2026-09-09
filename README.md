@@ -17,6 +17,25 @@ uvicorn app.main:app --reload --port 8000
 Point the app at a real database by exporting `MONGO_URI` (and optionally
 `MONGO_DB`, default `vantage`).
 
+### MongoDB connection and indexes
+
+In Mongo mode `app/db.py` holds one process-wide `MongoClient` (created lazily
+on first use, closed on FastAPI shutdown) so pymongo's connection pool is
+shared across requests. Callers filter through `find_documents(name, query)`,
+which issues an indexed `find({...})` against Mongo and the equivalent
+in-memory match in seed mode.
+
+The following single-field indexes are required and are created automatically
+at startup (`db.ensure_indexes()`, a no-op in seed mode):
+
+| Collection  | Indexes                    | Used by                                   |
+| ----------- | -------------------------- | ----------------------------------------- |
+| `accounts`  | `account_id`, `billing_ref` | invoice account lookup, billing reference |
+| `usage`     | `account_id`, `period`     | `GET /billing/invoices`, usage summary    |
+| `sites`     | `device_uuid`, `market_id` | `GET /resources`, `GET /resources/{id}`   |
+| `devices`   | `device_uuid`              | management addressing                     |
+| `locations` | `market_id`                | capacity location search                  |
+
 ## Modules
 
 ### `app/inventory`
