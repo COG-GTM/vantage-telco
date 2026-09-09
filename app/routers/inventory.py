@@ -1,11 +1,20 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Security
 
+from app import security
 from app.inventory import circuits as circuit_rules
 from app.inventory.repository import get_site, list_circuits, list_sites
 
-router = APIRouter(tags=["inventory"])
+router = APIRouter(
+    tags=["inventory"],
+    dependencies=[
+        Security(
+            security.require_scopes,
+            scopes=[security.SCOPE_INVENTORY_READ, security.SCOPE_NOC],
+        )
+    ],
+)
 
 
 @router.get("/resources")

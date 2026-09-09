@@ -2,6 +2,7 @@
 
 Usage:
     python docs/modernization/capture.py <out_dir> <prefix> [--base-url http://localhost:8000]
+                                                     [--bearer <token>]
 
 Writes, into <out_dir>:
     <prefix>-dashboard.png          full-page screenshot of /dashboard
@@ -19,7 +20,7 @@ import argparse
 import json
 import shutil
 from pathlib import Path
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 from playwright.sync_api import sync_playwright
 
@@ -33,10 +34,13 @@ API_PATHS = [
 ]
 
 
-def dump_api(base_url: str, out: Path) -> None:
+def dump_api(base_url: str, out: Path, bearer: str | None) -> None:
     chunks = []
     for path in API_PATHS:
-        with urlopen(base_url + path) as resp:  # noqa: S310 - local dev server
+        request = Request(base_url + path)
+        if bearer:
+            request.add_header("Authorization", f"Bearer {bearer}")
+        with urlopen(request) as resp:  # noqa: S310 - local dev server
             body = resp.read().decode()
             status = resp.status
         try:
@@ -54,18 +58,22 @@ def main() -> None:
     ap.add_argument("out_dir")
     ap.add_argument("prefix")
     ap.add_argument("--base-url", default="http://localhost:8000")
+    ap.add_argument("--bearer", default=None)
     args = ap.parse_args()
 
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
     base = args.base_url.rstrip("/")
 
-    dump_api(base, out / f"{args.prefix}-api.txt")
+    dump_api(base, out / f"{args.prefix}-api.txt", args.bearer)
 
     with sync_playwright() as pw:
         browser = pw.chromium.launch()
         ctx = browser.new_context(
             viewport={"width": 1400, "height": 900},
+            extra_http_headers=(
+                {"Authorization": f"Bearer {args.bearer}"} if args.bearer else {}
+            ),
             record_video_dir=str(out / "_video"),
             record_video_size={"width": 1400, "height": 900},
         )

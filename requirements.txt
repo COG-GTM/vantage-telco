@@ -2,3 +2,5 @@ fastapi==0.141.1
 uvicorn==0.52.4
 pymongo==4.17.0
 pydantic==2.13.5
+PyJWT[crypto]==2.13.0
+cryptography==50.0.1

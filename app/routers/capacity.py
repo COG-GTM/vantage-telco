@@ -1,8 +1,11 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, Query
+import html
+
+from fastapi import APIRouter, HTTPException, Query, Security
 from fastapi.responses import HTMLResponse
 
+from app import security
 from app.inventory.locations import (
     AVAILABILITY_RULE,
     buffer_total_mbps,
@@ -10,7 +13,14 @@ from app.inventory.locations import (
     list_locations,
 )
 
-router = APIRouter(tags=["capacity"])
+router = APIRouter(
+    tags=["capacity"],
+    dependencies=[Security(security.require_scopes, scopes=[security.SCOPE_SALES_ENGINEERING])],
+)
+
+
+def _e(value: object) -> str:
+    return html.escape(str(value), quote=True)
 
 
 @router.get("/capacity/locations")
@@ -45,7 +55,7 @@ def get_single_location(location_code: str, requested_mbps: int = Query(default=
 def capacity_check(requested_mbps: int = Query(default=350, ge=0)):
     locations = list_locations(requested_mbps=requested_mbps)
     markets = sorted({location["market_id"] for location in locations})
-    market_options = "".join(f'<option value="{m}">{m}</option>' for m in markets)
+    market_options = "".join(f'<option value="{_e(m)}">{_e(m)}</option>' for m in markets)
     payload = "".join(
         _row(location, index) for index, location in enumerate(locations)
     )
@@ -64,14 +74,22 @@ def capacity_check(requested_mbps: int = Query(default=350, ge=0)):
 def _row(location: dict, index: int) -> str:
     verdict = "yes" if location["can_support"] else "no"
     verdict_label = "Serviceable" if location["can_support"] else "Not serviceable"
+    location_code = _e(location["location_code"])
+    customer_name = _e(location["customer_name"])
+    location_name = _e(location["location_name"])
+    market_id = _e(location["market_id"])
+    search = _e(
+        f"{location['customer_name'].lower()} "
+        f"{location['location_name'].lower()} {location['location_code'].lower()}"
+    )
     return f"""
-      <tr data-market="{location['market_id']}" data-available="{location['available_mbps']}"
-          data-search="{location['customer_name'].lower()} {location['location_name'].lower()} {location['location_code'].lower()}"
+      <tr data-market="{market_id}" data-available="{location['available_mbps']}"
+          data-search="{search}"
           class="{'lead' if index == 0 else ''}">
-        <td class="code">{location['location_code']}</td>
-        <td class="customer">{location['customer_name']}</td>
-        <td class="site">{location['location_name']}</td>
-        <td><span class="chip">{location['market_id']}</span></td>
+        <td class="code">{location_code}</td>
+        <td class="customer">{customer_name}</td>
+        <td class="site">{location_name}</td>
+        <td><span class="chip">{market_id}</span></td>
         <td class="num">{location['total_capacity_mbps']:,}</td>
         <td class="num">{location['allocated_mbps']:,}</td>
         <td class="num buffer">{location['maintenance_buffer_mbps']:,}</td>
