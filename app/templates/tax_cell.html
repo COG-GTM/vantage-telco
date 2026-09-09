@@ -1,0 +1,1 @@
+{{ invoice.federal_tax_label }} ${{ "%.2f"|format(invoice.federal_tax) }}{% if invoice.provincial_tax_label %} + {{ invoice.provincial_tax_label }} ${{ "%.2f"|format(invoice.provincial_tax) }}{% endif %}
