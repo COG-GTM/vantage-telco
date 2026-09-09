@@ -1,0 +1,82 @@
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/resources?limit=50&offset=0'
+HTTP 200
+  keys: ['count', 'resources']; count: 97; resources: 97; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/resources?limit=50&offset=100'
+HTTP 200
+  keys: ['count', 'resources']; count: 97; resources: 97; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/resources?limit=50&offset=150'
+HTTP 200
+  keys: ['count', 'resources']; count: 97; resources: 97; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/resources?offset=100000'
+HTTP 200
+  keys: ['count', 'resources']; count: 97; resources: 97; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/circuits?limit=50&offset=0'
+HTTP 200
+  keys: ['count', 'active_count', 'active_capacity_mbps', 'circuits']; count: 60; circuits: 60; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/circuits?limit=50&offset=100'
+HTTP 200
+  keys: ['count', 'active_count', 'active_capacity_mbps', 'circuits']; count: 60; circuits: 60; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/circuits?limit=50&offset=150'
+HTTP 200
+  keys: ['count', 'active_count', 'active_capacity_mbps', 'circuits']; count: 60; circuits: 60; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/circuits?offset=100000'
+HTTP 200
+  keys: ['count', 'active_count', 'active_capacity_mbps', 'circuits']; count: 60; circuits: 60; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/billing/invoices?period=2026-07&limit=50&offset=0'
+HTTP 200
+  keys: ['count', 'revenue_total', 'invoices']; count: 200; revenue_total: 1816527.27; invoices: 200; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/billing/invoices?period=2026-07&limit=50&offset=100'
+HTTP 200
+  keys: ['count', 'revenue_total', 'invoices']; count: 200; revenue_total: 1816527.27; invoices: 200; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/billing/invoices?period=2026-07&limit=50&offset=150'
+HTTP 200
+  keys: ['count', 'revenue_total', 'invoices']; count: 200; revenue_total: 1816527.27; invoices: 200; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/billing/invoices?period=2026-07&offset=100000'
+HTTP 200
+  keys: ['count', 'revenue_total', 'invoices']; count: 200; revenue_total: 1816527.27; invoices: 200; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/network/devices?limit=50&offset=0'
+HTTP 200
+  keys: ['count', 'devices']; count: 74; devices: 74; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/network/devices?limit=50&offset=100'
+HTTP 200
+  keys: ['count', 'devices']; count: 74; devices: 74; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/network/devices?limit=50&offset=150'
+HTTP 200
+  keys: ['count', 'devices']; count: 74; devices: 74; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/network/devices?offset=100000'
+HTTP 200
+  keys: ['count', 'devices']; count: 74; devices: 74; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/capacity/locations?limit=50&offset=0'
+HTTP 200
+  keys: ['rule', 'requested_mbps', 'count', 'serviceable_count', 'available_mbps', 'maintenance_buffer_mbps', 'locations']; count: 22; locations: 22; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/capacity/locations?limit=50&offset=100'
+HTTP 200
+  keys: ['rule', 'requested_mbps', 'count', 'serviceable_count', 'available_mbps', 'maintenance_buffer_mbps', 'locations']; count: 22; locations: 22; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/capacity/locations?limit=50&offset=150'
+HTTP 200
+  keys: ['rule', 'requested_mbps', 'count', 'serviceable_count', 'available_mbps', 'maintenance_buffer_mbps', 'locations']; count: 22; locations: 22; pagination: <absent>
+
+$ curl -H 'Authorization: Bearer $TOKEN' 'http://localhost:8000/capacity/locations?offset=100000'
+HTTP 200
+  keys: ['rule', 'requested_mbps', 'count', 'serviceable_count', 'available_mbps', 'maintenance_buffer_mbps', 'locations']; count: 22; locations: 22; pagination: <absent>
+
+OpenAPI /billing/invoices GET parameter names: ['account_id', 'period']
+OpenAPI info.version: 2.4.0
