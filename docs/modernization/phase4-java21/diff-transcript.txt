@@ -1,0 +1,4 @@
+$ diff -r pre-artifacts post-artifacts
+exit=0
+$ diff pre-batch-output.txt post-batch-output.txt
+exit=0

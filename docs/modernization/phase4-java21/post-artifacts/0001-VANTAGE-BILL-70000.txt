@@ -1,0 +1,12 @@
+VANTAGE NETWORK SERVICES
+Invoice for period 2026-07
+--------------------------------------------------------
+Account:  VANTAGE-BILL-70000
+Customer: Northgate Logistics LLC
+Plan:     BUSINESS-FLEX
+--------------------------------------------------------
+Monthly plan fee (BUSINESS-FLEX)      $650.00
+Usage overage: 98422 MB at 0.012/MB   $1181.06
+Sales tax at 6.25% on 1831.06         $114.44
+--------------------------------------------------------
+TOTAL DUE                             $1945.50
