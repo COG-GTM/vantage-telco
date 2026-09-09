@@ -69,10 +69,10 @@ def dashboard(period: str = "2026-07"):
 <main>
   <div class="tiles">
     <div class="tile"><div class="n">{len(sites)}</div><div class="l">Resources</div></div>
-    <div class="tile"><div class="n">{sum(1 for s in sites if s['lifecycle_state'] == 'ACTIVE')}</div><div class="l">Active</div></div>
+    <div class="tile"><div class="n">{sum(1 for s in sites if s["lifecycle_state"] == "ACTIVE")}</div><div class="l">Active</div></div>
     <div class="tile"><div class="n">{circuit_rules.active_count(circuits)}</div><div class="l">Active circuits</div></div>
     <div class="tile"><div class="n">${revenue:,.2f}</div><div class="l">Billed revenue {period}</div></div>
-    <div class="tile"><div class="n">{sum(int(u['usage_mb']) for u in unlinked):,}</div><div class="l">Unbilled MB {period}</div></div>
+    <div class="tile"><div class="n">{sum(int(u["usage_mb"]) for u in unlinked):,}</div><div class="l">Unbilled MB {period}</div></div>
   </div>
   <h2>Invoices &middot; {period}</h2>
   <table><thead><tr><th>Account</th><th>Customer</th><th>Province</th><th>Usage MB</th><th>Overage MB</th>

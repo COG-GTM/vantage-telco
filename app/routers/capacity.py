@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import HTMLResponse
 
@@ -18,17 +16,19 @@ router = APIRouter(tags=["capacity"])
 @router.get("/capacity/locations")
 def get_locations(
     requested_mbps: int = Query(default=0, ge=0),
-    market_id: Optional[str] = Query(default=None),
-    search: Optional[str] = Query(default=None),
+    market_id: str | None = Query(default=None),
+    search: str | None = Query(default=None),
 ):
     locations = list_locations(requested_mbps=requested_mbps, market_id=market_id, search=search)
     return {
         "rule": AVAILABILITY_RULE,
         "requested_mbps": requested_mbps,
         "count": len(locations),
-        "serviceable_count": sum(1 for l in locations if l["can_support"]),
-        "available_mbps": sum(l["available_mbps"] for l in locations),
-        "maintenance_buffer_mbps": sum(l["maintenance_buffer_mbps"] for l in locations),
+        "serviceable_count": sum(1 for location in locations if location["can_support"]),
+        "available_mbps": sum(location["available_mbps"] for location in locations),
+        "maintenance_buffer_mbps": sum(
+            location["maintenance_buffer_mbps"] for location in locations
+        ),
         "locations": locations,
     }
 
@@ -44,19 +44,17 @@ def get_single_location(location_code: str, requested_mbps: int = Query(default=
 @router.get("/capacity", response_class=HTMLResponse)
 def capacity_check(requested_mbps: int = Query(default=350, ge=0)):
     locations = list_locations(requested_mbps=requested_mbps)
-    markets = sorted({l["market_id"] for l in locations})
+    markets = sorted({location["market_id"] for location in locations})
     market_options = "".join(f'<option value="{m}">{m}</option>' for m in markets)
-    payload = "".join(
-        _row(location, index) for index, location in enumerate(locations)
-    )
+    payload = "".join(_row(location, index) for index, location in enumerate(locations))
     return _PAGE.format(
         rule=AVAILABILITY_RULE,
         requested=requested_mbps,
         market_options=market_options,
         rows=payload,
         location_count=len(locations),
-        serviceable=sum(1 for l in locations if l["can_support"]),
-        available=f"{sum(l['available_mbps'] for l in locations):,}",
+        serviceable=sum(1 for location in locations if location["can_support"]),
+        available=f"{sum(location['available_mbps'] for location in locations):,}",
         buffer_total=f"{buffer_total_mbps():,}",
     )
 
@@ -65,23 +63,23 @@ def _row(location: dict, index: int) -> str:
     verdict = "yes" if location["can_support"] else "no"
     verdict_label = "Serviceable" if location["can_support"] else "Not serviceable"
     return f"""
-      <tr data-market="{location['market_id']}" data-available="{location['available_mbps']}"
-          data-search="{location['customer_name'].lower()} {location['location_name'].lower()} {location['location_code'].lower()}"
-          class="{'lead' if index == 0 else ''}">
-        <td class="code">{location['location_code']}</td>
-        <td class="customer">{location['customer_name']}</td>
-        <td class="site">{location['location_name']}</td>
-        <td><span class="chip">{location['market_id']}</span></td>
-        <td class="num">{location['total_capacity_mbps']:,}</td>
-        <td class="num">{location['allocated_mbps']:,}</td>
-        <td class="num buffer">{location['maintenance_buffer_mbps']:,}</td>
+      <tr data-market="{location["market_id"]}" data-available="{location["available_mbps"]}"
+          data-search="{location["customer_name"].lower()} {location["location_name"].lower()} {location["location_code"].lower()}"
+          class="{"lead" if index == 0 else ""}">
+        <td class="code">{location["location_code"]}</td>
+        <td class="customer">{location["customer_name"]}</td>
+        <td class="site">{location["location_name"]}</td>
+        <td><span class="chip">{location["market_id"]}</span></td>
+        <td class="num">{location["total_capacity_mbps"]:,}</td>
+        <td class="num">{location["allocated_mbps"]:,}</td>
+        <td class="num buffer">{location["maintenance_buffer_mbps"]:,}</td>
         <td class="num available">
-          {location['available_mbps']:,}
-          <div class="calc">{location['total_capacity_mbps']:,} &minus; {location['allocated_mbps']:,} &minus; {location['maintenance_buffer_mbps']:,}</div>
+          {location["available_mbps"]:,}
+          <div class="calc">{location["total_capacity_mbps"]:,} &minus; {location["allocated_mbps"]:,} &minus; {location["maintenance_buffer_mbps"]:,}</div>
         </td>
         <td class="num">
-          {location['utilization_pct']}%
-          <div class="meter"><span style="width:{min(location['utilization_pct'], 100)}%"></span></div>
+          {location["utilization_pct"]}%
+          <div class="meter"><span style="width:{min(location["utilization_pct"], 100)}%"></span></div>
         </td>
         <td><span class="verdict {verdict}">{verdict_label}</span></td>
       </tr>"""
