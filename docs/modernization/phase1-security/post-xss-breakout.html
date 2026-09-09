@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Vantage Net &middot; Billing</title><style>
+body { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; margin: 0; background: #f7f9fc; color: #14213d; }
+header { background: #0f766e; color: #fff; padding: 18px 28px; }
+header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+main { padding: 24px 28px; }
+.tiles { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.tile { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(20,33,61,.12); padding: 16px 20px; min-width: 170px; }
+.tile .n { font-size: 28px; font-weight: 600; }
+.tile .l { color: #64748b; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+table { border-collapse: collapse; width: 100%; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(20,33,61,.12); margin-bottom: 28px; }
+th { text-align: left; background: #e2e8f0; padding: 8px 12px; font-size: 12px; }
+td { padding: 7px 12px; border-top: 1px solid #f1f5f9; font-size: 13px; }
+td.num { text-align: right; }
+h2 { font-size: 15px; margin: 22px 0 10px; }
+</style></head>
+<body>
+<header><h1>Vantage Net &middot; Invoice Register</h1></header>
+<main>
+  <form method="get" action="/dashboard/billing">
+    <label>Period <input name="period" value="2026-07"></label>
+    <label>Account <input name="account_id" value="" placeholder="VANTAGE-BILL-..."></label>
+    <label>Billing ref <input name="billing_ref" value="&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;" placeholder="TN-0001"></label>
+    <button type="submit">Show</button>
+  </form>
+  <div class="tiles">
+    <div class="tile"><div class="n">0</div><div class="l">Invoices 2026-07</div></div>
+    <div class="tile"><div class="n">$0.00</div><div class="l">Billed revenue</div></div>
+  </div>
+  <table><thead><tr><th>Account</th><th>Ref</th><th>Customer</th><th>Province</th><th>Usage MB</th>
+  <th>Overage MB</th><th>Recurring</th><th>Overage</th><th>Promo</th><th>Suspension</th><th>Late fee</th>
+  <th>Subtotal</th><th>Loyalty</th><th>Tax</th><th>Total</th></tr></thead>
+  <tbody></tbody></table>
+</main></body></html>

@@ -1,0 +1,194 @@
+# /health
+$ curl -si http://localhost:8000/health
+HTTP 200
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+content-type: application/json
+referrer-policy: no-referrer
+strict-transport-security: max-age=63072000; includeSubDomains
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 120
+
+{
+  "status": "ok"
+}
+
+# /billing/invoices?period=2026-07
+$ curl -si http://localhost:8000/billing/invoices?period=2026-07
+HTTP 401
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+content-type: application/json
+referrer-policy: no-referrer
+strict-transport-security: max-age=63072000; includeSubDomains
+www-authenticate: Bearer scope="billing-ops noc"
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 109
+
+{
+  "detail": "not authenticated"
+}
+
+# /capacity/locations?requested_mbps=350
+$ curl -si http://localhost:8000/capacity/locations?requested_mbps=350
+HTTP 401
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+content-type: application/json
+referrer-policy: no-referrer
+strict-transport-security: max-age=63072000; includeSubDomains
+www-authenticate: Bearer scope="sales-engineering"
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 108
+
+{
+  "detail": "not authenticated"
+}
+
+# /health (with bearer token)
+$ curl -si -H "Authorization: Bearer eyJhbGciOiJI..." http://localhost:8000/health
+HTTP 200
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+content-type: application/json
+referrer-policy: no-referrer
+strict-transport-security: max-age=63072000; includeSubDomains
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 120
+
+{
+  "status": "ok"
+}
+
+# /billing/invoices?period=2026-07 (with bearer token)
+$ curl -si -H "Authorization: Bearer eyJhbGciOiJI..." http://localhost:8000/billing/invoices?period=2026-07
+HTTP 200
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+content-type: application/json
+referrer-policy: no-referrer
+strict-transport-security: max-age=63072000; includeSubDomains
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 107
+
+{
+  "count": 200,
+  "revenue_total": 1816527.27,
+  "invoices": [
+    {
+      "account_id": "VANTAGE-BILL-88213",
+      "billing_ref": "TN-0001",
+      "legal_name": "Beacon Manufacturing Corp",
+      "tax_id": "47-2214880",
+      "service_address": "2518 Columbia Ave, Kamloops, BC V2C 1L2",
+      "province": "BC",
+      "plan_code": "ENT-5000",
+      "period": "2026-07",
+      "usage_mb": 7472103,
+      "included_gb": 5000,
+      "overage_mb": 2352103,
+      "plan_charge": 4025.81,
+      "line_discount": 402.58,
+      "recurring": 3623.23,
+      "overage_charges": 28225.24,
+      "suspension_credit": 0.0,
+      "promo_credit": 350.0,
+      "late_fee": 0.0,
+      "subtotal": 31498.47,
+      "loyalty_discount_pct": 4.0,
+      "loyalty_discount": 1259.94,
+      "federal_tax_label": "GST",
+      "federal_tax": 1574.92,
+      "provincial_tax_label": "PST",
+      "provincial_tax": 2204.89,
+      "invoice_total": 34018.34
+    },
+    {
+      "account_id": "VANTAGE-BILL-70000",
+      "billing_ref": "TN-0002",
+      "legal_name": "Northgate Logistics LLC",
+      "tax_id": "26-8841902",
+      "service_address": "871 Jasper Ave, Edmonton, AB T5J 1W8",
+      "province": "AB",
+      "plan_code": "ENT-2500",
+      "period": "2026-07",
+      "usage_mb": 4049593,
+      "included_gb": 2500,
+      "overage_mb": 1489593,
+      "plan_charge": 2400.0,
+      "line_discount": 0.0,
+      "recurring": 2400.0,
+      "overage_charges": 17875.12,
+      "suspension_credit": 0.0,
+      "promo_credit": 200.
+... (truncated)
+
+# /capacity/locations?requested_mbps=350 (with bearer token)
+$ curl -si -H "Authorization: Bearer eyJhbGciOiJI..." http://localhost:8000/capacity/locations?requested_mbps=350
+HTTP 200
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://fastapi.tiangolo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+content-type: application/json
+referrer-policy: no-referrer
+strict-transport-security: max-age=63072000; includeSubDomains
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-ratelimit-limit: 120
+x-ratelimit-remaining: 106
+
+{
+  "rule": "available = total_capacity - allocated - maintenance_buffer",
+  "requested_mbps": 350,
+  "count": 22,
+  "serviceable_count": 12,
+  "available_mbps": 13440,
+  "maintenance_buffer_mbps": 4750,
+  "locations": [
+    {
+      "location_code": "RIV-01",
+      "customer_name": "Beacon Manufacturing Corp",
+      "location_name": "Riverside Crossing - Quincy Plant",
+      "market_id": "BOS-12",
+      "total_capacity_mbps": 1000,
+      "allocated_mbps": 600,
+      "maintenance_buffer_mbps": 150,
+      "available_mbps": 250,
+      "utilization_pct": 75.0,
+      "can_support": false,
+      "headroom_mbps": -100
+    },
+    {
+      "location_code": "GRH-02",
+      "customer_name": "Cedar Point Health Systems",
+      "location_name": "Granite Hill Medical Campus",
+      "market_id": "BOS-14",
+      "total_capacity_mbps": 2000,
+      "allocated_mbps": 1250,
+      "maintenance_buffer_mbps": 200,
+      "available_mbps": 550,
+      "utilization_pct": 72.5,
+      "can_support": true,
+      "headroom_mbps": 200
+    },
+    {
+      "location_code": "FVR-03",
+      "customer_name": "Foxglove Biotech",
+      "location_name": "Fairview Ridge Labs",
+      "market_id": "ATL-09",
+      "total_capacity_mbps": 1000,
+      "allocated_mbps": 720,
+      "maintenance_buffer_mbps": 100,
+      "available_mbps": 180,
+      "utilization_pct": 82.0,
+      "can_support": false,
+      "headroom_mbps": -170
+    },
+    {
+      "location_code": "LKN-04",
+      "customer_name": "Willow Grove Retail Group",
+  
+... (truncated)

@@ -17,6 +17,19 @@ uvicorn app.main:app --reload --port 8000
 Point the app at a real database by exporting `MONGO_URI` (and optionally
 `MONGO_DB`, default `vantage`).
 
+## Authentication
+
+All application routes except `/health` require an OAuth2/OIDC bearer token.
+Router access is controlled by scopes: inventory and network readers, sales
+engineering, billing operations, and NOC each receive only the endpoints
+needed for their role. Billing operations can see invoice PII; NOC responses
+redact tax ID, legal name, and service address.
+
+Local development can use an HS256 token from `VANTAGE_AUTH_DEV_SECRET`.
+Security configuration, the full scope-to-router matrix, token command, capture
+commands, and the PII policy are documented in
+`docs/modernization/phase1-security/README.md`.
+
 ## Modules
 
 ### `app/inventory`

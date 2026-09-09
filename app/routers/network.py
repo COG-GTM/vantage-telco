@@ -1,10 +1,20 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Security
 
+from app import security
 from app.network import addressing
 
-router = APIRouter(prefix="/network", tags=["network"])
+router = APIRouter(
+    prefix="/network",
+    tags=["network"],
+    dependencies=[
+        Security(
+            security.require_scopes,
+            scopes=[security.SCOPE_NETWORK_READ, security.SCOPE_NOC],
+        )
+    ],
+)
 
 
 @router.get("/addressing")
