@@ -25,6 +25,16 @@ COLLECTIONS = {
     "locations": "locations.json",
 }
 
+REQUIRED_INDEXES: dict[str, list[str]] = {
+    "accounts": ["account_id", "billing_ref"],
+    "usage": ["account_id", "period"],
+    "sites": ["device_uuid", "market_id"],
+    "devices": ["device_uuid", "market_id"],
+    "locations": ["market_id"],
+}
+
+_client: Any = None
+
 
 class SeedCollection:
     """Read-only stand-in for a Mongo collection backed by a seed file."""
@@ -47,7 +57,13 @@ class SeedCollection:
 
 
 def _matches(doc: dict[str, Any], query: dict[str, Any]) -> bool:
-    return all(doc.get(key) == value for key, value in query.items())
+    for key, value in query.items():
+        if isinstance(value, dict) and "$in" in value:
+            if doc.get(key) not in value["$in"]:
+                return False
+        elif doc.get(key) != value:
+            return False
+    return True
 
 
 @cache
@@ -60,14 +76,45 @@ def get_collection(name: str):
     """Return the named collection, from Mongo when configured, else the seed."""
     if name not in COLLECTIONS:
         raise KeyError(f"unknown collection: {name}")
-    uri = os.environ.get("MONGO_URI")
-    if not uri:
+    if not mongo_enabled():
         return _load_seed(name)
-    from pymongo import MongoClient  # imported lazily: unused in seed mode
+    return mongo_client()[os.environ.get("MONGO_DB", "vantage")][name]
 
-    client: Any = MongoClient(uri)
-    return client[os.environ.get("MONGO_DB", "vantage")][name]
+
+def mongo_client() -> Any:
+    """Process-wide pymongo client, created on first use so pooling is reused."""
+    global _client
+    if _client is None:
+        from pymongo import MongoClient  # imported lazily: unused in seed mode
+
+        _client = MongoClient(os.environ["MONGO_URI"])
+    return _client
+
+
+def close_client() -> None:
+    global _client
+    if _client is not None:
+        _client.close()
+        _client = None
+
+
+def mongo_enabled() -> bool:
+    return bool(os.environ.get("MONGO_URI"))
+
+
+def find_documents(name: str, query: dict[str, Any]) -> list[dict[str, Any]]:
+    return list(get_collection(name).find(query))
 
 
 def all_documents(name: str) -> list[dict[str, Any]]:
-    return list(get_collection(name).find({}))
+    return find_documents(name, {})
+
+
+def ensure_indexes() -> None:
+    """Create the indexes the query paths rely on. No-op in seed mode."""
+    if not mongo_enabled():
+        return
+    for name, fields in REQUIRED_INDEXES.items():
+        collection = get_collection(name)
+        for field in fields:
+            collection.create_index(field)

@@ -1,16 +1,28 @@
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.db import close_client, ensure_indexes
 from app.routers import billing, capacity, dashboard, inventory, network
 from app.security import RateLimitMiddleware, SecurityHeadersMiddleware, cors_origins
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    ensure_indexes()
+    yield
+    close_client()
+
 
 app = FastAPI(
     title="Vantage Network Services",
     version="2.4.0",
     description="Inventory, management addressing and billing for the Vantage network.",
     redoc_url=None,
+    lifespan=lifespan,
 )
 
 app.add_middleware(

@@ -51,6 +51,21 @@ curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/resources
 
 Swagger UI at `/docs` includes an **Authorize** button for the bearer token.
 
+### Mongo indexes
+
+The lifespan hook creates these indexes at startup when `MONGO_URI` is set:
+
+| Collection | Fields |
+| --- | --- |
+| `accounts` | `account_id`, `billing_ref` |
+| `usage` | `account_id`, `period` |
+| `sites` | `device_uuid`, `market_id` |
+| `devices` | `device_uuid`, `market_id` |
+| `locations` | `market_id` |
+
+The app uses one pooled Mongo client per process, which is closed during
+shutdown.
+
 ## Modules
 
 ### `app/inventory`
