@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Vantage Net{% endblock %}
+{% block head %}
+<style>
+body { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; margin: 0; background: #f7f9fc; color: #14213d; }
+header { background: #0f766e; color: #fff; padding: 18px 28px; }
+header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+main { padding: 24px 28px; }
+.tiles { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.tile { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(20,33,61,.12); padding: 16px 20px; min-width: 170px; }
+.tile .n { font-size: 28px; font-weight: 600; }
+.tile .l { color: #64748b; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+table { border-collapse: collapse; width: 100%; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(20,33,61,.12); margin-bottom: 28px; }
+th { text-align: left; background: #e2e8f0; padding: 8px 12px; font-size: 12px; }
+td { padding: 7px 12px; border-top: 1px solid #f1f5f9; font-size: 13px; }
+td.num { text-align: right; }
+h2 { font-size: 15px; margin: 22px 0 10px; }
+</style>
+{% endblock %}
+{% block body %}
+<header><h1>Vantage Net &middot; Inventory &amp; Billing</h1></header>
+<main>
+  <div class="tiles">
+    <div class="tile"><div class="n">{{ sites|length }}</div><div class="l">Resources</div></div>
+    <div class="tile"><div class="n">{{ sites|selectattr("lifecycle_state", "equalto", "ACTIVE")|list|length }}</div><div class="l">Active</div></div>
+    <div class="tile"><div class="n">{{ active_circuits }}</div><div class="l">Active circuits</div></div>
+    <div class="tile"><div class="n">${{ "{:,.2f}".format(revenue) }}</div><div class="l">Billed revenue {{ period }}</div></div>
+    <div class="tile"><div class="n">{{ "{:,}".format(unlinked|sum(attribute="usage_mb")) }}</div><div class="l">Unbilled MB {{ period }}</div></div>
+  </div>
+  <h2>Invoices &middot; {{ period }}</h2>
+  <table><thead><tr><th>Account</th><th>Customer</th><th>Province</th><th>Usage MB</th><th>Overage MB</th>
+  <th>Recurring</th><th>Overage</th><th>Subtotal</th><th>Loyalty</th><th>Tax</th><th>Total</th></tr></thead>
+  <tbody>
+  {% for invoice in invoices %}
+    <tr><td>{{ invoice.account_id }}</td><td>{{ invoice.legal_name }}</td>
+    <td>{{ invoice.province }}</td>
+    <td class="num">{{ invoice.usage_mb }}</td><td class="num">{{ invoice.overage_mb }}</td>
+    <td class="num">${{ "%.2f"|format(invoice.recurring) }}</td><td class="num">${{ "%.2f"|format(invoice.overage_charges) }}</td>
+    <td class="num">${{ "%.2f"|format(invoice.subtotal) }}</td><td class="num">-${{ "%.2f"|format(invoice.loyalty_discount) }}</td>
+    <td class="num">{% include "tax_cell.html" %}</td><td class="num">${{ "%.2f"|format(invoice.invoice_total) }}</td></tr>
+  {% endfor %}
+  </tbody></table>
+  <h2>Mediated usage with no invoice</h2>
+  <table><thead><tr><th>Usage ID</th><th>Device</th><th>Period</th><th>Usage MB</th><th>Reason</th></tr></thead>
+  <tbody>
+  {% for usage in unlinked %}
+    <tr><td>{{ usage.usage_id }}</td><td>{{ usage.device_uuid }}</td>
+    <td>{{ usage.period }}</td><td class="num">{{ usage.usage_mb }}</td><td>no billing account</td></tr>
+  {% endfor %}
+  </tbody></table>
+  <h2>Resources</h2>
+  <table><thead><tr><th>Name</th><th>Market</th><th>Lifecycle</th><th>Tower reg</th><th>Total</th><th>Allocated</th><th>Buffer</th><th>Available</th></tr></thead>
+  <tbody>
+  {% for site in sites %}
+    <tr><td>{{ site.name }}</td><td>{{ site.market_id }}</td>
+    <td>{{ site.lifecycle_state }}</td><td>{{ site.tower_registration|default("", true) }}</td>
+    <td class="num">{{ site.total_capacity_mbps }}</td><td class="num">{{ site.allocated_mbps }}</td>
+    <td class="num">{{ site.maintenance_buffer_mbps }}</td><td class="num">{{ site.available_mbps }}</td></tr>
+  {% endfor %}
+  </tbody></table>
+</main>
+{% endblock %}

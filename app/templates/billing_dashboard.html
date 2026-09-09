@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Vantage Net &middot; Billing{% endblock %}
+{% block head %}
+<style>
+body { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; margin: 0; background: #f7f9fc; color: #14213d; }
+header { background: #0f766e; color: #fff; padding: 18px 28px; }
+header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+main { padding: 24px 28px; }
+.tiles { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.tile { background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(20,33,61,.12); padding: 16px 20px; min-width: 170px; }
+.tile .n { font-size: 28px; font-weight: 600; }
+.tile .l { color: #64748b; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+table { border-collapse: collapse; width: 100%; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(20,33,61,.12); margin-bottom: 28px; }
+th { text-align: left; background: #e2e8f0; padding: 8px 12px; font-size: 12px; }
+td { padding: 7px 12px; border-top: 1px solid #f1f5f9; font-size: 13px; }
+td.num { text-align: right; }
+form { display: flex; gap: 12px; align-items: end; margin-bottom: 24px; }
+label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
+input { padding: 6px 8px; }
+button { padding: 7px 12px; }
+</style>
+{% endblock %}
+{% block body %}
+<header><h1>Vantage Net &middot; Invoice Register</h1></header>
+<main>
+  <form method="get" action="/v1/dashboard/billing">
+    <label>Period <input name="period" value="{{ period }}"></label>
+    <label>Account <input name="account_id" value="{{ account_id }}" placeholder="VANTAGE-BILL-..."></label>
+    <label>Billing ref <input name="billing_ref" value="{{ billing_ref }}" placeholder="TN-0001"></label>
+    <button type="submit">Show</button>
+  </form>
+  <div class="tiles">
+    <div class="tile"><div class="n">{{ invoices|length }}</div><div class="l">Invoices {{ period }}</div></div>
+    <div class="tile"><div class="n">${{ "{:,.2f}".format(revenue) }}</div><div class="l">Billed revenue</div></div>
+  </div>
+  <table><thead><tr><th>Account</th><th>Ref</th><th>Customer</th><th>Province</th><th>Usage MB</th>
+  <th>Overage MB</th><th>Recurring</th><th>Overage</th><th>Promo</th><th>Suspension</th><th>Late fee</th>
+  <th>Subtotal</th><th>Loyalty</th><th>Tax</th><th>Total</th></tr></thead>
+  <tbody>
+  {% for invoice in invoices %}
+    <tr><td>{{ invoice.account_id }}</td><td>{{ invoice.billing_ref }}</td>
+    <td>{{ invoice.legal_name }}</td><td>{{ invoice.province }}</td><td class="num">{{ invoice.usage_mb }}</td>
+    <td class="num">{{ invoice.overage_mb }}</td><td class="num">${{ "%.2f"|format(invoice.recurring) }}</td>
+    <td class="num">${{ "%.2f"|format(invoice.overage_charges) }}</td><td class="num">-${{ "%.2f"|format(invoice.promo_credit) }}</td>
+    <td class="num">-${{ "%.2f"|format(invoice.suspension_credit) }}</td><td class="num">${{ "%.2f"|format(invoice.late_fee) }}</td>
+    <td class="num">${{ "%.2f"|format(invoice.subtotal) }}</td><td class="num">-${{ "%.2f"|format(invoice.loyalty_discount) }}</td>
+    <td class="num">{% include "tax_cell.html" %}</td><td class="num">${{ "%.2f"|format(invoice.invoice_total) }}</td></tr>
+  {% endfor %}
+  </tbody></table>
+</main>
+{% endblock %}

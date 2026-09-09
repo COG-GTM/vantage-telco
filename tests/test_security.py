@@ -68,12 +68,22 @@ def test_noc_invoice_response_redacts_pii(ops_client):
 
 
 def test_billing_ops_invoice_response_matches_baseline(billing_ops_client):
-    response = billing_ops_client.get("/billing/invoices?period=2026-07")
     baseline_path = Path("docs/modernization/phase0-baseline/pre-billing-invoices.json")
     baseline = json.loads(baseline_path.read_text())
-    body = json.loads(response.text)
-    assert body == baseline
-    assert body["invoices"] == baseline["invoices"]
+    invoices = []
+    offset = 0
+    while True:
+        body = billing_ops_client.get(
+            "/billing/invoices",
+            params={"period": "2026-07", "limit": 50, "offset": offset},
+        ).json()
+        assert body["count"] == baseline["count"]
+        assert body["revenue_total"] == baseline["revenue_total"]
+        invoices.extend(body["invoices"])
+        if not body["pagination"]["has_more"]:
+            break
+        offset += 50
+    assert json.dumps(invoices) == json.dumps(baseline["invoices"])
 
 
 def test_tampered_token_is_rejected(app_client, token_for):

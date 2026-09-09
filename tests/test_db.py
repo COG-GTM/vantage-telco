@@ -134,9 +134,21 @@ def test_billing_invoices_match_phase0_baseline(token_for):
 
     token = token_for([SCOPE_BILLING_OPS])
     with TestClient(app, headers={"Authorization": f"Bearer {token}"}) as client:
-        result = client.get("/billing/invoices?period=2026-07").json()
+        invoices = []
+        offset = 0
+        while True:
+            result = client.get(
+                "/billing/invoices",
+                params={"period": "2026-07", "limit": 50, "offset": offset},
+            ).json()
+            assert result["count"] == baseline["count"]
+            assert result["revenue_total"] == baseline["revenue_total"]
+            invoices.extend(result["invoices"])
+            if not result["pagination"]["has_more"]:
+                break
+            offset += 50
 
-    assert dumps(result, sort_keys=True) == dumps(baseline, sort_keys=True)
+    assert dumps(invoices) == dumps(baseline["invoices"])
 
 
 def test_account_index_matches_find_account():
