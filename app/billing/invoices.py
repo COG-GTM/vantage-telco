@@ -11,7 +11,7 @@ from app.billing.proration import prorated_plan_charge
 from app.billing.rating import money, overage_mb, rate_overage
 from app.billing.suspension import suspension_credit
 from app.billing.tax import federal_tax, provincial_tax, rates_for_province
-from app.db import all_documents
+from app.db import all_documents, find_documents
 
 
 def accounts() -> list[dict[str, Any]]:
@@ -19,12 +19,12 @@ def accounts() -> list[dict[str, Any]]:
 
 
 def usage_records(account_id: str | None = None, period: str | None = None) -> list[dict[str, Any]]:
-    records = all_documents("usage")
+    query: dict[str, Any] = {}
     if account_id:
-        records = [r for r in records if r.get("account_id") == account_id]
+        query["account_id"] = account_id
     if period:
-        records = [r for r in records if r.get("period") == period]
-    return records
+        query["period"] = period
+    return find_documents("usage", query)
 
 
 def find_account(account_id: str) -> dict[str, Any] | None:
@@ -32,6 +32,10 @@ def find_account(account_id: str) -> dict[str, Any] | None:
         if account["account_id"] == account_id:
             return account
     return None
+
+
+def account_index() -> dict[str, dict[str, Any]]:
+    return {a["account_id"]: a for a in accounts()}
 
 
 def build_invoice(account: dict[str, Any], usage: dict[str, Any]) -> dict[str, Any]:
@@ -108,11 +112,12 @@ def build_invoice(account: dict[str, Any], usage: dict[str, Any]) -> dict[str, A
 
 def list_invoices(account_id: str | None = None, period: str | None = None) -> list[dict[str, Any]]:
     invoices = []
+    index = account_index()
     for usage in usage_records(account_id=account_id, period=period):
         if not usage.get("account_id"):
             # Usage with no billing account never reaches an invoice.
             continue
-        account = find_account(usage["account_id"])
+        account = index.get(usage["account_id"])
         if account is None:
             continue
         invoices.append(build_invoice(account, usage))
@@ -121,10 +126,10 @@ def list_invoices(account_id: str | None = None, period: str | None = None) -> l
 
 def unlinked_usage(period: str | None = None) -> list[dict[str, Any]]:
     """Mediated usage carrying no billing account. Never invoiced today."""
-    records = [r for r in all_documents("usage") if not r.get("account_id")]
+    query: dict[str, Any] = {"account_id": {"$in": [None, ""]}}
     if period:
-        records = [r for r in records if r.get("period") == period]
-    return records
+        query["period"] = period
+    return find_documents("usage", query)
 
 
 def billed_usage_mb(period: str | None = None) -> int:
@@ -132,9 +137,8 @@ def billed_usage_mb(period: str | None = None) -> int:
 
 
 def mediated_usage_mb(period: str | None = None) -> int:
-    records = all_documents("usage")
-    if period:
-        records = [r for r in records if r.get("period") == period]
+    query = {"period": period} if period else {}
+    records = find_documents("usage", query)
     return sum(int(r["usage_mb"]) for r in records)
 
 

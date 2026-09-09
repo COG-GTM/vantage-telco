@@ -2,18 +2,19 @@ from __future__ import annotations
 
 from typing import Any
 
-from app.db import all_documents
+from app.db import all_documents, find_documents
 from app.inventory.capacity import available_capacity, site_capacity
 
 
 def list_sites(
     market_id: str | None = None, lifecycle_state: str | None = None
 ) -> list[dict[str, Any]]:
-    sites = all_documents("sites")
+    query: dict[str, Any] = {}
     if market_id:
-        sites = [s for s in sites if s["market_id"] == market_id]
+        query["market_id"] = market_id
     if lifecycle_state:
-        sites = [s for s in sites if s["lifecycle_state"] == lifecycle_state]
+        query["lifecycle_state"] = lifecycle_state
+    sites = find_documents("sites", query)
     return [enrich_site(s) for s in sites]
 
 
