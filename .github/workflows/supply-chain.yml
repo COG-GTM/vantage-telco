@@ -1,0 +1,76 @@
+name: supply-chain
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Python dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -r requirements.txt
+      - uses: anchore/sbom-action@v0
+        with:
+          path: .
+          format: cyclonedx-json
+          artifact-name: sbom-python.cdx.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - run: mvn -B -q -f java/vantage-report/pom.xml package -DskipTests
+      - uses: anchore/sbom-action@v0
+        with:
+          path: java/vantage-report
+          format: cyclonedx-json
+          artifact-name: sbom-java.cdx.json
+
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build application image
+        run: docker build -t vantage-app:ci .
+      - name: Build report image
+        run: docker build -t vantage-report:ci java/vantage-report
+      - name: Report application vulnerabilities
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: vantage-app:ci
+          format: table
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: 0
+      - name: Fail on application critical vulnerabilities
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: vantage-app:ci
+          format: table
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: 1
+      - name: Report report-image vulnerabilities
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: vantage-report:ci
+          format: table
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: 0
+      - name: Fail on report-image critical vulnerabilities
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: vantage-report:ci
+          format: table
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: 1
