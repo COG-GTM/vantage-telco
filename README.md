@@ -107,7 +107,7 @@ addressing/reference integrity, and the HTTP surface.
 ## `java/vantage-report`
 
 The archived invoice artifacts the NOC keeps per cycle are rendered by a
-separate Maven module in `java/vantage-report`, built and run on Java 11. It
+separate Maven module in `java/vantage-report`, built and run on Java 21. It
 re-implements the rating rules in `app/billing` (exact-MB overage, tax on the
 pre-discount subtotal, loyalty credit applied post-tax) and renders each
 invoice as plain text plus a per-charge CSV.
@@ -121,7 +121,7 @@ mvn -q exec:java -Dexec.mainClass=net.vantage.report.Main -Dexec.args="2026-07"
 Usage comes from the mediation CSV export
 (`account_id,device_uuid,period,usage_mb`); with no path argument the bundled
 `usage-sample.csv` is used. Invoices are rendered concurrently by
-`pipeline/BatchRunner` over a fixed platform-thread pool.
+`pipeline/BatchRunner` over a virtual-thread-per-task executor.
 
 ## Seed data
 
