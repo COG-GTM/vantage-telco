@@ -107,7 +107,7 @@ def compare(period: str, meridian_dir: Path, build: bool = True, limit: int = 25
             by_rule[hint] = by_rule.get(hint, Decimal("0")) + abs(delta)
         province = left["province"]
         by_province[province] = by_province.get(province, Decimal("0")) + abs(delta)
-        rows.append((ref, left["cust_nm"][:26], province, left["total"], right["invoice_total"], delta, ",".join(hints)))
+        rows.append((ref, right["legal_name"][:26], province, left["total"], right["invoice_total"], delta, ",".join(hints)))
 
     print(f"invoice parity  period={period}  accounts={len(refs)}  differing={len(rows)}")
     if missing:
