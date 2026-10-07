@@ -8,6 +8,8 @@ dependencies = [
     "uvicorn>=0.27",
     "pymongo>=4.6",
     "pydantic>=2.6",
+    # Same commit as the third_party/telco-rules submodule (tests/test_dependencies.py).
+    "telco-rules @ git+https://github.com/COG-GTM/telco-rules.git@c781c322f3f0174d2b099aab4912ddef9eabbec8",
 ]
 
 [project.optional-dependencies]
