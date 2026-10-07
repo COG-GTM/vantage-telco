@@ -4,3 +4,4 @@ pymongo>=4.6
 pydantic>=2.6
 pytest>=8.0
 httpx>=0.27
+./third_party/telco-rules

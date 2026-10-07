@@ -9,13 +9,23 @@ and the test suite run with no database.
 ## Getting started
 
 ```bash
+git submodule update --init          # third_party/telco-rules
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements.txt      # builds the telco-rules binding (needs g++)
 uvicorn app.main:app --reload --port 8000
 ```
 
 Point the app at a real database by exporting `MONGO_URI` (and optionally
 `MONGO_DB`, default `vantage`).
+
+## Shared business rules
+
+Billing, capacity, circuit roll-up, lifecycle and addressing rules come from
+[`telco-rules`](https://github.com/COG-GTM/telco-rules), vendored as a git
+submodule in `third_party/telco-rules`. meridian-telco uses the same library, so
+the two estates rate and roll up identically. Where vantage used to differ from
+meridian, the rule chosen and the reason are in
+`third_party/telco-rules/DECISIONS.md`. Change rules there, not here.
 
 ## Modules
 
@@ -25,17 +35,19 @@ Network resources keyed by `device_uuid`, grouped by `market_id` (fine-grained
 metro codes), with a five-state `lifecycle_state`: `ACTIVE`, `MAINTENANCE`,
 `RETIRED`, `PLANNED`, `RESERVED`.
 
-- `capacity.py` — `available = total - allocated - maintenance_buffer`. A link
-  reserved for maintenance is not spare capacity.
-- `circuits.py` — standby and failover circuits are excluded from active counts
-  and active capacity.
+- `capacity.py` — `available = total - allocated` (telco-rules D-07). The
+  `maintenance_buffer_mbps` on each record is reported but not withheld.
+- `circuits.py` — every circuit in an active lifecycle state counts, whatever its
+  role, so standby and failover circuits count (D-08).
 
 Endpoints: `GET /resources`, `GET /resources/{device_uuid}`, `GET /circuits`.
 
 ### `app/network`
 
 Management addressing. Every device holds an address out of the
-`10.20.0.0/16` management supernet; `10.20.250.0/24` is the growth pool.
+`10.20.0.0/16` management supernet. `10.20.250.0/24` (planned aggregation
+build-out, still exposed as `growth_pool`) and `10.20.251.0/24` (lab) are
+reserved ranges (D-10).
 Generated artifacts under `app/network/configs` reference those addresses:
 
 | Path | Format | Purpose |
@@ -56,21 +68,23 @@ Devices flagged `external_bgp` are customer-facing and must not be renumbered.
 
 ### `app/billing`
 
-- `rating.py` — usage is billed to the exact MB at $0.012/MB overage. No
-  gigabyte rounding.
-- `proration.py` — mid-cycle plan changes split on actual calendar days.
-- `promo.py` — promo credits stay live for 30 days from issue.
-- `suspension.py` — suspended days are credited back at the daily rate.
+Each module is a thin wrapper over telco-rules:
+
+- `rating.py` — whole gigabytes, partial gigabytes round up, $10/GB overage (D-01).
+  `overage_mb` is still reported for information.
+- `proration.py` — 30-day billing month for mid-cycle plan changes (D-05).
+- `promo.py` — promo credits expire at the end of the cycle they were issued in (D-02).
+- `suspension.py` — a suspended line is billed in full, no credit (D-04).
 - `lines.py` — 3-9 lines 5% off recurring, 10 or more 10%.
 - `latefee.py` — 10 days grace after the due date, then 1.5% of the balance.
-- `tax.py` — GST/HST/PST/QST, all assessed on the pre-discount subtotal.
-- `discounts.py` — the loyalty credit comes off the subtotal and does not change
-  the tax base.
-- `invoices.py` — invoice construction, plus `unlinked_usage()` for usage that
-  was mediated without a billing account.
+- `tax.py` — GST/HST on the pre-discount subtotal, PST/QST after the loyalty
+  discount (D-03).
+- `discounts.py` — the loyalty credit comes off the subtotal.
+- `invoices.py` — invoice construction via `telco_rules.compute_invoice`, plus
+  `unlinked_usage()` for usage that was mediated without a billing account.
 
-Charges are carried as `Decimal` at full precision and rounded once, at the
-invoice total. Provinces billed: BC, AB, ON, QC.
+Each charge line is rounded to cents, then the total is rounded (D-06). Provinces
+billed: BC, AB, ON, QC.
 
 Endpoints: `GET /billing/invoices`, `GET /billing/usage-summary`. The invoice
 register page is `GET /dashboard/billing` (filter by `period`, `account_id` or
@@ -80,10 +94,11 @@ register page is `GET /dashboard/billing` (filter by `period`, `account_id` or
 
 `GET /capacity` is the sales-facing page: enter the bandwidth being quoted and
 it shows, per customer location, what is actually sellable. Availability comes
-from `app/inventory/capacity.py`, so the maintenance buffer is withheld:
+from telco-rules via `app/inventory/capacity.py`. No maintenance buffer is
+withheld (D-07):
 
 ```
-available = total_capacity - allocated - maintenance_buffer
+available = total_capacity - allocated
 ```
 
 Serviceable locations live in `data/seed/locations.json`. The same figures are
@@ -110,7 +125,9 @@ The archived invoice artifacts the NOC keeps per cycle are rendered by a
 separate Maven module in `java/vantage-report`, built and run on Java 11. It
 re-implements the rating rules in `app/billing` (exact-MB overage, tax on the
 pre-discount subtotal, loyalty credit applied post-tax) and renders each
-invoice as plain text plus a per-charge CSV.
+invoice as plain text plus a per-charge CSV. It has **not** been moved onto
+telco-rules yet, so its output still follows the old vantage rules
+(DECISIONS.md D-13).
 
 ```bash
 cd java/vantage-report
@@ -148,7 +165,9 @@ province.
 make parity PERIOD=2026-07 MERIDIAN_DIR=../meridian-telco
 ```
 
-It exits non-zero while the two estates still disagree.
+It exits non-zero while the two estates disagree, and it also compares each
+invoice line both registers carry. Since both estates moved to telco-rules it
+reports `differing=0`.
 
 ## Demo
 

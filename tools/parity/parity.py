@@ -84,6 +84,24 @@ def _rule_hints(legacy: Dict[str, Any], modern: Dict[str, Any]) -> List[str]:
     return hints
 
 
+# (meridian register field, vantage invoice field)
+LINE_FIELDS = (
+    ("overage_gb", "overage_gb"), ("plan_charge", "plan_charge"), ("line_discount", "line_discount"),
+    ("overage_charges", "overage_charges"), ("suspension_credit", "suspension_credit"),
+    ("promo_credit", "promo_credit"), ("late_fee", "late_fee"), ("subtotal", "subtotal"),
+    ("loyalty", "loyalty_discount"), ("federal_tax", "federal_tax"), ("provincial_tax", "provincial_tax"),
+)
+
+
+def _line_diffs(legacy: Dict[str, Any], modern: Dict[str, Any]) -> List[str]:
+    """Invoice lines carried by both registers that disagree, even if the totals agree."""
+    return [
+        theirs for ours, theirs in LINE_FIELDS
+        if ours in legacy and theirs in modern
+        and Decimal(str(legacy[ours])) != Decimal(str(modern[theirs]))
+    ]
+
+
 def compare(period: str, meridian_dir: Path, build: bool = True, limit: int = 25) -> int:
     legacy = meridian_invoices(meridian_dir, period, build=build)
     modern = vantage_invoices_by_ref(period)
@@ -99,9 +117,10 @@ def compare(period: str, meridian_dir: Path, build: bool = True, limit: int = 25
         left = legacy[ref]
         right = modern[ref]
         delta = Decimal(str(right["invoice_total"])) - Decimal(str(left["total"]))
-        if abs(delta) <= Decimal("0"):
+        line_diffs = _line_diffs(left, right)
+        if abs(delta) <= Decimal("0") and not line_diffs:
             continue
-        hints = _rule_hints(left, right)
+        hints = _rule_hints(left, right) if delta else ["lines:" + "/".join(line_diffs)]
         variance += abs(delta)
         for hint in hints:
             by_rule[hint] = by_rule.get(hint, Decimal("0")) + abs(delta)

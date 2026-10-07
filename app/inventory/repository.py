@@ -42,6 +42,5 @@ def enrich_circuit(circuit: Dict[str, Any]) -> Dict[str, Any]:
     enriched["available_mbps"] = available_capacity(
         int(circuit.get("capacity_mbps", 0)),
         int(circuit.get("allocated_mbps", 0)),
-        int(circuit.get("maintenance_buffer_mbps", 0)),
     )
     return enriched

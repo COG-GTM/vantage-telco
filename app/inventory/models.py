@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from typing import Optional
 
+import telco_rules
 from pydantic import BaseModel
 
-LIFECYCLE_STATES = ("ACTIVE", "MAINTENANCE", "RETIRED", "PLANNED", "RESERVED")
+LIFECYCLE_STATES = tuple(telco_rules.lifecycle_states())
 
 
 class Resource(BaseModel):

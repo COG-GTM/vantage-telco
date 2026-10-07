@@ -77,7 +77,7 @@ def _row(location: dict, index: int) -> str:
         <td class="num buffer">{location['maintenance_buffer_mbps']:,}</td>
         <td class="num available">
           {location['available_mbps']:,}
-          <div class="calc">{location['total_capacity_mbps']:,} &minus; {location['allocated_mbps']:,} &minus; {location['maintenance_buffer_mbps']:,}</div>
+          <div class="calc">{location['total_capacity_mbps']:,} &minus; {location['allocated_mbps']:,}</div>
         </td>
         <td class="num">
           {location['utilization_pct']}%
@@ -221,8 +221,8 @@ _PAGE = """<!DOCTYPE html>
   <div class="eyebrow">Vantage Networks · Sales Engineering</div>
   <h1>Capacity Check</h1>
   <p>Check whether a customer location can carry the bandwidth being quoted. Availability
-     excludes capacity Vantage holds back for maintenance windows, so what you see here is
-     what is actually sellable today.</p>
+     is total capacity less what is already allocated, the shared telco-rules capacity rule
+     used by both estates.</p>
 </header>
 <main>
   <section class="panel controls">
@@ -238,7 +238,7 @@ _PAGE = """<!DOCTYPE html>
       <label for="search">Search customer or location</label>
       <input id="search" type="search" placeholder="e.g. Beacon, Riverside, RIV-01">
     </div>
-    <div class="buffer-pill">{buffer_total} Mbps held as maintenance buffer</div>
+    <div class="buffer-pill">{buffer_total} Mbps maintenance buffer on record (not withheld)</div>
   </section>
 
   <div class="tiles">
@@ -263,9 +263,9 @@ _PAGE = """<!DOCTYPE html>
             <span class="label">Available</span>
             <div class="tip">
               <h3>How availability is calculated</h3>
-              <div class="formula">available = total &minus; allocated &minus; maintenance buffer</div>
-              <p>The maintenance buffer is capacity reserved for planned work and failover
-                 headroom. It is never offered to customers, so it is subtracted before we quote.</p>
+              <div class="formula">available = total &minus; allocated</div>
+              <p>No maintenance reserve is withheld (telco-rules DECISIONS.md D-07). The
+                 maintenance buffer column is shown for planning only.</p>
             </div>
           </th>
           <th class="num">Utilization</th>
@@ -276,7 +276,7 @@ _PAGE = """<!DOCTYPE html>
     </table>
   </div>
   <footer>
-    Rule: <code>{rule}</code> · implemented in <code>app/inventory/capacity.py</code> ·
+    Rule: <code>{rule}</code> · implemented in <code>telco-rules</code> via <code>app/inventory/capacity.py</code> ·
     data from <code>GET /capacity/locations</code> · figures in Mbps.
   </footer>
 </main>

@@ -1,33 +1,36 @@
-"""Capacity math.
+"""Capacity math, from the shared telco-rules library (DECISIONS.md D-07).
 
-Vantage always holds back a maintenance buffer on top of what is allocated: a
-link is not considered spare capacity if we need it during a maintenance
-window. ``available`` is therefore total - allocated - maintenance_buffer.
+``available = total - allocated``, clamped at zero. No maintenance reserve is
+withheld: ``maintenance_buffer_mbps`` is still carried on the record and in the
+API so planning can see it, but it does not reduce sellable capacity.
 """
 
 from __future__ import annotations
 
 from typing import Any, Dict
 
-
-def available_capacity(total_mbps: int, allocated_mbps: int, maintenance_buffer_mbps: int = 0) -> int:
-    return max(total_mbps - allocated_mbps - maintenance_buffer_mbps, 0)
+import telco_rules
 
 
-def utilization_pct(total_mbps: int, allocated_mbps: int, maintenance_buffer_mbps: int = 0) -> float:
-    if total_mbps <= 0:
-        return 0.0
-    return round((allocated_mbps + maintenance_buffer_mbps) * 100 / total_mbps, 2)
+def available_capacity(total_mbps: int, allocated_mbps: int) -> int:
+    return telco_rules.available_capacity(int(total_mbps), int(allocated_mbps))
+
+
+def utilization_pct(total_mbps: int, allocated_mbps: int) -> float:
+    return round(telco_rules.utilization_ratio_pct(int(total_mbps), int(allocated_mbps)), 2)
+
+
+def can_support(total_mbps: int, allocated_mbps: int, requested_mbps: int) -> bool:
+    return telco_rules.can_support(int(total_mbps), int(allocated_mbps), int(requested_mbps))
 
 
 def site_capacity(site: Dict[str, Any]) -> Dict[str, Any]:
     total = int(site.get("total_capacity_mbps", 0))
     allocated = int(site.get("allocated_mbps", 0))
-    buffer_mbps = int(site.get("maintenance_buffer_mbps", 0))
     return {
         "total_mbps": total,
         "allocated_mbps": allocated,
-        "maintenance_buffer_mbps": buffer_mbps,
-        "available_mbps": available_capacity(total, allocated, buffer_mbps),
-        "utilization_pct": utilization_pct(total, allocated, buffer_mbps),
+        "maintenance_buffer_mbps": int(site.get("maintenance_buffer_mbps", 0)),
+        "available_mbps": available_capacity(total, allocated),
+        "utilization_pct": utilization_pct(total, allocated),
     }

@@ -3,14 +3,9 @@ from __future__ import annotations
 from decimal import Decimal
 from typing import Any, Dict, List, Optional
 
-from app.billing.discounts import loyalty_discount
-from app.billing.latefee import late_fee
-from app.billing.lines import multi_line_discount
-from app.billing.promo import promo_credit
-from app.billing.proration import prorated_plan_charge
-from app.billing.rating import money, overage_mb, rate_overage
-from app.billing.suspension import suspension_credit
-from app.billing.tax import federal_tax, provincial_tax, rates_for_province
+import telco_rules
+
+from app.billing.rating import overage_mb
 from app.db import all_documents
 
 
@@ -35,44 +30,32 @@ def find_account(account_id: str) -> Optional[Dict[str, Any]]:
 
 
 def build_invoice(account: Dict[str, Any], usage: Dict[str, Any]) -> Dict[str, Any]:
-    """Assemble one invoice.
+    """Assemble one invoice through the shared telco-rules invoice computation.
 
-    Charges are carried at full precision and rounded once, at the total: the
-    invoice is a single amount owed, not a stack of separately rounded lines.
+    Every rule (rating, proration, promo, suspension, multi-line, late fee,
+    loyalty, tax, per-line rounding) lives in telco-rules; DECISIONS.md there
+    records where vantage used to differ and why.
     """
     period = usage["period"]
     usage_mb = int(usage["usage_mb"])
     included_gb = int(account["included_gb"])
-    plan_fee = Decimal(str(account["plan_monthly_fee"]))
-
-    plan_charge = prorated_plan_charge(
-        plan_fee,
-        Decimal(str(account.get("previous_plan_fee", 0) or 0)),
-        int(account.get("plan_change_day", 0) or 0),
-        period,
+    lines = telco_rules.compute_invoice(
+        period=period,
+        province=(account.get("province", "") or "").upper(),
+        usage_mb=usage_mb,
+        included_gb=included_gb,
+        plan_fee=float(account["plan_monthly_fee"]),
+        prev_plan_fee=float(account.get("previous_plan_fee", 0) or 0),
+        plan_change_day=int(account.get("plan_change_day", 0) or 0),
+        line_count=int(account.get("line_count", 1) or 1),
+        promo_amount=float(account.get("promo_credit_amount", 0) or 0),
+        promo_issued_on=account.get("promo_issued_on") or "",
+        suspension_start_day=int(account.get("suspension_start_day", 0) or 0),
+        suspension_end_day=int(account.get("suspension_end_day", 0) or 0),
+        prior_balance=float(account.get("prior_balance", 0) or 0),
+        prior_due_date=account.get("prior_due_date") or "",
+        loyalty_pct=float(account["loyalty_discount_pct"]),
     )
-    line_discount = multi_line_discount(plan_charge, int(account.get("line_count", 1) or 1))
-    recurring = plan_charge - line_discount
-    overage_charges = rate_overage(usage_mb, included_gb)
-    credit = suspension_credit(
-        plan_fee,
-        int(account.get("suspension_start_day", 0) or 0),
-        int(account.get("suspension_end_day", 0) or 0),
-        period,
-    )
-    promo = promo_credit(
-        Decimal(str(account.get("promo_credit_amount", 0) or 0)),
-        account.get("promo_issued_on"),
-        period,
-    )
-    fee = late_fee(Decimal(str(account.get("prior_balance", 0) or 0)), account.get("prior_due_date"), period)
-
-    subtotal = max(recurring + overage_charges + fee - credit - promo, Decimal("0"))
-    rates = rates_for_province(account.get("province", ""))
-    loyalty = loyalty_discount(subtotal, account["loyalty_discount_pct"])
-    federal = federal_tax(subtotal, rates)
-    provincial = provincial_tax(subtotal, loyalty, rates)
-    total = subtotal - loyalty + federal + provincial
 
     return {
         "account_id": account["account_id"],
@@ -86,21 +69,23 @@ def build_invoice(account: Dict[str, Any], usage: Dict[str, Any]) -> Dict[str, A
         "usage_mb": usage_mb,
         "included_gb": included_gb,
         "overage_mb": overage_mb(usage_mb, included_gb),
-        "plan_charge": float(money(plan_charge)),
-        "line_discount": float(money(line_discount)),
-        "recurring": float(money(recurring)),
-        "overage_charges": float(money(overage_charges)),
-        "suspension_credit": float(money(credit)),
-        "promo_credit": float(money(promo)),
-        "late_fee": float(money(fee)),
-        "subtotal": float(money(subtotal)),
+        "usage_gb_rated": lines.usage_gb_rated,
+        "overage_gb": lines.overage_gb,
+        "plan_charge": lines.plan_charge,
+        "line_discount": lines.line_discount,
+        "recurring": lines.recurring,
+        "overage_charges": lines.overage_charges,
+        "suspension_credit": lines.suspension_credit,
+        "promo_credit": lines.promo_credit,
+        "late_fee": lines.late_fee,
+        "subtotal": lines.subtotal,
         "loyalty_discount_pct": account["loyalty_discount_pct"],
-        "loyalty_discount": float(money(loyalty)),
-        "federal_tax_label": rates.federal_label,
-        "federal_tax": float(money(federal)),
-        "provincial_tax_label": rates.provincial_label,
-        "provincial_tax": float(money(provincial)),
-        "invoice_total": float(money(total)),
+        "loyalty_discount": lines.loyalty_discount,
+        "federal_tax_label": lines.federal_label,
+        "federal_tax": lines.federal_tax,
+        "provincial_tax_label": lines.provincial_label,
+        "provincial_tax": lines.provincial_tax,
+        "invoice_total": lines.total,
     }
 
 

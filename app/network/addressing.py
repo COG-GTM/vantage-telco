@@ -4,6 +4,11 @@ Every Vantage device gets a management address out of ``MANAGEMENT_SUPERNET``.
 The generated artifacts under ``app/network/configs`` (routing, firewall, DNS,
 monitoring) all reference these addresses and are expected to stay in sync with
 ``data/seed/devices.json``.
+
+The supernet and the reserved ranges come from telco-rules (DECISIONS.md D-10).
+``10.20.250.0/24`` is reserved for the planned aggregation build-out (the
+``agg-sw-growth-*`` switches sit in it) and ``10.20.251.0/24`` for the lab;
+neither is free pool. ``GROWTH_POOL`` keeps its name for existing callers.
 """
 
 from __future__ import annotations
@@ -14,10 +19,12 @@ import re
 from pathlib import Path
 from typing import Any, Dict, Iterable, List
 
+import telco_rules
+
 from app.db import all_documents
 
-MANAGEMENT_SUPERNET = ipaddress.ip_network("10.20.0.0/16")
-GROWTH_POOL = ipaddress.ip_network("10.20.250.0/24")
+MANAGEMENT_SUPERNET = ipaddress.ip_network(telco_rules.MGMT_SUPERNET)
+GROWTH_POOL = ipaddress.ip_network(telco_rules.PLANNED_BUILDOUT_RESERVE)
 
 CONFIG_ROOT = Path(__file__).resolve().parent / "configs"
 IPV4_PATTERN = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
@@ -41,11 +48,20 @@ def external_bgp_devices() -> List[Dict[str, Any]]:
 
 
 def in_supernet(address: str) -> bool:
-    return ipaddress.ip_address(address) in MANAGEMENT_SUPERNET
+    return telco_rules.in_mgmt_supernet(address)
 
 
 def in_growth_pool(address: str) -> bool:
-    return ipaddress.ip_address(address) in GROWTH_POOL
+    return telco_rules.ip_in_cidr(address, telco_rules.PLANNED_BUILDOUT_RESERVE)
+
+
+def reserved_ranges() -> List[Dict[str, str]]:
+    return [{"cidr": r.cidr, "purpose": r.purpose} for r in telco_rules.reserved_ranges()]
+
+
+def reserved_purpose(address: str) -> str:
+    """Purpose of the reserved range holding ``address``, or "" if none."""
+    return telco_rules.reserved_purpose(address)
 
 
 def config_files() -> List[Path]:
@@ -91,6 +107,8 @@ def summary() -> Dict[str, Any]:
         "address_references": sum(counts.values()),
         "external_bgp_devices": [d["device_name"] for d in external_bgp_devices()],
         "growth_pool_allocations": [d["mgmt_ip"] for d in devices() if in_growth_pool(d["mgmt_ip"])],
+        "reserved_ranges": reserved_ranges(),
+        "reserved_range_allocations": [d["mgmt_ip"] for d in devices() if reserved_purpose(d["mgmt_ip"])],
     }
 
 

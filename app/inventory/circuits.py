@@ -1,22 +1,20 @@
-"""Circuit roll-ups.
+"""Circuit roll-ups, from the shared telco-rules library (DECISIONS.md D-08).
 
-Standby and failover circuits carry no customer traffic, so they are excluded
-from the active count and from active capacity. Counting them would overstate
-both the footprint and the utilisation of the network.
+A circuit counts when its lifecycle state is countable-active; its role does
+not matter, so standby and failover circuits count towards the active count
+and active capacity, the same as primaries.
 """
 
 from __future__ import annotations
 
 from typing import Any, Dict, Iterable, List
 
-ACTIVE_ROLES = {"PRIMARY"}
-REDUNDANT_ROLES = {"STANDBY", "FAILOVER"}
+import telco_rules
 
 
 def is_active(circuit: Dict[str, Any]) -> bool:
-    return (
-        circuit.get("lifecycle_state") == "ACTIVE"
-        and circuit.get("role", "PRIMARY").upper() in ACTIVE_ROLES
+    return telco_rules.circuit_is_active_lifecycle(
+        circuit.get("lifecycle_state", "") or "", (circuit.get("role", "PRIMARY") or "PRIMARY").upper()
     )
 
 

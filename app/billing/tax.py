@@ -1,19 +1,16 @@
-"""Canadian sales tax.
+"""Canadian sales tax, from telco-rules (DECISIONS.md D-03).
 
 GST (and HST in the harmonized provinces) is assessed on the charge before any
-loyalty discount: the discount is a goodwill credit, not a reduction of the
-consideration.
-
-The provincial component is assessed the same way. Vantage taxes what was
-invoiced, not what was collected, so PST and QST also sit on the pre-discount
-subtotal. Rate changes are a config change, not a code change.
+loyalty discount. PST and QST are assessed on what the customer pays, after the
+loyalty discount.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Dict
+
+import telco_rules
 
 
 @dataclass(frozen=True)
@@ -24,27 +21,25 @@ class TaxRates:
     provincial_label: str
 
 
-PROVINCE_RATES: Dict[str, TaxRates] = {
-    "BC": TaxRates(Decimal("5"), Decimal("7"), "GST", "PST"),
-    "AB": TaxRates(Decimal("5"), Decimal("0"), "GST", ""),
-    "ON": TaxRates(Decimal("13"), Decimal("0"), "HST", ""),
-    "QC": TaxRates(Decimal("5"), Decimal("9.975"), "GST", "QST"),
-}
-
-DEFAULT_RATES = TaxRates(Decimal("5"), Decimal("0"), "GST", "")
-
-
 def rates_for_province(province: str) -> TaxRates:
-    return PROVINCE_RATES.get((province or "").upper(), DEFAULT_RATES)
+    rates = telco_rules.rates_for_province((province or "").upper())
+    return TaxRates(
+        Decimal(str(rates.federal_pct)),
+        Decimal(str(rates.provincial_pct)),
+        rates.federal_label,
+        rates.provincial_label,
+    )
+
+
+def _native(rates: TaxRates) -> telco_rules.TaxRates:
+    return telco_rules.TaxRates(
+        float(rates.federal_pct), float(rates.provincial_pct), rates.federal_label, rates.provincial_label
+    )
 
 
 def federal_tax(pre_discount_amount: Decimal, rates: TaxRates) -> Decimal:
-    return Decimal(pre_discount_amount) * rates.federal_pct / Decimal(100)
+    return Decimal(str(telco_rules.federal_tax(float(pre_discount_amount), _native(rates))))
 
 
 def provincial_tax(pre_discount_amount: Decimal, discount: Decimal, rates: TaxRates) -> Decimal:
-    """PST/QST on the invoiced amount; the loyalty credit does not reduce it."""
-    del discount
-    if rates.provincial_pct == 0:
-        return Decimal("0")
-    return Decimal(pre_discount_amount) * rates.provincial_pct / Decimal(100)
+    return Decimal(str(telco_rules.provincial_tax(float(pre_discount_amount), float(discount), _native(rates))))

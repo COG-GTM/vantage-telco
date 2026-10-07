@@ -22,3 +22,12 @@ def test_no_orphaned_references():
 def test_external_bgp_devices_are_flagged_in_the_address_plan():
     plan_names = set(addressing.address_plan()["external_bgp_devices"])
     assert plan_names == {d["device_name"] for d in addressing.external_bgp_devices()}
+
+
+def test_reserved_ranges_come_from_telco_rules():
+    assert str(addressing.MANAGEMENT_SUPERNET) == "10.20.0.0/16"
+    assert {r["cidr"] for r in addressing.reserved_ranges()} == {"10.20.250.0/24", "10.20.251.0/24"}
+    assert addressing.reserved_purpose("10.20.250.30") == "planned-agg-buildout"
+    assert addressing.reserved_purpose("10.20.4.17") == ""
+    summary = addressing.summary()
+    assert summary["growth_pool_allocations"] == summary["reserved_range_allocations"]

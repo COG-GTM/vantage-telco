@@ -2,21 +2,23 @@ from app.inventory.capacity import available_capacity, site_capacity, utilizatio
 from app.inventory.repository import get_site, list_circuits
 
 
-def test_available_capacity_subtracts_maintenance_buffer():
-    assert available_capacity(1000, 600, 150) == 250
+def test_available_capacity_holds_no_maintenance_reserve():
+    assert available_capacity(1000, 600) == 400
 
 
 def test_available_capacity_never_negative():
-    assert available_capacity(100, 90, 50) == 0
+    assert available_capacity(100, 150) == 0
 
 
-def test_utilization_includes_buffer():
-    assert utilization_pct(1000, 600, 150) == 75.0
+def test_utilization_is_allocated_over_total():
+    assert utilization_pct(1000, 600) == 60.0
+    assert utilization_pct(3000, 1001) == 33.37
 
 
-def test_downtown_fiber_ring_reports_250_mbps():
+def test_downtown_fiber_ring_reports_400_mbps():
     circuit = list_circuits(circuit_id="VC-BOS-0118")[0]
-    assert circuit["available_mbps"] == 250
+    assert circuit["maintenance_buffer_mbps"] == 150
+    assert circuit["available_mbps"] == 400
 
 
 def test_site_capacity_shape():

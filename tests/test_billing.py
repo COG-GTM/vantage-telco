@@ -5,12 +5,13 @@ from app.billing.discounts import loyalty_discount
 from app.billing.rating import overage_mb, rate_overage
 
 
-def test_overage_is_measured_in_exact_megabytes():
+def test_measured_overage_megabytes_are_still_reported():
     assert overage_mb(3_000_000, 2000) == 3_000_000 - 2000 * 1024
 
 
-def test_rate_overage_uses_per_mb_rate():
-    assert rate_overage(2000 * 1024 + 1000, 2000) == Decimal("12.00")
+def test_rate_overage_rounds_up_to_whole_gigabytes_at_ten_dollars():
+    assert rate_overage(2000 * 1024 + 1000, 2000) == Decimal("10.00")
+    assert rate_overage(2000 * 1024 + 1025, 2000) == Decimal("20.00")
 
 
 def test_no_overage_when_under_allowance():
