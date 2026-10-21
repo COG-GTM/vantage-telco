@@ -258,20 +258,31 @@ REC_FIELDS = [
 ]
 
 
+def meridian_billing_ref(billing_ref: str) -> str:
+    """Meridian export format (vendor patch 4.2): TN-0112 -> TN00112."""
+    prefix, _, number = billing_ref.partition("-")
+    return f"{prefix}{number.zfill(5)}"
+
+
 def write_meridian(fixtures: Dict[str, Any], root: Path) -> None:
     accounts_dir = root / "billing" / "accounts"
     accounts_dir.mkdir(parents=True, exist_ok=True)
     for stale in accounts_dir.glob("*.rec"):
         stale.unlink()
 
-    for account in fixtures["accounts"]:
+    exported = [
+        {**account, "billing_ref": meridian_billing_ref(account["billing_ref"])}
+        for account in fixtures["accounts"]
+    ]
+
+    for account in exported:
         lines = [f"{key}={account[field]}" for key, field in REC_FIELDS]
         _write(accounts_dir / f"{account['meridian_account_id']}.rec", "\n".join(lines) + "\n")
 
     with (root / "data" / "accounts.csv").open("w", newline="") as handle:
         writer = csv.writer(handle, lineterminator="\n")
         writer.writerow([key for key, _ in REC_FIELDS])
-        for account in fixtures["accounts"]:
+        for account in exported:
             writer.writerow([account[field] for _, field in REC_FIELDS])
 
     by_ref = {a["billing_ref"]: a["meridian_account_id"] for a in fixtures["accounts"]}
