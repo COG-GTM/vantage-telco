@@ -12,7 +12,7 @@ Expected clone layout (override with --meridian-dir or MERIDIAN_DIR):
     <workspace>/meridian-telco
 
 The meridian binaries are built on demand with ``make -C <meridian-dir>``.
-Exit status is 0 when every account agrees, 1 otherwise.
+Exit status is 0 when every account joins and agrees, 1 otherwise.
 """
 
 from __future__ import annotations
@@ -127,6 +127,9 @@ def compare(period: str, meridian_dir: Path, build: bool = True, limit: int = 25
     if by_province:
         print("by province:  " + "  ".join(f"{prov}=${amount:,.2f}" for prov, amount in sorted(by_province.items())))
 
+    if not refs or missing:
+        print(f"\nPARITY FAILED: {len(refs)} accounts joined, {len(missing)} present in only one system")
+        return 1
     if rows:
         print("\nPARITY FAILED")
         return 1
