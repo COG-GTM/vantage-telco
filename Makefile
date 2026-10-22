@@ -3,13 +3,17 @@ PORT ?= 8000
 PERIOD ?= 2026-07
 MERIDIAN_DIR ?= ../meridian-telco
 
-.PHONY: install test run fixtures parity demo
+.PHONY: install test vendor-check run fixtures parity demo
 
 install:
 	$(PY) -m pip install -r requirements.txt
 
-test:
+test: vendor-check
 	$(PY) -m pytest -q
+
+# fails if vendor/ (telco-billing-rules) was patched in place instead of re-vendored
+vendor-check:
+	$(PY) vendor/vendor_check.py
 
 run:
 	$(PY) -m uvicorn app.main:app --port $(PORT)
