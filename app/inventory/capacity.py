@@ -2,16 +2,25 @@
 
 Vantage always holds back a maintenance buffer on top of what is allocated: a
 link is not considered spare capacity if we need it during a maintenance
-window. ``available`` is therefore total - allocated - maintenance_buffer.
+window. The rule itself lives in the shared capacity-lib (also used by
+meridian-telco): the buffer is 10% of total and
+``available = total - allocated - maintenance_buffer``.
 """
 
 from __future__ import annotations
 
 from typing import Any, Dict
 
+from app.inventory import capacity_lib
 
-def available_capacity(total_mbps: int, allocated_mbps: int, maintenance_buffer_mbps: int = 0) -> int:
-    return max(total_mbps - allocated_mbps - maintenance_buffer_mbps, 0)
+maintenance_buffer_mbps = capacity_lib.maintenance_buffer_mbps
+can_support = capacity_lib.can_support
+
+
+def available_capacity(total_mbps: int, allocated_mbps: int, maintenance_buffer_mbps: int | None = None) -> int:
+    if maintenance_buffer_mbps is None:
+        maintenance_buffer_mbps = capacity_lib.maintenance_buffer_mbps(total_mbps)
+    return capacity_lib.available_capacity(total_mbps, allocated_mbps, maintenance_buffer_mbps)
 
 
 def utilization_pct(total_mbps: int, allocated_mbps: int, maintenance_buffer_mbps: int = 0) -> float:
@@ -23,7 +32,7 @@ def utilization_pct(total_mbps: int, allocated_mbps: int, maintenance_buffer_mbp
 def site_capacity(site: Dict[str, Any]) -> Dict[str, Any]:
     total = int(site.get("total_capacity_mbps", 0))
     allocated = int(site.get("allocated_mbps", 0))
-    buffer_mbps = int(site.get("maintenance_buffer_mbps", 0))
+    buffer_mbps = maintenance_buffer_mbps(total)
     return {
         "total_mbps": total,
         "allocated_mbps": allocated,

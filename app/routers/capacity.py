@@ -5,6 +5,7 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import HTMLResponse
 
+from app.inventory import capacity_lib
 from app.inventory.locations import (
     AVAILABILITY_RULE,
     buffer_total_mbps,
@@ -29,6 +30,8 @@ def get_locations(
         "serviceable_count": sum(1 for l in locations if l["can_support"]),
         "available_mbps": sum(l["available_mbps"] for l in locations),
         "maintenance_buffer_mbps": sum(l["maintenance_buffer_mbps"] for l in locations),
+        "maintenance_buffer_pct": capacity_lib.maintenance_buffer_pct(),
+        "capacity_lib": capacity_lib.version(),
         "locations": locations,
     }
 
@@ -264,8 +267,10 @@ _PAGE = """<!DOCTYPE html>
             <div class="tip">
               <h3>How availability is calculated</h3>
               <div class="formula">available = total &minus; allocated &minus; maintenance buffer</div>
+              <div class="formula">maintenance buffer = 10% of total</div>
               <p>The maintenance buffer is capacity reserved for planned work and failover
-                 headroom. It is never offered to customers, so it is subtracted before we quote.</p>
+                 headroom. It is never offered to customers, so it is subtracted before we quote.
+                 Computed by the shared capacity-lib, the same rule meridian-telco uses.</p>
             </div>
           </th>
           <th class="num">Utilization</th>
@@ -276,7 +281,8 @@ _PAGE = """<!DOCTYPE html>
     </table>
   </div>
   <footer>
-    Rule: <code>{rule}</code> · implemented in <code>app/inventory/capacity.py</code> ·
+    Rule: <code>{rule}</code> · implemented in the shared <code>capacity-lib</code> (<code>vendor/capacity-lib</code>, via
+    <code>app/inventory/capacity.py</code>) ·
     data from <code>GET /capacity/locations</code> · figures in Mbps.
   </footer>
 </main>

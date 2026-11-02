@@ -9,8 +9,8 @@ client = TestClient(app)
 def test_availability_withholds_the_maintenance_buffer():
     location = get_location("RIV-01")
     assert (location["total_capacity_mbps"], location["allocated_mbps"]) == (1000, 600)
-    assert location["maintenance_buffer_mbps"] == 150
-    assert location["available_mbps"] == 250
+    assert location["maintenance_buffer_mbps"] == 100
+    assert location["available_mbps"] == 300
 
 
 def test_first_location_is_riv_01():
@@ -18,7 +18,8 @@ def test_first_location_is_riv_01():
 
 
 def test_requested_bandwidth_drives_the_verdict():
-    assert get_location("RIV-01", requested_mbps=250)["can_support"] is True
+    assert get_location("RIV-01", requested_mbps=300)["can_support"] is True
+    assert get_location("RIV-01", requested_mbps=350)["can_support"] is False
     assert get_location("RIV-01", requested_mbps=400)["can_support"] is False
 
 
@@ -29,7 +30,8 @@ def test_search_and_market_filters():
 
 def test_capacity_locations_endpoint():
     body = client.get("/capacity/locations", params={"requested_mbps": 400}).json()
-    assert body["rule"] == "available = total_capacity - allocated - maintenance_buffer"
+    assert body["rule"] == "available = total - allocated - maintenance_buffer; maintenance_buffer = 10% of total"
+    assert body["maintenance_buffer_pct"] == 10
     assert body["locations"][0]["location_code"] == "RIV-01"
     assert body["locations"][0]["can_support"] is False
 
