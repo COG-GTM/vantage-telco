@@ -3,7 +3,8 @@
 Sales engineers use this to answer one question: can we sell the customer the
 bandwidth they are asking for at this location today? The answer uses the same
 capacity rule as the rest of the platform — the maintenance buffer is withheld,
-because capacity reserved for maintenance windows is not sellable.
+because capacity reserved for maintenance windows is not sellable. Buffer,
+availability and the can-support verdict all come from the shared capacity-lib.
 """
 
 from __future__ import annotations
@@ -11,21 +12,27 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from app.db import all_documents
-from app.inventory.capacity import available_capacity, utilization_pct
+from app.inventory import capacity_lib
+from app.inventory.capacity import available_capacity, can_support, maintenance_buffer_mbps, utilization_pct
 
-AVAILABILITY_RULE = "available = total_capacity - allocated - maintenance_buffer"
+
+
+def availability_rule() -> str:
+    """The rule of the capacity-lib actually loaded (read lazily, not at import)."""
+    return capacity_lib.rule()
 
 
 def enrich_location(location: Dict[str, Any], requested_mbps: int = 0) -> Dict[str, Any]:
     total = int(location["total_capacity_mbps"])
     allocated = int(location["allocated_mbps"])
-    buffer_mbps = int(location["maintenance_buffer_mbps"])
+    buffer_mbps = maintenance_buffer_mbps(total)
     available = available_capacity(total, allocated, buffer_mbps)
     enriched = dict(location)
     enriched.update(
+        maintenance_buffer_mbps=buffer_mbps,
         available_mbps=available,
         utilization_pct=utilization_pct(total, allocated, buffer_mbps),
-        can_support=available >= requested_mbps,
+        can_support=can_support(total, allocated, requested_mbps),
         headroom_mbps=available - requested_mbps,
     )
     return enriched
@@ -56,4 +63,4 @@ def get_location(location_code: str, requested_mbps: int = 0) -> Optional[Dict[s
 
 
 def buffer_total_mbps() -> int:
-    return sum(int(l["maintenance_buffer_mbps"]) for l in all_documents("locations"))
+    return sum(maintenance_buffer_mbps(int(l["total_capacity_mbps"])) for l in all_documents("locations"))

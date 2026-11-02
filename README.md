@@ -11,6 +11,7 @@ and the test suite run with no database.
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+git submodule update --init && make -C vendor/capacity-lib lib   # shared capacity rule
 uvicorn app.main:app --reload --port 8000
 ```
 
@@ -25,8 +26,14 @@ Network resources keyed by `device_uuid`, grouped by `market_id` (fine-grained
 metro codes), with a five-state `lifecycle_state`: `ACTIVE`, `MAINTENANCE`,
 `RETIRED`, `PLANNED`, `RESERVED`.
 
-- `capacity.py` — `available = total - allocated - maintenance_buffer`. A link
-  reserved for maintenance is not spare capacity.
+- `capacity.py` — `available = total - allocated - maintenance_buffer`, with
+  `maintenance_buffer = 10% of total`. A link reserved for maintenance is not
+  spare capacity. The arithmetic is not implemented here: it calls the shared
+  [capacity-lib](https://github.com/COG-GTM/capacity-lib) (C++ with a C API,
+  vendored as a git submodule in `vendor/capacity-lib` and loaded through
+  `capacity_lib.py` with ctypes). meridian-telco links the same library, so the
+  two estates quote identical sellable bandwidth. After cloning run
+  `git submodule update --init` (`make install` / `make test` do it for you).
 - `circuits.py` — standby and failover circuits are excluded from active counts
   and active capacity.
 
@@ -80,13 +87,17 @@ register page is `GET /dashboard/billing` (filter by `period`, `account_id` or
 
 `GET /capacity` is the sales-facing page: enter the bandwidth being quoted and
 it shows, per customer location, what is actually sellable. Availability comes
-from `app/inventory/capacity.py`, so the maintenance buffer is withheld:
+from the shared capacity-lib, so the maintenance buffer is withheld:
 
 ```
-available = total_capacity - allocated - maintenance_buffer
+available = total - allocated - maintenance_buffer
+maintenance_buffer = 10% of total
+can_support = available >= requested
 ```
 
-Serviceable locations live in `data/seed/locations.json`. The same figures are
+Serviceable locations live in `data/seed/locations.json`. The
+`maintenance_buffer_mbps` stored there is no longer read: every location, site
+and circuit gets the standard buffer from capacity-lib. The same figures are
 available as JSON from `GET /capacity/locations?requested_mbps=...` and
 `GET /capacity/locations/{location_code}`.
 
@@ -149,6 +160,18 @@ make parity PERIOD=2026-07 MERIDIAN_DIR=../meridian-telco
 ```
 
 It exits non-zero while the two estates still disagree.
+
+## Capacity parity with meridian-telco
+
+`tools/parity/capacity_parity.py` starts meridian's inventory-api, asks both
+estates for the sales capacity check at every shared location over a sweep of
+requested bandwidths, and prints every location where the buffer, available
+Mbps or can-support verdict differ. Both now call capacity-lib, so it reports
+`CAPACITY PARITY OK: 0 differences`.
+
+```bash
+make capacity-parity MERIDIAN_DIR=../meridian-telco
+```
 
 ## Demo
 
