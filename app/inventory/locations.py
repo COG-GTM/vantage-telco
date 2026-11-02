@@ -12,10 +12,10 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from app.db import all_documents
-from app.inventory import capacity_lib
 from app.inventory.capacity import available_capacity, can_support, maintenance_buffer_mbps, utilization_pct
 
-AVAILABILITY_RULE = capacity_lib.rule()
+# must equal capacity_lib.rule() (checked in tests); a literal so importing the app does not load the native lib
+AVAILABILITY_RULE = "available = total - allocated - maintenance_buffer; maintenance_buffer = 10% of total"
 
 
 def enrich_location(location: Dict[str, Any], requested_mbps: int = 0) -> Dict[str, Any]:

@@ -45,3 +45,10 @@ def test_capacity_page_renders_the_buffer_column():
     assert response.status_code == 200
     assert "Maint. buffer" in response.text
     assert "RIV-01" in response.text
+
+
+def test_availability_rule_matches_capacity_lib():
+    from app.inventory import capacity_lib
+    from app.inventory.locations import AVAILABILITY_RULE
+
+    assert AVAILABILITY_RULE == capacity_lib.rule()

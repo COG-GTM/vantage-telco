@@ -17,7 +17,7 @@ test: capacity-lib
 	$(MAKE) -s -C vendor/capacity-lib check
 	$(PY) -m pytest -q
 
-run:
+run: capacity-lib
 	$(PY) -m uvicorn app.main:app --port $(PORT)
 
 fixtures:
