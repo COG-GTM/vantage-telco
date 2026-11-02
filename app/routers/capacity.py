@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse
 
 from app.inventory import capacity_lib
 from app.inventory.locations import (
-    AVAILABILITY_RULE,
+    availability_rule,
     buffer_total_mbps,
     get_location,
     list_locations,
@@ -24,7 +24,7 @@ def get_locations(
 ):
     locations = list_locations(requested_mbps=requested_mbps, market_id=market_id, search=search)
     return {
-        "rule": AVAILABILITY_RULE,
+        "rule": availability_rule(),
         "requested_mbps": requested_mbps,
         "count": len(locations),
         "serviceable_count": sum(1 for l in locations if l["can_support"]),
@@ -53,7 +53,7 @@ def capacity_check(requested_mbps: int = Query(default=350, ge=0)):
         _row(location, index) for index, location in enumerate(locations)
     )
     return _PAGE.format(
-        rule=AVAILABILITY_RULE,
+        rule=availability_rule(),
         requested=requested_mbps,
         market_options=market_options,
         rows=payload,

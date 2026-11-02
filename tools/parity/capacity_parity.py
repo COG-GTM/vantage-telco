@@ -137,9 +137,6 @@ def compare(meridian_dir: Path, requested: List[int], build: bool = True) -> int
               f"{right['buffer']:>7} {right['available']:>9} {_yn(right['can_support']):>6} | {match}")
     print("-" * 96)
 
-    if not shared or only_one:
-        print("\nCAPACITY PARITY FAILED: the two inventories do not cover the same locations")
-        return 1
     if diffs:
         print()
         print("differences (requested, location, field: meridian -> vantage)")
@@ -148,6 +145,10 @@ def compare(meridian_dir: Path, requested: List[int], build: bool = True) -> int
             print(f"  {req:>5} {code:<7} {detail}")
         if len(diffs) > 40:
             print(f"  ... {len(diffs) - 40} more")
+    if not shared or only_one:
+        print("\nCAPACITY PARITY FAILED: the two inventories do not cover the same locations")
+        return 1
+    if diffs:
         print("\nCAPACITY PARITY FAILED")
         return 1
     print("\nCAPACITY PARITY OK: 0 differences")

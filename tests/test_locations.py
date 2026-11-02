@@ -49,6 +49,6 @@ def test_capacity_page_renders_the_buffer_column():
 
 def test_availability_rule_matches_capacity_lib():
     from app.inventory import capacity_lib
-    from app.inventory.locations import AVAILABILITY_RULE
+    from app.inventory.locations import availability_rule
 
-    assert AVAILABILITY_RULE == capacity_lib.rule()
+    assert availability_rule() == capacity_lib.rule()
