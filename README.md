@@ -26,7 +26,11 @@ metro codes), with a five-state `lifecycle_state`: `ACTIVE`, `MAINTENANCE`,
 `RETIRED`, `PLANNED`, `RESERVED`.
 
 - `capacity.py` — `available = total - allocated - maintenance_buffer`. A link
-  reserved for maintenance is not spare capacity.
+  reserved for maintenance is not spare capacity. `available_capacity` and
+  `utilization_pct` are re-exported from the shared
+  [`COG-GTM/telco-capacity-rules`](https://github.com/COG-GTM/telco-capacity-rules)
+  package (`telco_capacity`, installed via `requirements.txt`), which Meridian
+  also consumes; the rule is written up in that repo's `SPEC.md`.
 - `circuits.py` — standby and failover circuits are excluded from active counts
   and active capacity.
 
@@ -101,7 +105,9 @@ HTML page.
 pytest
 ```
 
-`tests/` covers capacity, circuit roll-ups, rating and discount ordering,
+`tests/test_shared_vectors.py` runs the shared golden vectors from
+`telco-capacity-rules` (the same `spec/vectors.json` Meridian's `make check`
+runs). `tests/` also covers capacity, circuit roll-ups, rating and discount ordering,
 addressing/reference integrity, and the HTTP surface.
 
 ## `java/vantage-report`
