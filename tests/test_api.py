@@ -39,3 +39,48 @@ def test_dashboard_renders():
     response = client.get("/dashboard")
     assert response.status_code == 200
     assert "Vantage Net" in response.text
+
+
+XSS_PAYLOAD = '"><script>alert(1)</script>'
+ESCAPED_PAYLOAD = "&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;"
+
+
+def test_billing_dashboard_escapes_query_params():
+    for param in ("account_id", "billing_ref", "period"):
+        response = client.get("/dashboard/billing", params={param: XSS_PAYLOAD})
+        assert response.status_code == 200
+        assert "<script>" not in response.text, param
+        assert f'name="{param}" value="{ESCAPED_PAYLOAD}"' in response.text, param
+
+
+def test_dashboard_escapes_period():
+    response = client.get("/dashboard", params={"period": XSS_PAYLOAD})
+    assert response.status_code == 200
+    assert "<script>" not in response.text
+    assert ESCAPED_PAYLOAD in response.text
+
+
+def test_billing_dashboard_round_trips_filter_values():
+    response = client.get(
+        "/dashboard/billing",
+        params={"period": "2026-07", "account_id": "VANTAGE-BILL-0001", "billing_ref": "TN-0001"},
+    )
+    assert 'name="period" value="2026-07"' in response.text
+    assert 'name="account_id" value="VANTAGE-BILL-0001"' in response.text
+    assert 'name="billing_ref" value="TN-0001"' in response.text
+
+
+def test_dashboards_escape_seed_data(monkeypatch):
+    from app.billing import invoices as invoice_service
+
+    original = invoice_service.list_invoices
+
+    def tainted(*args, **kwargs):
+        rows = original(*args, **kwargs)
+        return [{**row, "legal_name": "<script>alert('seed')</script>"} for row in rows]
+
+    monkeypatch.setattr(invoice_service, "list_invoices", tainted)
+    for path in ("/dashboard", "/dashboard/billing"):
+        body = client.get(path).text
+        assert "<script>" not in body, path
+        assert "&lt;script&gt;alert(&#x27;seed&#x27;)&lt;/script&gt;" in body, path
