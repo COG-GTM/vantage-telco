@@ -105,12 +105,13 @@ def build_invoice(account: Dict[str, Any], usage: Dict[str, Any]) -> Dict[str, A
 
 
 def list_invoices(account_id: Optional[str] = None, period: Optional[str] = None) -> List[Dict[str, Any]]:
+    accounts_by_id = {account["account_id"]: account for account in reversed(accounts())}
     invoices = []
     for usage in usage_records(account_id=account_id, period=period):
         if not usage.get("account_id"):
             # Usage with no billing account never reaches an invoice.
             continue
-        account = find_account(usage["account_id"])
+        account = accounts_by_id.get(usage["account_id"])
         if account is None:
             continue
         invoices.append(build_invoice(account, usage))
@@ -136,5 +137,7 @@ def mediated_usage_mb(period: Optional[str] = None) -> int:
     return sum(int(r["usage_mb"]) for r in records)
 
 
-def revenue_total(period: Optional[str] = None) -> Decimal:
-    return sum((Decimal(str(i["invoice_total"])) for i in list_invoices(period=period)), Decimal("0"))
+def revenue_total(period: Optional[str] = None, invoices: Optional[List[Dict[str, Any]]] = None) -> Decimal:
+    if invoices is None:
+        invoices = list_invoices(period=period)
+    return sum((Decimal(str(i["invoice_total"])) for i in invoices), Decimal("0"))

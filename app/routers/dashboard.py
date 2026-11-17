@@ -39,7 +39,7 @@ def dashboard(period: str = "2026-07"):
     circuits = list_circuits()
     invoices = invoice_service.list_invoices(period=period)
     unlinked = invoice_service.unlinked_usage(period=period)
-    revenue = invoice_service.revenue_total(period=period)
+    revenue = invoice_service.revenue_total(period=period, invoices=invoices)
 
     site_rows = "".join(
         f"<tr><td>{s['name']}</td><td>{s['market_id']}</td><td>{s['lifecycle_state']}</td>"

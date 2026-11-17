@@ -19,7 +19,8 @@ def get_invoices(
         raise HTTPException(status_code=404, detail="no invoices for account")
     return {
         "count": len(found),
-        "revenue_total": float(invoice_service.revenue_total(period=period)),
+        # revenue_total spans the whole period, so only reuse the list when it is unfiltered.
+        "revenue_total": float(invoice_service.revenue_total(period=period, invoices=None if account_id else found)),
         "invoices": found,
     }
 
