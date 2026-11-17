@@ -1,4 +1,6 @@
-from app.inventory.capacity import available_capacity, site_capacity, utilization_pct
+import capacity_core
+
+from app.inventory.capacity import available_capacity, can_support, site_capacity, utilization_pct
 from app.inventory.repository import get_site, list_circuits
 
 
@@ -35,3 +37,24 @@ def list_sites_uuid():
     from app.inventory.repository import list_sites
 
     return list_sites()[0]["device_uuid"]
+
+
+def test_buffer_defaults_to_zero():
+    assert available_capacity(1000, 600) == 400
+    assert utilization_pct(1000, 600) == 60.0
+
+
+def test_utilization_rounds_to_two_decimals():
+    assert utilization_pct(3, 1) == 33.33
+    assert utilization_pct(0, 50, 10) == 0.0
+
+
+def test_can_support_is_requested_within_available():
+    assert can_support(1000, 600, 250, 150) is True
+    assert can_support(1000, 600, 251, 150) is False
+
+
+def test_delegates_to_shared_capacity_core():
+    for args in [(1000, 600, 150), (1234, 567, 89), (100, 90, 50), (0, 0, 0)]:
+        assert available_capacity(*args) == capacity_core.available_capacity(*args)
+        assert utilization_pct(*args) == capacity_core.utilization_pct(*args)

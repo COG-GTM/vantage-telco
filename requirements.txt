@@ -4,3 +4,4 @@ pymongo>=4.6
 pydantic>=2.6
 pytest>=8.0
 httpx>=0.27
+telco-capacity-core @ git+https://github.com/COG-GTM/telco-capacity-core@v1.0.0
