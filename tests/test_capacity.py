@@ -47,6 +47,10 @@ def test_buffer_defaults_to_zero():
 def test_utilization_rounds_to_two_decimals():
     assert utilization_pct(3, 1) == 33.33
     assert utilization_pct(0, 50, 10) == 0.0
+    # exact decimal ties round half-to-even: 0.025 -> 0.02, 0.035 -> 0.04
+    assert utilization_pct(4000, 1) == 0.02
+    assert utilization_pct(4000, 1, 0) == utilization_pct(4000, 0, 1)
+    assert utilization_pct(20000, 7) == 0.04
 
 
 def test_can_support_is_requested_within_available():
