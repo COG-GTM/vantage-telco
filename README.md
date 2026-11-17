@@ -26,7 +26,8 @@ metro codes), with a five-state `lifecycle_state`: `ACTIVE`, `MAINTENANCE`,
 `RETIRED`, `PLANNED`, `RESERVED`.
 
 - `capacity.py` — `available = total - allocated - maintenance_buffer`. A link
-  reserved for maintenance is not spare capacity.
+  reserved for maintenance is not spare capacity. Delegates to the shared
+  `capacity_core` package (COG-GTM/telco-capacity-core).
 - `circuits.py` — standby and failover circuits are excluded from active counts
   and active capacity.
 
@@ -83,8 +84,18 @@ it shows, per customer location, what is actually sellable. Availability comes
 from `app/inventory/capacity.py`, so the maintenance buffer is withheld:
 
 ```
-available = total_capacity - allocated - maintenance_buffer
+available       = max(total_capacity - allocated - maintenance_buffer, 0)
+utilization_pct = (allocated + maintenance_buffer) * 100 / total_capacity   (2 decimals, 0 when total <= 0)
+can_support     = requested <= available
 ```
+
+The rule is not implemented here. `app/inventory/capacity.py` delegates to the
+shared [`capacity_core`](https://github.com/COG-GTM/telco-capacity-core)
+package (`telco-capacity-core` in `requirements.txt`), the same rule
+meridian-telco compiles in from `capacity_core.h`. Both are validated against
+that repo's `test_vectors.json`, so the two services report identical
+`available_mbps` and `utilization_pct` for the same inputs. Change the rule
+there, not here.
 
 Serviceable locations live in `data/seed/locations.json`. The same figures are
 available as JSON from `GET /capacity/locations?requested_mbps=...` and

@@ -8,6 +8,7 @@ dependencies = [
     "uvicorn>=0.27",
     "pymongo>=4.6",
     "pydantic>=2.6",
+    "telco-capacity-core @ git+https://github.com/COG-GTM/telco-capacity-core@v1.0.0",
 ]
 
 [project.optional-dependencies]
