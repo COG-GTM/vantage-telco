@@ -12,7 +12,7 @@ import ipaddress
 import json
 import re
 from pathlib import Path
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 from app.db import all_documents
 
@@ -21,6 +21,9 @@ GROWTH_POOL = ipaddress.ip_network("10.20.250.0/24")
 
 CONFIG_ROOT = Path(__file__).resolve().parent / "configs"
 IPV4_PATTERN = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
+
+# path -> ((st_mtime_ns, st_size), address counts); re-parsed when the file changes.
+_file_reference_cache: Dict[Path, Tuple[Tuple[int, int], Dict[str, int]]] = {}
 
 
 def devices() -> List[Dict[str, Any]]:
@@ -61,11 +64,24 @@ def references(address: str) -> List[Path]:
     return hits
 
 
-def referenced_addresses() -> Dict[str, int]:
+def _file_references(path: Path) -> Dict[str, int]:
+    stat = path.stat()
+    version = (stat.st_mtime_ns, stat.st_size)
+    cached = _file_reference_cache.get(path)
+    if cached is not None and cached[0] == version:
+        return cached[1]
     counts: Dict[str, int] = {}
-    for path in config_files():
-        for match in IPV4_PATTERN.findall(path.read_text()):
-            counts[match] = counts.get(match, 0) + 1
+    for match in IPV4_PATTERN.findall(path.read_text()):
+        counts[match] = counts.get(match, 0) + 1
+    _file_reference_cache[path] = (version, counts)
+    return counts
+
+
+def referenced_addresses(files: Optional[List[Path]] = None) -> Dict[str, int]:
+    counts: Dict[str, int] = {}
+    for path in config_files() if files is None else files:
+        for address, n in _file_references(path).items():
+            counts[address] = counts.get(address, 0) + n
     return counts
 
 
@@ -81,13 +97,14 @@ def orphaned_references() -> Dict[str, int]:
 
 
 def summary() -> Dict[str, Any]:
-    counts = referenced_addresses()
+    files = config_files()
+    counts = referenced_addresses(files)
     return {
         "management_supernet": str(MANAGEMENT_SUPERNET),
         "growth_pool": str(GROWTH_POOL),
         "device_count": len(devices()),
         "assigned_addresses": len(assigned_addresses()),
-        "config_files": len(config_files()),
+        "config_files": len(files),
         "address_references": sum(counts.values()),
         "external_bgp_devices": [d["device_name"] for d in external_bgp_devices()],
         "growth_pool_allocations": [d["mgmt_ip"] for d in devices() if in_growth_pool(d["mgmt_ip"])],
