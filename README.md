@@ -2,160 +2,86 @@
 
 Inventory, management addressing and billing services for the Vantage network.
 
-Vantage runs a single FastAPI application backed by MongoDB. For local
-development and CI the same collections are read from `data/seed`, so the app
-and the test suite run with no database.
+One FastAPI service serves the JSON API and HTML dashboards. The Java invoice
+reporter and Meridian parity tools run separately. See the
+[architecture guide and diagram](docs/architecture.md) for how they fit together.
 
 ## Getting started
 
+Use Python 3.10 or newer. From the repository root:
+
 ```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m uvicorn app.main:app --reload --port 8000
 ```
 
-Point the app at a real database by exporting `MONGO_URI` (and optionally
-`MONGO_DB`, default `vantage`).
+Leave `MONGO_URI` unset to use the checked-in JSON collections in `data/seed/`.
+To use MongoDB, set `MONGO_URI` and optionally `MONGO_DB` (default `vantage`).
+The selected database must already have the collections; startup does not seed it.
 
-## Modules
+| Local page | Purpose |
+| --- | --- |
+| [Dashboard](http://localhost:8000/dashboard) | Inventory and billing overview |
+| [Invoice register](http://localhost:8000/dashboard/billing) | Filter invoices by period, account ID or billing reference |
+| [Capacity check](http://localhost:8000/capacity) | Check sellable bandwidth by location |
+| [API docs](http://localhost:8000/docs) | Explore the JSON endpoints |
 
-### `app/inventory`
+## Repository layout
 
-Network resources keyed by `device_uuid`, grouped by `market_id` (fine-grained
-metro codes), with a five-state `lifecycle_state`: `ACTIVE`, `MAINTENANCE`,
-`RETIRED`, `PLANNED`, `RESERVED`.
-
-- `capacity.py` — `available = total - allocated - maintenance_buffer`. A link
-  reserved for maintenance is not spare capacity.
-- `circuits.py` — standby and failover circuits are excluded from active counts
-  and active capacity.
-
-Endpoints: `GET /resources`, `GET /resources/{device_uuid}`, `GET /circuits`.
-
-### `app/network`
-
-Management addressing. Every device holds an address out of the
-`10.20.0.0/16` management supernet; `10.20.250.0/24` is the growth pool.
-Generated artifacts under `app/network/configs` reference those addresses:
-
-| Path | Format | Purpose |
-| --- | --- | --- |
-| `configs/routing/*.yaml` | YAML | per-market static routes |
-| `configs/firewall/*.yaml` | YAML | management-plane ACLs |
-| `configs/dns/*.zone` | zone file | forward records for management names |
-| `configs/monitoring/*.json` | JSON | NOC poller targets |
-| `configs/address_plan.json` | JSON | supernet, growth pool, external-BGP devices |
-
-`addressing.py` can list every config file referencing a given address and
-detect references to addresses no device owns.
-
-Endpoints: `GET /network/addressing`, `GET /network/devices`,
-`GET /network/references?address=...`.
-
-Devices flagged `external_bgp` are customer-facing and must not be renumbered.
-
-### `app/billing`
-
-- `rating.py` — usage is billed to the exact MB at $0.012/MB overage. No
-  gigabyte rounding.
-- `proration.py` — mid-cycle plan changes split on actual calendar days.
-- `promo.py` — promo credits stay live for 30 days from issue.
-- `suspension.py` — suspended days are credited back at the daily rate.
-- `lines.py` — 3-9 lines 5% off recurring, 10 or more 10%.
-- `latefee.py` — 10 days grace after the due date, then 1.5% of the balance.
-- `tax.py` — GST/HST/PST/QST, all assessed on the pre-discount subtotal.
-- `discounts.py` — the loyalty credit comes off the subtotal and does not change
-  the tax base.
-- `invoices.py` — invoice construction, plus `unlinked_usage()` for usage that
-  was mediated without a billing account.
-
-Charges are carried as `Decimal` at full precision and rounded once, at the
-invoice total. Provinces billed: BC, AB, ON, QC.
-
-Endpoints: `GET /billing/invoices`, `GET /billing/usage-summary`. The invoice
-register page is `GET /dashboard/billing` (filter by `period`, `account_id` or
-`billing_ref`); it shows the province and the tax lines per invoice.
-
-## Capacity check (sales engineering)
-
-`GET /capacity` is the sales-facing page: enter the bandwidth being quoted and
-it shows, per customer location, what is actually sellable. Availability comes
-from `app/inventory/capacity.py`, so the maintenance buffer is withheld:
-
-```
-available = total_capacity - allocated - maintenance_buffer
-```
-
-Serviceable locations live in `data/seed/locations.json`. The same figures are
-available as JSON from `GET /capacity/locations?requested_mbps=...` and
-`GET /capacity/locations/{location_code}`.
-
-## Dashboard
-
-`GET /dashboard` renders the current inventory and billing figures as a plain
-HTML page.
+| Path | Contents |
+| --- | --- |
+| [`app/`](app/) | FastAPI entry point, HTTP routers, collection access, and domain rules |
+| [`app/network/configs/`](app/network/configs/) | Address plan, routing, firewall, DNS and monitoring files |
+| [`data/seed/`](data/seed/) | Local JSON collections for sites, circuits, devices, locations, accounts and usage |
+| [`java/vantage-report/`](java/vantage-report/) | Standalone Java 11 invoice reporter |
+| [`tools/`](tools/) | Fixture generation and Python–Meridian invoice comparison |
+| [`tests/`](tests/) | Python domain and HTTP tests |
 
 ## Tests
 
-```bash
-pytest
-```
-
-`tests/` covers capacity, circuit roll-ups, rating and discount ordering,
-addressing/reference integrity, and the HTTP surface.
-
-## `java/vantage-report`
-
-The archived invoice artifacts the NOC keeps per cycle are rendered by a
-separate Maven module in `java/vantage-report`, built and run on Java 11. It
-re-implements the rating rules in `app/billing` (exact-MB overage, tax on the
-pre-discount subtotal, loyalty credit applied post-tax) and renders each
-invoice as plain text plus a per-charge CSV.
+From the repository root with the virtual environment activated:
 
 ```bash
-cd java/vantage-report
-mvn -B verify
-mvn -q exec:java -Dexec.mainClass=net.vantage.report.Main -Dexec.args="2026-07"
+env -u MONGO_URI python -m pytest -q
 ```
 
-Usage comes from the mediation CSV export
-(`account_id,device_uuid,period,usage_mb`); with no path argument the bundled
-`usage-sample.csv` is used. Invoices are rendered concurrently by
-`pipeline/BatchRunner` over a fixed platform-thread pool.
+## Java invoice reporter
 
-## Seed data
-
-`data/seed/` holds `sites.json` (97), `circuits.json`, `devices.json`,
-`accounts.json` (200 billing accounts across BC/AB/ON/QC), `usage.json` and
-`locations.json`.
-
-The billing fixtures are generated, not hand-edited. `tools/fixtures` writes
-both estates' copies of the same customer book from one seed, so an account is
-the same customer on both sides and joins on `billing_ref`:
+With JDK 11 and Maven, build and test the reporter and run the resulting JAR
+from the repository root:
 
 ```bash
-make fixtures MERIDIAN_DIR=../meridian-telco
+mvn -B -f java/vantage-report/pom.xml verify
+java -jar java/vantage-report/target/vantage-report-1.6.0.jar 2026-07
 ```
 
-## Invoice parity with meridian-telco
+The CLI uses built-in accounts and defaults to the bundled `usage-sample.csv`.
+To use a different CSV, pass its path after the period. Use the header
+`account_id,device_uuid,period,usage_mb`. It prints text invoices and a cycle
+summary to stdout. The Java reporter has its own billing rules; it does not
+run the FastAPI billing engine.
 
-`tools/parity` runs the legacy meridian-telco register and this service over the
-same usage feed, joins on `billing_ref` and prints every account whose invoice
-total disagrees, with the rules implicated and the variance by rule and by
-province.
+## Meridian fixtures, parity and demo
+
+For these commands, clone [`meridian-telco`](https://github.com/COG-GTM/meridian-telco)
+next to this repo (or pass `MERIDIAN_DIR=/path/to/meridian-telco` to `make`). Its Makefile needs a C++
+compiler and SQLite development headers to build. Activate the Vantage Python
+environment and leave `MONGO_URI` unset to use the same fixture dataset.
+
+To regenerate the shared billing dataset, run `make fixtures` in a clean
+workspace. It overwrites Vantage's billing JSON and replaces Meridian's
+account and usage fixtures.
 
 ```bash
-make parity PERIOD=2026-07 MERIDIAN_DIR=../meridian-telco
+make parity PERIOD=2026-07
+make demo
 ```
 
-It exits non-zero while the two estates still disagree.
+`make parity` compares the Python billing engine with Meridian's invoice
+binary by `billing_ref`; differences in matched totals yield a nonzero exit
+status. It does not start the servers.
 
-## Demo
-
-```bash
-make demo MERIDIAN_DIR=../meridian-telco
-```
-
-Brings up both invoice registers side by side: vantage on
-<http://localhost:8000/dashboard/billing> and meridian on
-<http://localhost:8083/billing.html> (its invoice API on :8082).
+`make demo` runs both invoice registers: [Vantage](http://localhost:8000/dashboard/billing)
+and [Meridian](http://localhost:8083/billing.html) (Meridian's invoice API uses port 8082).
