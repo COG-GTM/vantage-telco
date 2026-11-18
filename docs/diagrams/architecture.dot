@@ -1,0 +1,59 @@
+digraph Vantage {
+    graph [
+        label="Vantage Telco | Runtime and offline tools",
+        labelloc=t, labeljust=l, fontsize=24, fontname="DejaVu Sans Bold",
+        fontcolor="#0F172A", bgcolor=white, pad=0.3, nodesep=0.25,
+        ranksep=0.42, newrank=true
+    ]
+    node [
+        shape=box, style="rounded,filled", fontname="DejaVu Sans",
+        fontsize=14, margin="0.18,0.12", color="#94A3B8",
+        fontcolor="#0F172A", fillcolor=white
+    ]
+    edge [fontname="DejaVu Sans", fontsize=11, color="#475569", fontcolor="#334155"]
+
+    subgraph cluster_python {
+        label="HTTP REQUEST PATH  /  PYTHON"; labeljust=l; fontsize=14;
+        style="rounded,filled"; color="#93C5FD"; fillcolor="#EFF6FF"; margin=18;
+
+        clients [label="Browsers & API clients"];
+        api [label="Uvicorn + FastAPI\nJSON routes and server-rendered HTML", fillcolor="#DBEAFE"];
+        domains [label="Inventory, capacity\n& addressing"];
+        billing [label="Python billing\nInvoice & usage rules"];
+        data [label="Collection access  ·  app/db.py", fillcolor="#DBEAFE"];
+        configs [label="Checked-in\nnetwork configs"];
+        seed [label="Seed JSON\nMONGO_URI unset"];
+        mongo [label="MongoDB\nMONGO_URI set"];
+
+        clients -> api [label="HTTP GET"];
+        api -> { domains billing };
+        domains -> { configs data };
+        billing -> data;
+        data -> { seed mongo };
+        { rank=same; domains; billing; }
+        { rank=same; configs; seed; mongo; }
+    }
+
+    subgraph cluster_java {
+        label="BATCH REPORTER  /  JAVA 11"; labeljust=l; fontsize=14;
+        style="rounded,filled"; color="#6EE7B7"; fillcolor="#ECFDF5"; margin=18;
+
+        usage [label="Usage CSV + built-in accounts"];
+        runner [label="Rate usage & render invoices\njava/vantage-report", fillcolor="#D1FAE5"];
+        report [label="Text invoices + cycle summary\nstdout"];
+        usage -> runner -> report;
+    }
+
+    subgraph cluster_parity {
+        label="OFFLINE INVOICE PARITY  /  PYTHON"; labeljust=l; fontsize=14;
+        style="rounded,filled"; color="#FCD34D"; fillcolor="#FFFBEB"; margin=18;
+
+        meridian [label="Separate Meridian checkout\nbin/billing-run"];
+        parity [label="tools/parity\nCompare totals by billing_ref", fillcolor="#FEF3C7"];
+        meridian -> parity [label="invoice JSON"];
+    }
+
+    billing -> parity [style=dashed, color="#A16207", label="invoice\ntotals"];
+    { rank=same; clients; usage; }
+    { rank=same; data; meridian; }
+}
